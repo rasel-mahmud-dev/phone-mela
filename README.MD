@@ -14,7 +14,7 @@ Mobile Shop Ecommerce website, build with Golang and React js
 	
 ```
 
-# This Application under development so not yet hosting on cloud
+# This Application under development so not yet hosting on the cloud
 ### Preview screenshot
 
 ![preview-image](preview/2022-03-19_020533.png)
