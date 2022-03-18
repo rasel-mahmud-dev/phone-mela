@@ -1,0 +1,9 @@
+client/node_modules
+api/node_modules
+api/src/auto
+api/.env
+api/src/FileUpload
+api/.idea
+client/.idea
+client/src/pages.rar
+client/src/asserts

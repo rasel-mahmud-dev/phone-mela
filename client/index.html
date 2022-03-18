@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <style>
+      body{
+        margin: 0px;
+        padding: 0px;
+      }
+      .loader_backdrop.show{
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(45deg, #03A9F4 -12%, #b393ec, #8BC34A);
+        position: fixed;
+        z-index: 10000;
+      }
+      .loader_backdrop.disable_loader{
+        transition: all .5s ease-in-out;
+        width: 100%;
+        height: 100%;
+        background: rgb(65, 65, 65);
+        position: fixed;
+        z-index: 10000;
+        opacity: 0;
+        background-image: linear-gradient(45deg, #03A9F4 -12%, #b393ec, #8BC34A);
+      
+      }
+    
+      .show .loader{
+        z-index: 10001;
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        border: 6px solid transparent;
+        border-radius: 100%;
+        top: 30%;
+        left: 50%;
+        /*transform: translateX(-50px) translateY(-50px);*/
+        animation: pinner .8s ease-in-out infinite;
+      }
+    
+      .show .loader:nth-child(1){
+        border-bottom-color: red;
+        animation-delay: .11s;
+      }
+      .show .loader:nth-child(2){
+        border-bottom-color: red;
+        animation-delay: .22s;
+      }
+      .show .loader:nth-child(3){
+        border-bottom-color: red;
+        animation-delay: .33s;
+      }
+      .show .loader:nth-child(4){
+        border-bottom-color: red;
+        animation-delay: .1s;
+      }
+    
+      @keyframes pinner {
+        0%{ transform: rotate(0deg); }
+        100%{ transform: rotate(360deg); }
+      }
+  
+    </style>
+  </head>
+  <body>
+
+  <div class="loader_backdrop show">
+    <div class="loader"></div>
+    <div class="loader"></div>
+    <div class="loader"></div>
+    <div class="loader"></div>
+  </div>
+
+  <div id="backdrop-root"></div>
+  <div id="modal-root"></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

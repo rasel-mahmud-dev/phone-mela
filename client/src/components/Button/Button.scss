@@ -1,0 +1,310 @@
+@import "src/sass/index.scss";
+
+@mixin btn_reset {
+  color: inherit;
+  font-weight: 400;
+  position: relative;
+  user-select: none;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  font-family: roboto;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.active{
+  color: #ff0000;
+}
+
+.btn{
+  background: #fffcfc;
+  box-shadow: 
+  0px 1px 1px 0px rgba(0,0,0,0.2), 
+  0px 2px 2px 0px rgba(0,0,0,0.14), 
+  0px 1px 5px 0px rgba(0,0,0,0.12);
+  padding: 5px 8px;
+  margin: 5px;
+  @include btn_reset;
+
+  &:hover{
+    box-shadow: 
+    0px 1px 4px 0px rgba(0,0,0,0.2), 
+    0px 4px 5px 0px rgba(0,0,0,0.14), 
+    0px 1px 10px 0px rgba(0,0,0,0.12);
+  };
+  &:focus{
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 
+    0px 2px 4px 0px rgba(0, 0, 0, 0.14), 
+    0px 5px 6px 0px rgb(0 0 0 / 12%);
+  }
+  &:active{
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+     0px 3px 4px 1px rgb(0 0 0 / 23%), 
+     0px 4px 11px 0px rgb(0 0 0 / 24%);
+  }
+  a{
+    text-decoration: none;
+    color: inherit;
+  }
+}
+.btn-block{
+  display: block;
+  width: 100%;
+}
+.btn_icon{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 2px 6px;
+}
+.shadow_s1{
+  box-shadow: 
+  0px 1px 1px 0px rgba(0,0,0,0.2), 
+  0px 2px 2px 0px rgba(0,0,0,0.14), 
+  0px 1px 5px 0px rgba(0,0,0,0.12);
+  &:hover{
+    box-shadow: 
+    0px 1px 4px 0px rgba(0,0,0,0.2), 
+    0px 4px 5px 0px rgba(0,0,0,0.14), 
+    0px 1px 10px 0px rgba(0,0,0,0.12);
+  }
+  &:focus{
+    box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 
+    0px 2px 4px 0px rgba(0, 0, 0, 0.14), 
+    0px 5px 6px 0px rgb(0 0 0 / 12%);
+  }
+  &:active{
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+     0px 3px 4px 1px rgb(0 0 0 / 23%), 
+     0px 4px 11px 0px rgb(0 0 0 / 24%);
+  }
+}
+
+.btn_block{
+  width: 100%;
+  display: block;
+}
+
+.btn_text{
+  @include btn_reset;
+  background: transparent;
+  display: flex;
+  padding: 3px 5px;
+  // margin: inherit;
+  // padding: inherit;
+
+}
+.btn-flat{
+
+}
+
+.btn_green,
+.btn_icon_green{
+  background: colors(green, base);
+  color: colors(grey, 50);
+  &:hover,
+  &:focus{
+     background:colors(green, 900);
+  }
+  &:active{
+    background:colors(green, 900);
+  }
+}
+.btn_red,
+.btn_icon_red{
+  background: colors(red, base);
+  color: colors(grey, 50);
+  &:hover,
+  &:focus{
+    background: colors(red, 500);
+  }
+  &:active{
+    background: colors(red, 500);
+  }
+}
+.btn_pink,
+.btn_icon_pink{
+  background: colors(pink, base);
+  color: #ffffffe8;
+  &:hover,
+  &:focus{
+    background:  colors(pink, 900);
+  }
+  &:active{
+    background:  colors(pink, base);
+  }
+}
+.btn_orange,
+.btn_icon_orange{
+  background: colors(orange, base) ;
+  color: #2b2b2b;;
+  &:hover,
+  &:focus{
+    background: colors(orange, A200);
+  }
+  &:active{
+    background: colors(orange, 400);
+  }
+}
+.btn_blue,
+.btn_icon_blue{
+  background: colors(blue, base);
+  color: #ffffffe8;
+  &:hover,
+  &:focus{
+    background: colors(blue, A400);
+  }
+  &:active{
+    background: colors(blue, A400);
+  }
+}
+
+
+.btn_outline{
+  color: rgb(32, 32, 32);
+  background: #fffcfc;
+  border: 2px solid #c7c7c7;
+  margin: 5px;
+  border-radius: 4px;
+  outline: none;
+  box-shadow: 0 0 2px 1px #5a5a5a85;
+  box-sizing: border-box;
+  font-family: roboto;
+  font-size: 14px;
+}
+
+.outline_btn_default{
+  background: transparent;
+  border: 2px solid #c7c7c7;
+  box-shadow: 0 0 2px 1px #5a5a5a85;
+}
+.outline_btn_default:hover,
+.outline_btn_default:focus{
+  background: transparent;
+  border: 2px solid #c7c7c7;
+  box-shadow: 0px 1px 3px 1px #888888;
+}
+.outline_btn_default:active{
+  background: transparent;
+  border: 2px solid #c7c7c7;
+  box-shadow:0px 2px 4px 0px #464646;
+}
+
+
+.outline_btn_red{
+  background: transparent;
+  border: 2px solid rgb(253, 57, 57) ;
+  box-shadow: 0 0 2px 1px #ec414185;
+}
+.outline_btn_red:hover,
+.outline_btn_red:focus{
+  border: 2px solid #ff0000;
+  box-shadow: 0px 1px 4px 0px #ff0000c7;
+}
+
+.outline_btn_red:active{
+  border: 2px solid rgb(253, 57, 57) ;
+  box-shadow:0px 2px 4px 0px #ff0000c7;
+}
+
+
+
+.outline_btn_green{
+  background: transparent;
+  border: 2px solid  rgb(97, 235, 127) ;
+  box-shadow: 0 0 2px 0px #5ad374;
+}
+.outline_btn_green:hover,
+.outline_btn_green:focus{
+  background: transparent;
+  border: 2px solid  rgb(97, 235, 127) ;
+  box-shadow: 0 0.5px 2px 1px #58d173;
+}
+
+/* .outline_btn_green:hover,
+.outline_btn_green:focus{
+  background: transparent;
+  border: 2px solid  rgb(97, 235, 127) ;
+  box-shadow: 0px 1px 4px 0px  #5ad374;
+} */
+
+
+.outline_btn_green:active{
+  background: transparent;
+  border: 2px solid  rgb(97, 235, 127) ;
+  box-shadow:0px 2px 4px 0px #5ad374;
+}
+
+
+
+
+.outline_btn_blue{
+  background: transparent;
+  border: 2px solid rgb(69, 88, 255) ;
+}
+.outline_btn_blue:hover,
+.outline_btn_blue:focus{
+  background: transparent;
+  border: 2px solid rgb(69, 88, 255) ;
+  box-shadow: 0 0.5px 2px 1px rgb(69, 88, 255) ;
+}
+.outline_btn_blue:active{
+  background: transparent;
+  border: 2px solid rgb(69, 88, 255) ;
+  box-shadow:0px 2px 4px 0px rgb(69, 88, 255) ;
+}
+
+
+
+.outline_btn_pink{
+  background: transparent;
+  border: 2px solid rgb(255, 55, 155) ;
+}
+.outline_btn_pink:hover,
+.outline_btn_pink:focus{
+  background: transparent;
+  border: 2px solid rgb(255, 55, 155) ;
+  box-shadow: 0 0.5px 2px 1px rgb(255, 55, 155) ;
+}
+.outline_btn_pink:active{
+  background: transparent;
+  border: 2px solid rgb(255, 55, 155) ;
+  box-shadow:0px 2px 4px 0px rgb(255, 55, 155) ;
+}
+
+
+
+.outline_btn_orange{
+  background: transparent;
+  border: 2px solid rgb(238, 236, 95) ;
+}
+.outline_btn_orange:hover,
+.outline_btn_orange:focus{
+  background: transparent;
+  border: 2px solid rgb(238, 236, 95) ;
+  box-shadow: 0 0.5px 2px 1px rgb(238, 236, 95) ;
+}
+.outline_btn_orange:active{
+  background: transparent;
+  border: 2px solid rgb(238, 236, 95) ;
+  box-shadow:0px 2px 4px 0px rgb(238, 236, 95) ;
+}
+
+
+.outline_btn_primary{
+  background: transparent;
+  border: 2px solid rgb(69, 218, 255) ;
+  box-shadow:0px 2px 4px 0px rgb(69, 218, 255);
+}
+.outline_btn_primary:hover,
+.outline_btn_primary:focus{
+  background: transparent;
+  border: 2px solid rgb(69, 218, 255) ;
+  box-shadow: 0 0.5px 2px 1px rgb(69, 218, 255) ;;
+}
+.outline_btn_primary:active{
+  background: transparent;
+  border: 2px solid rgb(69, 218, 255) ;
+  box-shadow:0px 2px 4px 0px rgb(69, 218, 255) ;;
+}

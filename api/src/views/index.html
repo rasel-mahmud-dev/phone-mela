@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{.pageTitle}}</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+<body>
+
+
+
+  <div class="container">
+
+      <h1 class="title">This is H1 Heading Tag</h1>
+      {{ range $key, $value := .users }}
+        <li>
+          <strong>{{$key}}: {{$value}}</strong>
+            {{/*<span><button data-id="{{$key}}" class="delete">Delete</button></span>*/}}
+          <form action="/delete/{{$key}}" method="get">
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+      {{end}}
+
+      {{ range $key, $post := .posts }}
+        <li>
+          <strong>{{$post.id}}</strong>
+          <strong>{{$post.title}}</strong>
+          <strong>{{$post.description}}</strong>
+        </li>
+      {{end}}
+
+  </div>
+
+  <script src="/static/main.js"></script>
+</body>

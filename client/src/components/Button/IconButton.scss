@@ -1,0 +1,53 @@
+@import "src/sass/index.scss";
+
+.flat-icon {
+  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  font-weight: inherit;
+  font-family: Roboto;
+}
+
+.btn-circle {
+  border-radius: 100%;
+  width: 36px;
+  height: 36px;
+}
+
+.icon_btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  font-size: 16px;
+
+  // @include shadow($b1);
+  &:hover {
+    background: #e6e6e6;
+  }
+
+  i {
+    pointer-events: none;
+  }
+
+  &.btn_sm {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  &.btn_md {
+    width: 35px;
+    height: 35px;
+    font-size: 24px;
+  }
+}
+
+
+.fa-heart {
+  pointer-events: none;
+  position: absolute;
+
+}
+

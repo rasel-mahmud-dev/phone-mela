@@ -1,0 +1,85 @@
+
+
+
+@mixin xl {
+  @media (min-width: #{$desktop-width}) and (max-width: 2500px) {
+    @content;
+  }
+}
+@mixin lg {
+  @media (min-width: #{ $desktop-width }) and (max-width: #{ $HD-width - 1 }) {
+    @content;
+  }
+}
+@mixin md {
+  @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1}) {
+    @content;
+  }
+}
+@mixin sm {
+  @media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width - 1}) {
+    @content;
+  }
+}
+@mixin xs {
+  @media (min-width: 0px) and (max-width: #{$mobile-width - 1}) {
+    @content;
+  }
+}
+
+@mixin down_sm{
+  @media (max-width: #{$mobile-width - 1}){
+    @content;
+  }
+} 
+
+@mixin down_md{
+  @media (max-width: #{$tablet-width - 1}){
+    @content;
+  }
+} 
+
+@mixin down_lg{
+  @media (max-width: #{$desktop-width - 1}){
+    @content;
+  }
+} 
+
+@mixin down_xl {
+  @media (max-width: #{$HD-width - 1}){
+    @content;
+  }
+} 
+
+@mixin up_xs{
+  @media (min-width: #{$mobile-width}){
+    @content;
+  }
+} 
+@mixin up_sm{
+  @media (min-width: #{$tablet-width}){
+    @content;
+  }
+} 
+
+@mixin up_md{
+  @media (min-width: #{$desktop-width + 1}){
+    @content;
+  }
+} 
+
+@mixin up_lg{
+  @media (min-width: #{$HD-width + 1}){
+    @content;
+  }
+} 
+
+// down_sm means (510 to 0)
+// down_md means (768 to 0)
+// down_lg means (1024 to 0)
+// down_xl means (1200 to 0)
+
+// up_xs means (510 to ........)
+// up_sm means (768 to .........)
+// up_md means (1024 to .......)
+// up_lg means (1200 to .......)

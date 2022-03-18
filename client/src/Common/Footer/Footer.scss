@@ -1,0 +1,19 @@
+
+.footer{
+  background: #5656d8;
+  position: relative;
+  width: 100%;
+  
+  .footer_content{
+    height: 80px;
+    p{
+      color: rgb(233, 233, 233);
+    }
+    
+  }
+}
+
+.footer_fixed{
+  position: fixed;
+  bottom: 0;
+}
