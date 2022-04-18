@@ -1,0 +1,16 @@
+
+
+.r{
+  display: flex; 
+  width: 100%;
+  .sidebar{
+    min-width: 300px;
+    background: #f1f1f1;
+  }
+  .content{
+    background: white;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+  }
+}

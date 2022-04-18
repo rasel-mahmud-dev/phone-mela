@@ -1,0 +1,36 @@
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  .home-icon{
+    width: 15px;
+    height: 15px;
+    margin-right: .3rem;
+  }
+  .breadcrumb-item {
+    list-style: none;
+    padding-right: .3rem;
+    font-size: 15px;
+    &:not(:nth-child(1)) {
+      &::before {
+        display: inline-block;
+        padding-right: .3rem;
+        color: #6c757d;
+        content: "/";
+      }
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+      background-color: transparent
+    }
+
+    &.active {
+      color: #6c757d;
+    }
+  }
+}

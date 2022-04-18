@@ -1,0 +1,20 @@
+
+ 
+ .address_book{
+   display: flex; 
+   align-items: flex-start;
+   margin: 10px;
+   padding: 10px;
+   i{
+     margin-right: 10px;
+     margin-top: 5px;
+     display: block;
+    color: "red" !important
+   }
+   .edit_shipping_button{
+     position: absolute;
+     right: 10px;
+   }
+   
+ }
+ 

@@ -1,0 +1,114 @@
+
+
+.input_group_blue{
+  .suggetion_list{
+    .suggetion_item:hover{ background: blue }
+    .suggetion_item:not(:last-child){
+      border-bottom: 1px solid rgba(35, 53, 214, 0.418);
+    }
+  }
+
+}
+
+.input_group_red{
+  .suggetion_list{
+    .suggetion_item:hover{ background: #f33d3d }
+    .suggetion_item:not(:last-child){
+      border-bottom: 1px solid rgba(214, 35, 35, 0.418);
+    }
+  }
+}
+.input_group_green{
+  .suggetion_list{
+    .suggetion_item:hover{ background: #2aab1f }
+    .suggetion_item:not(:last-child){
+      border-bottom: 1px solid rgba(30, 231, 23, 0.418);
+    }
+  }
+}
+
+
+.input_group.select{
+  width: 100%;
+  .input_wrapper{
+    // background: #ffc0c0;
+    textarea{
+      resize: none;
+
+    }
+  }
+
+  .select{
+    width: 100%;
+    padding: 0px 0px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid green !important;
+  }
+
+
+  .switch_select{
+    position: absolute;
+    right: -6px;
+    top: -5px;
+    width: 23px;
+    text-align: center;
+    i{
+      font-size: 11px;
+      cursor: pointer;
+    }
+  }
+  .suggetion_list{
+    width: 100%;
+    position: absolute;
+    top: 23px;
+    background: #ececec;
+    box-shadow: 0px 1px 3px 0px #a09e9e;
+    z-index: 2;
+    padding: 0 10px;
+    .suggetion_item{
+      margin: 5px 0px;
+      list-style: none;
+      cursor: pointer;
+    }
+    .suggetion_item:not(:last-child){
+      border-bottom: 1px solid rgba(88, 88, 88, 0.233);
+    }
+    
+  }
+
+  .show_suggetion_list{
+    transform: scale(1)
+  }
+
+  .hide_suggetion_list{
+    transform: scale(0)
+  }
+
+  .suggetion_item:hover{
+    transition: all .5s ease;
+    background: #7676f5;
+    color: white;
+
+  }
+
+  .chevron_up{
+    transform: rotate(0deg);
+    animation: chevron_up .5s ease 1;
+  }
+
+  .chevron_down{
+    transform: rotate(180deg);
+    animation: chevron_down .5s ease-in 1;
+  }
+  @keyframes chevron_down{
+    0%{ transform: rotate(0deg) }
+    100%{ transform: rotate(180deg) }
+  }
+
+  @keyframes chevron_up{
+    0%{ transform: rotate(180deg) }
+    100%{ transform: rotate(0deg) }
+  }
+  
+}

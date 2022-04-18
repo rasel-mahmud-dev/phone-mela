@@ -1,0 +1,20 @@
+
+.filter_sections{
+  background: rgba(13, 199, 13, 0.00);
+  overflow: auto;
+}
+
+
+.select-item{
+  .select-del {
+    color: red;
+    display: none;
+  }
+  &:hover {
+    .select-del {
+      cursor: pointer;
+      display: block;
+      color: red;
+    }
+  }
+}
