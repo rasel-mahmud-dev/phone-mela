@@ -1,8 +1,0 @@
-@import "src/sass/index.scss";
-
-.box{
-  min-height: 10px;
-  width: 100%;
-  background: white;
-  @include shadow($s3);
-}

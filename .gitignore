@@ -3,7 +3,23 @@ api/node_modules
 api/src/auto
 api/.env
 api/src/FileUpload
+api/src/middleware/
+api/src/console
 api/.idea
 client/.idea
 client/src/pages.rar
+api/src/middleware
 client/src/asserts
+
+# Local Netlify folder
+.netlify
+
+client/fortawesome
+client/.netlify
+
+client/src/routes.ts.back
+client/.vercel
+client/js.js
+client/src/a.css
+client/bkash.html
+client/a.css
