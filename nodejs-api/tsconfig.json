@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "commonjs",
+    "strict": false,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "jsx": "react",
+    "outDir": "dist",
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": ".",
+//     include src dir
+    "sourceRoot": ".",
+    "inlineSourceMap": true,
+    //    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "typeRoots": [
+      "src/types/index.ts","node_modules/@types"
+    ]
+  },
+  "include": [
+    "src",
+    "."
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    },
+    // It is faster to skip typechecking.
+    // Remove if you want ts-node to do typechecking.
+    "transpileOnly": true,
+    "files": true,
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
+  },
+  
+}
+
+// "engines": {
+//   "node": "16.12.0"
+// },

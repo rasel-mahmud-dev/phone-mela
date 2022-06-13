@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Admin Login Page</title>
+  <style>
+     :root{
+      --primary: #5867ff;
+      --white: #f5f5f5
+     }
+
+     body{
+        margin: 0;
+        padding: 0;
+     }
+     form{
+        max-width: 500px;
+        margin: 30px auto;
+     }
+
+     form input{
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid var(--primary);
+        outline: none;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+     form button{
+        margin-top: 10px;
+        padding: 6px 10px;
+        background: var(--primary);
+        border: 1px solid greenyellow;
+        outline: none;
+        color: var(--white);
+        font-size: 14px;
+     }
+     .title{
+        color: var(--primary);
+        text-align: center;
+        font-size: 40px;
+        margin: 20px 0;
+     }
+     .container{
+        max-width: 1000px;
+        margin: auto;
+        padding: 0 20px;
+     }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1 class="title">Admin Login</h1>
+
+  <form action="/admin/login" method="post">
+    <input type="text" placeholder="Enter Admin Secret" name="secret" >
+    <button type="submit">Login As Admin</button>
+  </form>
+
+
+</div>
+
+
+
+</body>
+</html>
