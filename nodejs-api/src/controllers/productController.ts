@@ -1,6 +1,5 @@
 import {ProductType} from "../models/Product";
 import mongoose, {mongo} from "mongoose";
-import {ServerResponse} from "http";
 import {ApiResponse} from "../types";
 
 const mysql = require('mysql2');
@@ -24,10 +23,12 @@ export const fetchProducts = async (req: Request, res: ApiResponse)=> {
 }
 
 
-// interface CustomRequest<T> extends Request {
-//   body: T
-// }
-// CustomRequest<BodyMy>
+export const addProduct = async (req: Request, res: ApiResponse)=> {
+
+
+}
+
+
 
 interface BodyMy{
   type: "latest" |  "top_discount" | "top_rating" | "top_sales"

@@ -1,17 +1,13 @@
 import { Application } from "express";
 
 import controllers from "../controllers"
+import {admin} from "../middleware";
 
 const productRoutes = (app: Application)=>{
-  
-  interface ResBody{
-    products: []
-  }
-  
+  app.get("/api/products", controllers.productController.fetchProducts)
   app.post("/api/homepage-products", controllers.productController.fetchHomePageProducts)
   app.post("/api/top-wishlist-products", controllers.productController.topWishlistProducts)
-  
-  // app.get("/api/products", controllers.productController.fetchProducts)
+  app.post("/api/add-product", admin, controllers.productController.addProduct)
   
   // router.HandleFunc("/api/reviews/{product_id}", controllers.FetchProductCustomerRatings).Methods("GET")
   // router.HandleFunc("/api/specification/{id}", controllers.FetchProductSpecification).Methods("GET")

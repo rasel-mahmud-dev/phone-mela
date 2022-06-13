@@ -10,7 +10,7 @@ import (
 	"github.com/rasel-mahmud-dev/mobile-shop-api/src/response"
 	"io/ioutil"
 	"time"
-
+	
 	// "mobile-shop/api/db"
 	// "mobile-shop/api/middleware"
 	// "mobile-shop/api/models"
@@ -18,60 +18,39 @@ import (
 	"net/http"
 )
 
-// var (
-// 	key = []byte("super-secret-key")
-// 	store = sessions.NewCookieStore(key)
-// )
-//
-// const (
-// 	APP_KEY = "golangcode.com"
-// )
-//
-// func secret(w http.ResponseWriter, r *http.Request) {
-// 	session, _ := store.Get(r, "cookie-name")
-//
-// 	// Check if user is authenticated
-// 	if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
-// 		http.Error(w, "Forbidden", http.StatusForbidden)
-// 		return
-// 	}
-//
-// 	// Print secret message.svg
-// 	fmt.Fprintln(w, "The cake is a lie!")
-// }
 
-// func Registration(res http.ResponseWriter, req *http.Request) {
-// 		res.Header().Set("Content-Type", "application/json")
-//
-// 		var data map[string]string
-// 		json.NewDecoder(req.Body).Decode(&data)
-//
-// 	UserModel, ctx := db.GetDBCollection("users")
-//
-// 		var existUser models.User
-// 		err := UserModel.FindOne(ctx, bson.D{{"email", data["email"]}}).Decode(&existUser)
-// 		if err == nil{
-// 			_ = json.NewEncoder(res).Encode(map[string]interface{}{"message.svg": "User Already Exit"})
-// 			return
-// 		}
-//
-// 		newUser := models.User{
-// 			ID:       primitive.NewObjectID(),
-// 			Username: data["username"],
-// 			Email:    data["email"],
-// 		}
-// 		// ? Take Lot of Time..... if salt 14 but 5 ok
-// 		hashedPass, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 5)
-// 		newUser.Password = string(hashedPass)
-//
-// 		result, _ := UserModel.InsertOne(ctx, newUser)
-//
-// 		var createUser models.User
-// 		UserModel.FindOne(ctx, bson.D{{"_id", result.InsertedID}}).Decode(&createUser)
-//
-// 		json.NewEncoder(res).Encode(createUser)
-//
-// 	}
+func Registration(res http.ResponseWriter, req *http.Request) {
+	// 	res.Header().Set("Content-Type", "application/json")
+	//
+	// 	var data map[string]string
+	// 	json.NewDecoder(req.Body).Decode(&data)
+	//
+	// UserModel, ctx := db.GetDBCollection("users")
+	//
+	// 	var existUser models.User
+	// 	err := UserModel.FindOne(ctx, bson.D{{"email", data["email"]}}).Decode(&existUser)
+	// 	if err == nil{
+	// 		_ = json.NewEncoder(res).Encode(map[string]interface{}{"message.svg": "User Already Exit"})
+	// 		return
+	// 	}
+	//
+	// 	newUser := models.User{
+	// 		ID:       primitive.NewObjectID(),
+	// 		Username: data["username"],
+	// 		Email:    data["email"],
+	// 	}
+	// 	// ? Take Lot of Time..... if salt 14 but 5 ok
+	// 	hashedPass, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), 5)
+	// 	newUser.Password = string(hashedPass)
+	//
+	// 	result, _ := UserModel.InsertOne(ctx, newUser)
+	//
+	// 	var createUser models.User
+	// 	UserModel.FindOne(ctx, bson.D{{"_id", result.InsertedID}}).Decode(&createUser)
+	//
+	// 	json.NewEncoder(res).Encode(createUser)
+
+	}
 
 func Login(writer http.ResponseWriter, request *http.Request) {
 	// writer.Header().Set("Content-Type", "application/json")

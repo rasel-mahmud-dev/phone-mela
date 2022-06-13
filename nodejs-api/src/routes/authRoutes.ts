@@ -6,7 +6,6 @@ const authRoutes = (app: Application)=>{
   
   app.post("/api/signup", controllers.authController.userRegistration)
   app.post("/api/sign-in", controllers.authController.login)
-  
   app.get("/api/sign-current-user", controllers.authController.loginCurrentUser)
   
   
