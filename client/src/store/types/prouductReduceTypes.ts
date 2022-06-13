@@ -43,7 +43,7 @@ export interface ProductDetailType{
   description: string,
   discount: number,
   email: string,
-  id: number,
+  _id: string,
   price: number,
   seller_id: number,
   stock: string,

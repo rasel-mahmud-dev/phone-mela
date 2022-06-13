@@ -132,13 +132,13 @@ const MoreProducts: FC<MoreProductsProps> = (props) => {
                 cover: prod?.cover,
                 price: prod.price,
                 title: prod.title,
-                product_id: prod.id
+                product_id: prod._id
               }, true, 1000))}
               handleToggleWishlist={()=>dispatch(toggleHandleWishlist({
                 cover: prod?.cover,
                 price: prod.price,
                 title: prod.title,
-                product_id: prod.id
+                product_id: prod._id
               }, true, 1000))}
             />
           )) }

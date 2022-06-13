@@ -41,7 +41,7 @@ const AccountInfo = (props) => {
 
   React.useEffect(()=>{
     if(auth.isAuthenticated){
-      api.get(`/api/auth/customer-profile/${auth.id}`).then(doc=>{
+      api.get(`/api/auth/customer-profile/${auth._id}`).then(doc=>{
         if(doc.data){
           let u = doc.data
           setCustomerProfile(u)

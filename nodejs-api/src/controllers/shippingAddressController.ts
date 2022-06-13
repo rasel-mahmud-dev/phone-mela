@@ -8,7 +8,7 @@ const ShippingAddress = mongoose.model("ShippingAddress")
 
 export const getShippingAddress = async (req: Request, res: Response)=> {
   try{
-    let docs = await ShippingAddress.find({customer_id: req.session.user_id})
+    let docs = await ShippingAddress.find({customer_id: req.user.userId})
     res.status(200).send(docs)
   } catch (ex){
   

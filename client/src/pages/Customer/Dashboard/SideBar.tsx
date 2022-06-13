@@ -216,7 +216,7 @@ const SideBar = () => {
         <ul className="sidebar-menu">
   
           <div className="sidebar">
-            { sidebarData.map(data=>(
+            { sidebarData.map((data: any)=>(
               <div>
                 {/*<label style={{fontSize: 13, marginLeft: "10px", color: "pink"}} htmlFor="">{data.menu_section_name}</label>*/}
                 <Menu selectedKeys={collapseIds}>

@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import  bcryptjs from "bcryptjs"
 import {NextFunction, Request, Response} from "express";
-import {RequestWithSession} from "../types";
 import {UserType} from "../models/User";
 import {createToken, getToken, parseToken} from "../jwt";
 

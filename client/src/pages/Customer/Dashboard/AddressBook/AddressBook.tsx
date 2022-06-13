@@ -49,12 +49,12 @@ const AddressBook = (props) => {
 
   React.useEffect( ()=>{
     (async function () {
-      if(auth.id) {
-        let response = await api.get(`/api/shipping-addresses/${auth.id}`)
+      if(auth._id) {
+        let response = await api.get(`/api/shipping-addresses/${auth._id}`)
         setRecentShippingAddress(response.data)
       }
     }())
-  }, [auth.id])
+  }, [auth._id])
 
   function handleChange(e){
     setShippingAddress({

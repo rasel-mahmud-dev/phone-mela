@@ -27,7 +27,7 @@ const Wishlist = () => {
     navigate(-1)
   }
   
-  const isInCart=(id: number)=> {
+  const isInCart=(id: string)=> {
     let i = cartProducts && cartProducts.findIndex(cp=>cp.product_id.toString() === id.toString())
     return i !== -1
   }

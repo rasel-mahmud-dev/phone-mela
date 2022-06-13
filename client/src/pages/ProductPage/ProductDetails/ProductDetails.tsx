@@ -75,7 +75,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
         description: "",
         discount: 0,
         email: "",
-        id: 0,
+        _id:"",
         price: 0,
         seller_id: 0,
         stock: "",
@@ -123,7 +123,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
     try{
       const response = await api.get(`/api/product/${productId}`)
       if(response.status === 200) {
-      if (response.data.id) {
+      if (response.data._id) {
         let { attributes } = response.data
         try {
           attributes = attributes && JSON.parse(attributes)
@@ -135,7 +135,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
             ...prevState,
             productDetail: {
               ...prevState.productDetail,
-              id: response.data.id,
+              _id: response.data._id,
               title: response.data.title,
               brand_id: response.data.brand_id,
               brand_name: response.data.brand_name,
@@ -162,8 +162,8 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
         await this.fetchProductSpecification(response.data.specification_id)
         
       
-        await this.fetchProductReviews(response.data.id)
-        await this.fetchProductQuestions(response.data.id)
+        await this.fetchProductReviews(response.data._id)
+        await this.fetchProductQuestions(response.data._id)
       }
     }
     } catch(ex){
@@ -446,13 +446,13 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
     })
   }
   
-  isInCart=(id: number)=> {
+  isInCart=(id: string)=> {
     let i = this.props.cartProducts && this.props.cartProducts.findIndex(cp=>cp.product_id.toString() === id.toString())
     return i !== -1
   }
   
   
-  isInWished=(id: number)=> {
+  isInWished=(id: string)=> {
     let i = this.props.wishlist.findIndex(cp=>cp.product_id.toString() === id.toString())
     return i !== -1
   }
@@ -501,12 +501,12 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
         {/*<h1>Details</h1>*/}
         {/*{isLoading && <Loader isLoading={isLoading} style={{top: "100px"}}/>}*/}
      
-        {productDetail && productDetail.id && (
+        {productDetail && productDetail._id && (
         
           <div className="product_detail ">
   
             <Helmet>
-              <link rel="canonical" href={`https://phone-mela.vercel.app/#/product/${productDetail.title}/${productDetail.id}`} />
+              <link rel="canonical" href={`https://phone-mela.vercel.app/#/product/${productDetail.title}/${productDetail._id}`} />
               <title>{productDetail.title} on phone-mela.vercel.app</title>
               {/*<meta*/}
               {/*  name="description"*/}
@@ -562,22 +562,22 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
                           title: productDetail.title,
                           price: productDetail.price,
                           cover: productDetail.cover,
-                          product_id: productDetail.id
+                          product_id: productDetail._id
                         }, true, 1000)}
-                                className="bg-secondary-400 font-normal text-white text-xl px-4 py-2 mr-1">{ this.isInCart(productDetail.id) ? "Remove from cart" : "Add to Cart"}</button>
+                                className="bg-secondary-400 font-normal text-white text-xl px-4 py-2 mr-1">{ this.isInCart(productDetail._id) ? "Remove from cart" : "Add to Cart"}</button>
                         <button  className="bg-primary-400  font-normal text-white text-xl px-4 py-2">Buy Now</button>
                       </div>
     
     
                     </div>
     
-                    <div className={["heart_btn", this.isInWished(productDetail.id) ? "active": ""].join(" ")}>
+                    <div className={["heart_btn", this.isInWished(productDetail._id) ? "active": ""].join(" ")}>
                       <FontAwesomeIcon
                         onClick={()=>this.props.toggleHandleWishlist({
                           title: productDetail.title,
                           price: productDetail.price,
                           cover: productDetail.cover,
-                          product_id: productDetail.id
+                          product_id: productDetail._id
                         }, true, 1000)}
                         icon={faHeart}/>
                     </div>

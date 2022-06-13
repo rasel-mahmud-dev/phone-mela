@@ -28,10 +28,10 @@ const ProductList = () => {
   let data: any[] = [...products]
   
   function updateHandler(prod: ProductType) {
-    navigate(`/admin/dashboard/products/add-product/${prod.id}?callback=/admin/dashboard/products/product-list`)
+    navigate(`/admin/dashboard/products/add-product/${prod._id}?callback=/admin/dashboard/products/product-list`)
   }
   
-  function handleDelete(id: number) {
+  function handleDelete(id: string) {
   
   }
   
@@ -47,7 +47,7 @@ const ProductList = () => {
       key: "1122",
       dataIndex: "id",
       sorter: {
-        compare: (a:any, b:any)=> a.id > b.id ? 1 : a.id < b.id ? -1 : 0
+        compare: (a:any, b:any)=> a._id > b._id ? 1 : a._id < b._id ? -1 : 0
       }
     },
     {
@@ -99,7 +99,7 @@ const ProductList = () => {
                    <FontAwesomeIcon className="text-sm mr-1" icon={faPen} />
               <span>Edit</span>
             </button>
-             <button onClick={() => handleDelete(product.id)} className="btn">
+             <button onClick={() => handleDelete(product._id)} className="btn">
                <FontAwesomeIcon className="text-sm mr-1" icon={faTrash} />
                <span>Delete</span>
              </button>

@@ -1,4 +1,4 @@
-import {ApiRequest, ApiResponse} from "../types";
+import {ApiRequest, ApiResponse, RequestWithSession} from "../types";
 import {OrderStatusType, OrderType, paymentType} from "../models/Order";
 import mongoose from "mongoose";
 
@@ -18,11 +18,11 @@ interface OrderResponseType {
   title: string
 }
 
-export const fetchOrders = async (req: Request, res: ApiResponse<OrderResponseType | string>)=> {
+export const fetchOrders = async (req: RequestWithSession, res: ApiResponse<OrderResponseType | string>)=> {
 
   
   try{
-    const o: any = await Order.find({})
+    const o: any = await Order.find({customer_id:  req.user.userId})
     res.send(o)
   } catch (ex){
     res.status(500).send("internal error")

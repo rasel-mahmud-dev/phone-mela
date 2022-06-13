@@ -43,7 +43,7 @@ const Orders = (props) => {
   React.useEffect( ()=>{
     (async function (){
       if(auth.isAuthenticated){
-        let response = await api.post(`/api/orders`, { customer_id: auth.id })
+        let response = await api.post(`/api/orders`, { customer_id: auth._id })
         if(response.status === 200) {
           setOrders(response.data)
         }

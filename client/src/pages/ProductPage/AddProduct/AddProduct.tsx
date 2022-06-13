@@ -55,7 +55,7 @@ type UserDataType = {
   discount: { value: number | null, touched: boolean, errorMessage?: string },
   cover: { value?: string , touched: boolean, errorMessage?: string },
   stock: { value: number | null, touched: boolean, errorMessage?: string },
-  brand_id: {  value: { name: string, id: number | null }, touched: boolean, errorMessage?: string },
+  brand_id: {  value: { name: string, _id: string | null }, touched: boolean, errorMessage?: string },
   tags: string[],
   
   // tags: "[\"Redmi Note 11\", \"Redmi Note 11s\", \"Redmi Note 11 pro\"]",
@@ -122,7 +122,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
         description: { value: "", touched: false, errorMessage: ""},
         price: { value: 0, touched: false, errorMessage: ""},
         discount: { value: 0, touched: false, errorMessage: ""},
-        brand_id: { value: { name:"", id: 0 }, touched: false, errorMessage: ""},
+        brand_id: { value: { name:"", _id: "" }, touched: false, errorMessage: ""},
         stock: { value: 0, touched: false, errorMessage: ""},
         cover: { value: "", touched: false, errorMessage: ""},
         tags: []
@@ -253,7 +253,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
                 price: {value: price, errorMessage: "", touched: true},
                 cover: {value: cover, errorMessage: "", touched: true},
                 tags: [JSON.parse(tags)],
-                brand_id: { value: {id: brand_id ? brand_id : 0, name: ""}, touched: true }
+                brand_id: { value: {_id: brand_id ? brand_id : 0, name: ""}, touched: true }
               },
               filterAttributes: updatedFilterAttributes,
               updatedProductId: Number(id)
@@ -301,7 +301,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
   
     if (prevState.isShowStaticPhotos  !== this.state.isShowStaticPhotos) {
       if(this.props.auth.isAuthenticated) {
-        api.post("/api/get-static-images", {admin_id: this.props.auth.id}).then(response => {
+        api.post("/api/get-static-images", {admin_id: this.props.auth._id}).then(response => {
           this.setState({...this.state, staticPhotos: response.data})
         }).catch(ex => {
           console.log(ex)
@@ -334,7 +334,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
     const {userData, brands} = this.state
     
     if(name === "brand_id"){
-      let brand = brands.find(b=>b.id == value)
+      let brand = brands.find(b=>b._id == value)
         this.setState((prevState: Readonly<State>): State =>{
           return {
             ...prevState,
@@ -416,7 +416,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
       } else if(key === "brand_id"){
         if(typeof item.value == "object") {
           let brand  = (item.value as any)
-          if(!brand.id){
+          if(!brand._id){
             isCompleted = false
             errors.brand_id = "Brand is Required"
           }
@@ -452,7 +452,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
       let reqPayload: any = {
         id: updatedProductId,
         title: userData.title.value,
-        brand_id: Number(userData.brand_id.value.id),
+        brand_id: Number(userData.brand_id.value._id),
         description: userData.description.value,
         price:  Number(userData.price.value),
         discount: Number(userData.discount.value),
@@ -489,7 +489,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
       } else {
         // adding a new product
         
-        reqPayload.author_id = Number(auth.id)
+        reqPayload.author_id = Number(auth._id)
         reqPayload.seller_id = 1
         
         api.post(`/api/products/add`, reqPayload).then(response=>{
@@ -634,9 +634,9 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
                   ))}
                 </div>
   
-                {/*{ this.selectGroup("Brand", "brand_id", userData.brand_id.value.id, "number",*/}
+                {/*{ this.selectGroup("Brand", "brand_id", userData.brand_id.value._id, "number",*/}
                 {/*  brands as any, */}
-                {/*  (e)=> this.handleChange({target: {name: e.target.name, brandName: e.target.value, brandId: e.target.dataset.id}}),*/}
+                {/*  (e)=> this.handleChange({target: {name: e.target.name, brandName: e.target.value, brandId: e.target.dataset._id}}),*/}
                 {/*  errorsData.brand_id)}*/}
          
                 <div className="select_group mt-4 mx-2">
@@ -644,10 +644,10 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
                   { errorsData.brand_id && <div className="text-xs text-secondary-400 mt-1">
 										<span>{errorsData.brand_id}</span>
 									</div> }
-                  <select className="multi_input" name="brand_id" id="" value={userData.brand_id.value.id as number} onChange={this.handleChange}>
+                  <select className="multi_input" name="brand_id" id="" value={userData.brand_id.value._id as string} onChange={this.handleChange}>
                     <option value="">Select Brand</option>
                     { brands && brands.map(brand=>(
-                      <option value={brand.id}>{brand.name}</option>
+                      <option value={brand._id}>{brand.name}</option>
                     )) }
                   </select>
                 </div>

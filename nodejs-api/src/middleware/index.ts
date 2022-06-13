@@ -12,6 +12,9 @@ export function admin(req, res, next){
       let data = await parseToken(token)
       if(data && data.userId){
         if(data.role === "admin"){
+          req.user = data
+          // req.session.user_id = data.userId
+          // req.session.role = data.userId
           next()
         } else {
           res.status(409).json({message: "Your are not admin"})
@@ -41,11 +44,14 @@ export function auth(req, res, next){
       }
       let data = await parseToken(token)
       if(data && data.userId){
+        req.user = data
+        // req.role = data.userId
         next()
       } else {
         res.status(409).json({message: "your are unauthorized"})
       }
     } catch (ex){
+      console.log(ex)
       res.status(409).json({message: "Please login first"})
     }
   }())

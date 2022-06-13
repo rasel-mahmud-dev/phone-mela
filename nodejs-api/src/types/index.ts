@@ -3,8 +3,8 @@ import { IncomingMessage, ServerResponse} from "http";
 
 
 export interface RequestWithSession extends ApiRequest{
-  session: {
-    user_id: string,
+  user: {
+    userId: string,
     role: string
   } | null
 }

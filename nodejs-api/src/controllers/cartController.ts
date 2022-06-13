@@ -23,7 +23,7 @@ export const fetchCartProducts = async (req: RequestWithSession, res: ApiRespons
   
   try{
     let c: CartItemResponse[] = await Cart.aggregate([
-      { $match: { customer_id: new ObjectId(req.session.user_id) },  },
+      { $match: { customer_id: new ObjectId(req.user.userId) },  },
       { $lookup: {
           "from": "products",
           "localField": "product_id",
@@ -59,7 +59,8 @@ export const fetchCartProducts = async (req: RequestWithSession, res: ApiRespons
 
 
 export const addToCart = async (req: RequestWithSession, res: ApiResponse)=> {
-  let user_id = req.session.user_id
+
+  let user_id = req.user.userId
   const { product_id, quantity } = req.body
 
   let c: CartType = {

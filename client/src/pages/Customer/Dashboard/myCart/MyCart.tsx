@@ -42,7 +42,7 @@ const MyCart = () => {
 
   
   function renderCartItems(){
-    const isInWished=(id: number)=> {
+    const isInWished=(id: string)=> {
       let i = wishlist.findIndex(cp=>cp.product_id === id)
       return i !== -1
     }
@@ -127,14 +127,14 @@ const MyCart = () => {
             <div>
               <div className="flex items-center justify-center select-none min-w-[150px]">
                 <button
-                  onClick={()=>dispatch({type: ActionTypes.DECREASE_CART_ITEM, payload: product.id})}
+                  onClick={()=>dispatch({type: ActionTypes.DECREASE_CART_ITEM, payload: product._id})}
                 >
-                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.REMOVE_CART_ITEM, payload: product.id})} icon={faMinus} />
+                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.REMOVE_CART_ITEM, payload: product._id})} icon={faMinus} />
                 </button>
                 <span className="bg-primary-400 rounded-full text-sm leading-[25px]  font-normal h-6 w-10 text-white mx-4  px-4">{product.quantity}</span>
                 <button
-                  onClick={()=>dispatch({type: ActionTypes.INCREASE_CART_ITEM, payload: product.id})}>
-                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.REMOVE_CART_ITEM, payload: product.id})} icon={faPlus} />
+                  onClick={()=>dispatch({type: ActionTypes.INCREASE_CART_ITEM, payload: product._id})}>
+                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.REMOVE_CART_ITEM, payload: product._id})} icon={faPlus} />
                 </button>
               </div>
             </div>
@@ -190,8 +190,8 @@ const MyCart = () => {
               
               </div>
               
-              {/*<FontAwesomeIcon className="text-gray-700 mr-2 text-lg" onClick={()=>dispatch({type: "REMOVE_CART_ITEM", payload: item.id})} icon={faHeart} />*/}
-              {/*<FontAwesomeIcon className="text-gray-700 text-lg" onClick={()=>dispatch({type: "REMOVE_CART_ITEM", payload: item.id})} icon={faTrash} />*/}
+              {/*<FontAwesomeIcon className="text-gray-700 mr-2 text-lg" onClick={()=>dispatch({type: "REMOVE_CART_ITEM", payload: item._id})} icon={faHeart} />*/}
+              {/*<FontAwesomeIcon className="text-gray-700 text-lg" onClick={()=>dispatch({type: "REMOVE_CART_ITEM", payload: item._id})} icon={faTrash} />*/}
             
             </div>
           

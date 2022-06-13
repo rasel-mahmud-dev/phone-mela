@@ -22,7 +22,7 @@ const Wishlist = mongoose.model("Wishlist")
 export const fetchWishlistProducts = async (req: RequestWithSession, res: ApiResponse)=> {
   try {
     let c: WishlistResponse[] = await Wishlist.aggregate([
-      {$match: {customer_id: new ObjectId(req.session.user_id)},},
+      {$match: {customer_id: new ObjectId(req.user.userId)},},
       {
         $lookup: {
           "from": "products",
@@ -50,7 +50,7 @@ export const fetchWishlistProducts = async (req: RequestWithSession, res: ApiRes
 
 
 export const addToWishlist = async (req: RequestWithSession, res: ApiResponse)=> {
-  let user_id = req.session.user_id
+  let user_id = req.user.userId
   const { product_id } = req.body
   let c: WishListType = {
     customer_id: user_id,
