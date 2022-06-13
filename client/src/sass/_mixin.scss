@@ -1,0 +1,39 @@
+
+
+
+@mixin inline-animation($duration, $count) {
+  $name: inline-#{unique-id()};
+  @keyframes #{$name} {
+    @content
+  }
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $count;
+}
+
+@mixin inline-animation-linear($duration, $count) {
+  $name: inline-#{unique-id()};
+  @keyframes #{$name} {
+    @content
+  }
+  animation-timing-function: linear;
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $count;
+}
+
+@mixin custom_scrollbar($color){
+  //...............custom scrollbar...............
+
+    &::-webkit-scrollbar-track{
+      -webkit-box-shadow: inset 0 0 6px #e8ebf2;
+    }
+    &::-webkit-scrollbar{
+      width: 5px;
+    }
+    &::-webkit-scrollbar-thumb{
+      //background-color: rgba(255,128,132,.17);
+      background-color: $color
+    }
+  
+}

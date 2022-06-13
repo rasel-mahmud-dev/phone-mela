@@ -1,0 +1,57 @@
+
+.customer-avatar{
+  text-align: center;
+  i{
+    font-size: 100px;
+    color: red;
+  }
+}
+
+ul{margin: 0;padding: 0;}
+
+
+.item{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  .label{
+    margin-right: 10px;
+    i{margin: 0 5px;}
+  }
+}
+.border-less-input{
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 20px;
+  user-select: none;
+}
+
+.btn-center{
+  display: block;
+  text-align: center;
+  margin: auto;
+}
+.preview-avatar{
+  max-width: 300px;
+  img{
+    width: 100%;
+  }
+}
+
+
+.center{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.set-password-form{
+  position: absolute;
+  top: 40px;
+  background: white;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  box-shadow: 0 2px 20px 1px #1d1d1de7;
+}

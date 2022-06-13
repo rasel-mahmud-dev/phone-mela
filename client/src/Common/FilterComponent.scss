@@ -1,0 +1,111 @@
+
+ol, ul {
+  margin: 0 !important;
+}
+
+
+.product-page-filter {
+
+  display: flex;
+  background: #ececec;
+  min-height: 50px;
+  padding: 10px;
+  align-items: center;
+  // .item{
+  //   flex: 1;
+  // }
+
+  .flex-1 {
+    margin-left: auto;
+  }
+
+}
+
+.product_filter {
+  padding: 5px 10px;
+  // background: r;
+  i {
+    color: #3e61fa;
+  }
+}
+
+.filter_panel > div:not(:last-child) {
+  border-bottom: 1px solid #ababab75;
+}
+
+
+.ffffffff {
+  display: flex;
+  position: absolute;
+
+  ul {
+    padding: 0 10px;
+  }
+
+  //.filter_dropdown {
+    .filter_select_list {
+      background: white;
+      padding: 10px;
+
+      .select_filter_values {
+        margin: 0;
+
+        .select_filter_item {
+
+        }
+      }
+    }
+
+    .section_name {
+      padding: 0 15px;
+      .name {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0px;
+      }
+
+      .nested_one_dropdown_menu {
+        padding: 0 15px;
+         &--item{
+           margin-left: 15px;
+         }
+      }
+    }
+  //}
+
+
+}
+
+
+.filter_panel{
+  padding: 0;
+}
+.dropdown_panel {
+   font-size: 14px;
+  .dropdown_neated_list {
+    background: transparent;
+  }
+}
+
+.select_filter_values {
+  margin: 0;
+}
+
+.filterAbleList {
+  position: absolute;
+
+}
+.filter-menu-icon{
+  margin-left: 10px;
+  color: #7d34ff;
+  cursor: pointer
+}
+
+.sort_panel_wrapper{
+  position: relative;
+  margin-left: 10px;
+  i{
+    color: #7d34ff;
+    cursor: pointer;
+  }
+}

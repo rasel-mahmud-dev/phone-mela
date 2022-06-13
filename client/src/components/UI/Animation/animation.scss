@@ -1,0 +1,17 @@
+
+
+
+.animation{
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  background: rgba(255, 168, 168, 0.64);
+}
+.animation__expand{
+  transition: all .5s ease;
+  max-height: 300px;
+  overflow: auto;
+}
+.animation__collapse{
+  transition: all .5s ease;
+}

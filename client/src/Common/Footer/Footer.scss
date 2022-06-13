@@ -1,0 +1,26 @@
+
+.footer{
+background: #0c462a;
+  position: relative;
+  width: 100%;
+  z-index: 201;
+  .footer_content{
+    height: 80px;
+    p{
+      color: rgb(233, 233, 233);
+    }
+    
+  }
+}
+
+.footer_fixed{
+  position: fixed;
+  bottom: 0;
+}
+.sec-0{
+  flex: 5;
+}
+.sec-1{
+  flex: 2;
+  justify-content: flex-end !important;
+}

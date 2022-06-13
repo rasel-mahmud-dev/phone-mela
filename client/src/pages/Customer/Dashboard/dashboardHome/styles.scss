@@ -1,0 +1,28 @@
+
+
+.order_table{
+  width: 100%;
+  margin-top: 10px;
+  border: 1px solid  rgba(147, 147, 147, 0.45);;
+  overflow-x: auto;
+  max-width: 600px;
+  thead{
+    th{
+      color: #252525;
+      font-size: 15px;
+      font-weight: 400;
+      padding: 5px 10px;
+    }
+  }
+  
+  tr{
+    border-bottom:1px solid rgba(147, 147, 147, 0.45);
+    td{
+      padding: 5px 10px;
+      color: #525252;
+      font-size: 14px;
+    }
+  }
+  overflow-x: auto;
+  
+}

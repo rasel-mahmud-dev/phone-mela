@@ -1,0 +1,26 @@
+
+
+
+.myAnimation{
+  width: 200px;
+  max-height: 0;
+  overflow: hidden;
+  width: 100%;
+
+  &.exit,
+   &.exit-enter,
+   &.exit-done{
+    //background: green;
+    transition: all .3s ease;
+    max-height: 0;
+  }
+ 
+
+  &.enter,
+  &.enter-active,
+  &.enter-done{
+    //background: rgb(56, 151, 196);
+    transition: all .3s ease;
+  }
+}
+

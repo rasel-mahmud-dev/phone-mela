@@ -1,0 +1,45 @@
+
+.modal{
+  //background: white;
+  //box-shadow: 0 2px 30px 3px #343434d4;
+  position: fixed;
+  top: 10vh;
+  left: 50%;
+  z-index: 1003;
+  transform: translateX(-50%);
+  width: max-content;
+  padding: 10px;
+  overflow-y: auto;
+  /* height: 80vh  */;
+}
+.modal-close_icon{
+  margin-left: 10px;
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
+
+.my-modal{
+  color: red !important;
+   transition: all 1s ease;
+  &-enter {
+    opacity: 0;
+    transform: translateY(300px);
+   transition: all 1s ease;
+  }
+  &-enter-active {
+    opacity: 1;
+     transform: translateY(0px);
+    transition: all 1s ease;
+  }
+  &-exit {
+    opacity: 1;
+    transform: translateY(0px);
+       transition: all 1s ease;
+  }
+  &-exit-active {
+      opacity: 0;
+      transition: all 1s ease;
+  }
+    
+}
