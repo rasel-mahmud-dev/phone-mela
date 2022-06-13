@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-import {RequestWithSession} from "../types";
+import {ApiRequest, ApiResponse, RequestWithSession} from "../types";
 import {ObjectId} from "bson";
 import {WishListType} from "../models/WishList";
 
@@ -19,7 +19,7 @@ interface WishlistResponse {
 
 const Wishlist = mongoose.model("Wishlist")
 
-export const fetchWishlistProducts = async (req: RequestWithSession, res: Response)=> {
+export const fetchWishlistProducts = async (req: RequestWithSession, res: ApiResponse)=> {
   try {
     let c: WishlistResponse[] = await Wishlist.aggregate([
       {$match: {customer_id: new ObjectId(req.session.user_id)},},
@@ -49,7 +49,7 @@ export const fetchWishlistProducts = async (req: RequestWithSession, res: Respon
 }
 
 
-export const addToWishlist = async (req: RequestWithSession, res: Response)=> {
+export const addToWishlist = async (req: RequestWithSession, res: ApiResponse)=> {
   let user_id = req.session.user_id
   const { product_id } = req.body
   let c: WishListType = {
@@ -68,7 +68,7 @@ export const addToWishlist = async (req: RequestWithSession, res: Response)=> {
 }
 
 
-export const removeToWishlist = async (req: Request, res: Response)=> {
+export const removeToWishlist = async (req: ApiRequest, res: ApiResponse)=> {
   const {wishlist_id}  = req.body
   try {
     let isRemove = await Wishlist.remove({_id: wishlist_id})

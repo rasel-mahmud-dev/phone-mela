@@ -14,7 +14,7 @@ interface OrderResponseType {
   delivery_date: string
   created_at: string
   status_id: string
-  order_status: OrderStatusType
+  order_status: string
   title: string
 }
 

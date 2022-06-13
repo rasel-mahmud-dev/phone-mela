@@ -8,7 +8,7 @@ function fullLink(link){
 
   if(link) {
     if (link.indexOf("http") !== -1) {
-      if(import.meta.env.MODE === "development"){
+      if(import.meta.env.MODE !== "development"){
         let a = link.indexOf("phone_mela")
         return baseUri + "/" + link.slice(a+11)
       } else {

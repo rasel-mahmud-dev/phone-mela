@@ -2,7 +2,7 @@ import {Request} from "express";
 import { IncomingMessage, ServerResponse} from "http";
 
 
-export interface RequestWithSession extends Request{
+export interface RequestWithSession extends ApiRequest{
   session: {
     user_id: string,
     role: string

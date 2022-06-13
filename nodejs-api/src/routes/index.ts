@@ -17,7 +17,6 @@ const routes = (app: Application)=> {
   wishlistRoutes(app)
   shippingAddressRoutes(app)
   
-  
   // app.get('/', postController.getHomePage)
   // app.post("/api/registration", userController.userRegistration)
   // app.post("/api/post", postController.getPost)
@@ -25,12 +24,10 @@ const routes = (app: Application)=> {
   // app.post("/api/registration", userController.userRegistration)
   // app.get("/api/fetch-login", userController.fetchLogin)
   // app.get("/api/logout", userController.logout)
-  //
-  //
+
   // /* GET update post page  */
   // // app.get('/update-post/:slug', postController.getUpdatePostPage)
-  //
-  //
+  
   // // save a new post
   // app.post('/api/add-post', admin, postController.addPostHandler)
   // app.post('/api/add-category', admin, postController.addCategoryHandler)
@@ -47,3 +44,4 @@ const routes = (app: Application)=> {
 
 
 export default routes
+module.exports = routes

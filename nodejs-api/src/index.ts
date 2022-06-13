@@ -1,34 +1,28 @@
 import mongoose from "mongoose";
 
 
-
-
-//local dev
-require("../src/models")
-import routes from "../src/routes"
-
-const App = function (app, router){
+const App = function (app){
   
-  const uri = process.env.NODE_ENV === "development" ? "mongodb://127.0.0.1:27017/phone-mela" : process.env.MONGO_DB_URI
+  let isDev = process.env.NODE_ENV === "development"
+  
+  if(isDev){
+    require("../src/models")
+    const routes = require("../src/routes")
+    routes(app)
+  } else {
+    require("./models")
+    const routes = require("./routes")
+    routes(app)
+  }
+  
+  const uri = isDev ? "mongodb://127.0.0.1:27017/phone-mela" : process.env.MONGO_DB_URI
   mongoose.connect(uri).then(r=>{
     console.log("database connected.")
   }).catch(ex=>{
     console.log("database not connect")
   })
-  
 
-// access if from          /.netlify/functions/server
-//   router.get("/", (r, res)=>{
-//     res.send("hi")
-//   })
 
-// access if from          /
-//   app.get("/", (r, res)=>{
-//     res.send("ap")
-// })
-// routes(router)
-  
-  routes(app)
 }
 export default  App
 module.exports = App

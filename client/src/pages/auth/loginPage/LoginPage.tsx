@@ -12,7 +12,7 @@ const LoginPage = (props) => {
   
   const [state, setState] = React.useState({
     // email: { value: "test_user@gmail.com", touched: false, errorMessage: "" },
-    email: { value: "rasel@gmail.com", touched: false, errorMessage: "" },
+    email: { value: "test-user@gmail.com", touched: false, errorMessage: "" },
     password: { value: "123", touched: false, errorMessage: "" }
   })
 

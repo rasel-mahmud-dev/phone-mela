@@ -68,6 +68,9 @@ export const fetchCurrentAuth = () => async (dispatch: (args: LoginActionType) =
       role: data.role,
       avatar: data.avatar
     }
+    
+    data.token &&  window.localStorage.setItem("token", data.token)
+    
     dispatch({
       type: ActionTypes.LOGIN,
       payload: payload
@@ -121,7 +124,7 @@ export const login = (userData: { email: string, password: string }, cb: any)=> 
       email: r.data.email,
       avatar: r.data.avatar,
     }
-    window.localStorage.setItem("token", r.data.token)
+    r.data.token &&  window.localStorage.setItem("token", r.data.token)
 
     dispatch({
       type: ActionTypes.LOGIN,

@@ -11,7 +11,8 @@ export let baseUri = 'https://lpjcikfrxh.eu07.qoddiapp.com';
 
 if(import.meta.env.MODE === "development") {
   baseUri = 'http://localhost:1000'
-  // baseUri = 'http://192.168.43.170:5000'
+  // baseUri = 'https://phone-mela-api-server.netlify.app/.netlify/functions/server'
+  // baseUri = 'http://localhost:8888/.netlify/functions/server'
 }
 
 interface MyHeaders  extends  AxiosRequestHeaders {

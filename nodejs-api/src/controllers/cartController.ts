@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {CartType} from "../models/Cart";
-import {ApiResponse, RequestWithSession} from "../types";
+import {ApiRequest, ApiResponse, RequestWithSession} from "../types";
 import {ObjectId} from "bson";
 
 
@@ -79,7 +79,7 @@ export const addToCart = async (req: RequestWithSession, res: ApiResponse)=> {
 }
 
 
-export const removeToCart = async (req: Request, res: ApiResponse)=> {
+export const removeToCart = async (req: ApiRequest, res: ApiResponse)=> {
   const { cart_id }  = req.body
   try {
     let isRemove = await Cart.remove({_id: cart_id})

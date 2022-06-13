@@ -7,7 +7,7 @@ export interface OrderType{
   customer_id: string
   shipper_id: string
   shipping_id: string
-  order_status: orderStatusType
+  order_status: string
   description: string
   price: number
   quantity: number

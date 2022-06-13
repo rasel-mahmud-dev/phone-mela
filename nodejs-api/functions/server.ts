@@ -4,7 +4,6 @@ const app = express();
 const cors = require("cors")
 const bodyParser = require('body-parser');
 const path = require('path');
-const cookieSession = require('cookie-session')
 
 
 require("dotenv").config()
@@ -23,7 +22,7 @@ const corsOptions = {
       if(process.env.NODE_ENV === "development"){
         callback(null, true) // anyone can access this apis when is development mode
       } else {
-        callback(null, false) // anyone can access this apis
+        callback(null, {origin: false }) // anyone can access this apis
         // callback(new Error('Not allowed by CORS'))
       }
     }
@@ -31,18 +30,11 @@ const corsOptions = {
 }
 app.use(cors(corsOptions))
 
-app.set('trust proxy', 1) // trust first proxy
-app.use(cookieSession({
-  name: 'session',
-  keys: [process.env.SECRET_KEY],
-}))
-
 const router = express.Router();
-
 
 if(process.env.NODE_ENV === "development"){
   const mainApp = require("../src")
-  mainApp(app, router)
+  mainApp(app)
   
   app.use("/products/", express.static(path.resolve("src/static/products/")))
   app.use("/avatar/", express.static(path.resolve("src/static/avatar/")))
@@ -52,14 +44,55 @@ if(process.env.NODE_ENV === "development"){
     When out app are build
   */
   const mainApp = require("../dist")
-  mainApp(app, router)
+  
+  
+  /*? fixed later */
   app.use("/products/", express.static(path.resolve("dist/static/products/")))
   app.use("/avatar/", express.static(path.resolve("dist/static/avatar/")))
+  
+  router.use("/products/", express.static(path.resolve("dist/static/products/")))
+  router.use("/avatar/", express.static(path.resolve("dist/static/avatar/")))
+
+
+  mainApp(router)
+  
+  app.get("/", function (req, res){
+    res.send("with app /")
+  })
+  
+  // /.netlify/functions
+  router.get("/", function (req, res){
+    res.send("with router /")
+  })
+  
+  
+  // for direct access /.netlify/functions/server/api/brand2
+  // router.get("/api/brand2", function (req, res){
+  //   res.send(req.url)
+  // })
+  
+
+  
 }
+
+
+// access if from  /.netlify/functions/server
+//   router.get("/", (r, res)=>{
+//     res.send("hi")
+//   })
+
+// access if from          /
+//   app.get("/", (r, res)=>{
+//     res.send("ap")
+// })
+
 
 
 app.use(bodyParser.json());
 app.use('/.netlify/functions/server', router);  // path must route to lambda
 
+
+
 module.exports = app;
 module.exports.handler = serverless(app);
+

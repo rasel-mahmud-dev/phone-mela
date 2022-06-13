@@ -3,6 +3,7 @@ import  bcryptjs from "bcryptjs"
 import {NextFunction, Request, Response} from "express";
 import {RequestWithSession} from "../types";
 import {UserType} from "../models/User";
+import {createToken, getToken, parseToken} from "../jwt";
 
 
 export const userRegistration = async (req: Request, res: Response)=> {
@@ -34,8 +35,10 @@ export const userRegistration = async (req: Request, res: Response)=> {
     
     await instanceUser.validate();
     let result: any = await instanceUser.save()
+    let token = await createToken(instanceUser._id, newUser.role)
     
     res.status(201).json({
+      token: token,
       first_name: result.first_name,
       username: result.username,
       email: result.email,
@@ -77,10 +80,13 @@ export const login = async (req: Request, res: Response)=> {
     }
     
     
-    req.session.user_id = user._id.toString();
-    req.session.role = user.role;
+    // req.session.user_id = user._id.toString();
+    // req.session.role = user.role;
+  
+    let token = await createToken(user._id, user.role)
     
     return res.status(201).json({
+      token: token,
       email: user.email,
       username: user.username,
       avatar: user.avatar,
@@ -111,22 +117,22 @@ export const login = async (req: Request, res: Response)=> {
 
 export const loginCurrentUser = async (req: Request, res: Response)=> {
   
-  
   try{
+    let token = getToken(req)
+    if(!token){
+      return res.status(404).json({message: "please login first"})
+    }
     
-    if(req.session && req.session.user_id){
-      
-      
-      
+    let data = await parseToken(token)
+    if(data){
       let User = mongoose.model("User")
-      
-      let user: any = await User.findOne({_id: req.session.user_id})
-      
+      let user: any = await User.findOne({_id: data.userId})
+
       if (!user) {
         return res.status(404).json({message: "User not registered"})
       }
-      
-      
+
+
       return res.status(201).json({
         _id: user._id,
         email: user.email,
