@@ -1,6 +1,7 @@
 import {ProductType} from "../models/Product";
-import mongoose, {mongo} from "mongoose";
-import {ApiResponse} from "../types";
+import mongoose, {mongo, Schema} from "mongoose";
+import {ApiRequest, ApiResponse} from "../types";
+import {ObjectId} from "bson";
 
 const mysql = require('mysql2');
 
@@ -36,7 +37,7 @@ interface BodyMy{
 
 
 
-interface HomePageProduct{
+interface HomePageProductResponse{
   _id: string
   title: string
   cover: string
@@ -52,7 +53,7 @@ interface HomePageProduct{
   updatedAt: Date,
   createdAt: Date,
 }
-export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: BodyMy }, res: ApiResponse<HomePageProduct[]>)=> {
+export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: BodyMy }, res: ApiResponse<HomePageProductResponse[]>)=> {
   const Product = mongoose.model("Product")
   
   // const connection = connect()
@@ -167,4 +168,178 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
 export const topWishlistProducts = async (req: Request, res: ApiResponse)=> {
 
 
+}
+
+
+
+
+
+
+type FilterProductIncomingData = {
+ 
+  in: { // reserved keyword
+    brand_id: string[],
+    ram: number[]
+    cores: number[]
+    display: string[]
+    network_type: string[]
+    processor_brand: string[]
+    resolution_type: string[]
+    screen_size: number[]
+    os_version: string[]
+    operating_system: string[]
+  }
+  order: {
+    field: "createdAt" | "price" | "title",
+    by: "desc" | "asc"
+  }
+  pagination: { page_size: number, page_number: string }
+  range: {
+    internal_storage: [][]
+    primary_camera: [][]
+    secondary_camera: [][]
+    battery: [][]
+  }
+  search: {
+    field: "title" | "brand",
+    value: string
+  }
+}
+
+export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>, res: ApiResponse)=> {
+  let {
+    in: include,
+    order,
+    pagination,
+    range,
+    search
+  } = req.body
+  
+  
+  try{
+    
+    const Product = mongoose.model("Product")
+    
+    let includeAttributes = {
+      // "attributes.ram": {$in: [2]},
+      // "attributes.cores": {$in: [2]},
+      // "attributes.display": {$in: [2]},
+      // "attributes.network_type": {$in: [2]},
+      // "attributes.processor_brand": {$in: [2]},
+      // "attributes.resolution_type": {$in: [2]},
+      // "attributes.screen_size": {$in: [2]},
+      // "attributes.os_version": {$in: [2]},
+      // "attributes.operating_system": {$in: [2]},
+    }
+    
+
+  
+    for (let includeKey in include) {
+      if(includeKey === "brand_id"){
+        // convert all string _id to mongodb ObjectId
+        let objectIds = []
+        include[includeKey] && include[includeKey].length > 0 && include[includeKey].map(id=>{
+          objectIds.push(new ObjectId(id))
+        })
+        // now send match filter like { $match: { brand_id: {$in: [ObjectIds] }}}
+        if(objectIds.length > 0) {
+          includeAttributes[includeKey] = objectIds
+        }
+        
+      } else {
+        let values = []
+        // all like attributes
+        include[includeKey] && include[includeKey].length > 0 && include[includeKey].map(item=>{
+          if(typeof item === "string"){
+            values.push(item)
+          } else if (typeof item === "number"){
+            values.push(item)
+          }
+        })
+        if(values.length > 0) {
+          includeAttributes["attributes." + includeKey] = {$in: values}
+        }
+      }
+    }
+    
+    
+    
+    
+    let rangeFilter = []
+    // range: {internal_storage: [[64, 127], [128, 255]]}
+    
+    
+    // [
+    //   {"attributes.primary_camera": { $gt: 31, $lte: 64} },
+    //   {"attributes.secondary_camera": { $gt: 31, $lte: 64} },
+    // ]
+    
+    for (let rangeKey in range) {
+      
+      // { attributes.primary_camera: { '$gt': 64, '$lte': 108 } }
+      let eachAttributePair = {}
+    
+      if(range[rangeKey] && range[rangeKey].length > 0) {
+  
+        let twoDimension = range[rangeKey]
+  
+        // { '$gte': 64, '$lte': 108 } }
+        let gtLteCompare = {};
+  
+        for (let i = 0; i < twoDimension.length; i++) {
+          let eachValuePair = twoDimension[i]
+          gtLteCompare["$gte"] = eachValuePair[0]
+          gtLteCompare["$lte"] = eachValuePair[1]
+        }
+        eachAttributePair['attributes.' + rangeKey] = gtLteCompare
+  
+      }
+      
+      rangeFilter.push(eachAttributePair)
+      
+    }
+  
+    let andFilter;
+    if(rangeFilter.length > 0){
+      andFilter = { $and: [...rangeFilter]}
+      console.log(andFilter.$and)
+    }
+    
+    
+    let data = await Product.aggregate([
+      { $match: {
+          // brand_id: {$in: [new ObjectId("62a638e8bf617d070dc47301"), new ObjectId("62a638e8bf617d070dc47302")]},
+          // ...includeAttributes,
+    
+          ...andFilter
+          // $and: [ { 'attributes.internal_storage': { '$gt': 10, '$lte': 127 } } ]
+    
+    
+          // $and: [
+            // {"attributes.primary_camera": { $gt: 31, $lte: 64} },
+            // {"attributes.secondary_camera": { $gt: 31, $lte: 64} },
+          // ]
+        }
+      },
+      
+      { $lookup: {
+        from: "brands",
+          foreignField: "_id",
+          localField: "brand_id",
+          as: "brand"
+        }},
+    ])
+  
+    // console.log(data.map(d=>d.title))
+    
+    res.json({products: data})
+    
+    
+    
+  } catch (ex){
+    console.log(ex)
+  }
+  
+  
+  
 }

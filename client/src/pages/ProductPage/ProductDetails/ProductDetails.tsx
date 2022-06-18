@@ -65,9 +65,9 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
     this.state = {
       productDetail: {
         attributes: null,
-        author_id: 0,
+        author_id: "",
         avatar: "",
-        brand_id: 0,
+        brand_id: "",
         brand_name: "",
         rate: 0,
         cover: "",
@@ -77,7 +77,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
         email: "",
         _id:"",
         price: 0,
-        seller_id: 0,
+        seller_id: "",
         stock: "",
         tags: "",
         title: "",

@@ -103,7 +103,7 @@ export interface ProductStateType{
     // sortBy: [{field: "views", order: -1, id: "1"}],
     // display: ["super", "IPS"],
     
-    selectedBrands: {name:string, id: number}[],
+    selectedBrands: {name:string, _id: string}[],
     range: {
       // "rom": [["8", "16"]]
       // "ram": [["4", "8"]]

@@ -386,14 +386,14 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
   
   
   function changeFilterBrandValue(brand){
-    const { name, id } = brand
+    const { name, _id } = brand
     const updatedSelectedBrands = [...filterGroup.selectedBrands]
     
-    let index = updatedSelectedBrands ?  updatedSelectedBrands.findIndex(b=>b.id === id) : -1
+    let index = updatedSelectedBrands ?  updatedSelectedBrands.findIndex(b=>b._id === _id) : -1
     if(index !== -1){
       updatedSelectedBrands.splice(index, 1)
     } else {
-      updatedSelectedBrands.push({name, id})
+      updatedSelectedBrands.push({name, _id})
     }
     
     dispatch({
@@ -426,7 +426,7 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
   
   function removeSelectedBrandItem(brand){
      let updatedSelectedBrands = [...filterGroup.selectedBrands]
-     const filteredSelectedBrands = updatedSelectedBrands.filter(sb=>sb.id !== brand.id)
+     const filteredSelectedBrands = updatedSelectedBrands.filter(sb=>sb._id !== brand._id)
       dispatch({
        type: ActionTypes.SELECT_BRANDS,
        payload: filteredSelectedBrands
@@ -469,17 +469,17 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
     return isCheck
   }
   
-  function checkSelectedBrand(id: number) {
-    let index = filterGroup.selectedBrands.findIndex(b=>b.id === id)
+  function checkSelectedBrand(_id: string) {
+    let index = filterGroup.selectedBrands.findIndex(b=>b._id === _id)
     return index !== -1;
   }
   
   // these value are selected for products filter
-  function renderSelectedBrands(data: {name: string, id: number}[]){
+  function renderSelectedBrands(data: {name: string, _id: string}[]){
     if(data && data.length > 0){
       return (
         data.map(item=>(
-          <div className="flex flex-wrap" key={item.id}>
+          <div className="flex flex-wrap" key={item._id}>
             {/*{ data[item] && data[item].map((val, ind)=>*/}
               <span className="select-item flex items-center text-xs bg-primary-400/30 px-1 py-0.5 m-0.5 rounded">
                 <span>{item.name}</span>
@@ -510,6 +510,7 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
     }
   }
   
+  
   return (
     <div>
       
@@ -536,14 +537,14 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
           {brandPagination && brandPagination.brands.map(brand=>(
             <div className="mb-1 flex cursor-pointer hover:text-primary-400 " key={brand.name}>
               <input
-                id={brand.name + "-" + brand.id.toString()}
+                id={brand.name + "-" + brand._id}
                 onChange={(e)=>changeFilterBrandValue(brand)}
-                checked={checkSelectedBrand(brand.id)}
+                checked={checkSelectedBrand(brand._id)}
                 type="checkbox"
                 className="mr-1.5"
               />
               <label
-                htmlFor={brand.name + "-" + brand.id.toString()}
+                htmlFor={brand.name + "-" + brand._id}
                 className="cursor-pointer text-[13px] font-normal w-full block">
                 {brand.name}
               </label>

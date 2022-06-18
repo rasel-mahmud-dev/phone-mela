@@ -33,10 +33,10 @@ export type QuestionAndAnswer = {
 
 export interface ProductDetailType{
   attributes: {[key in ProductAttributesName]: string | number},
-  author_id: number,
+  author_id: string,
   avatar: string,
   rate: number,
-  brand_id: number,
+  brand_id: string,
   brand_name: string,
   cover: string,
   created_at: string,
@@ -45,7 +45,7 @@ export interface ProductDetailType{
   email: string,
   _id: string,
   price: number,
-  seller_id: number,
+  seller_id: string,
   stock: string,
   tags: string,
   title: string,

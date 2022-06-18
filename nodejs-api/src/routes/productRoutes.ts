@@ -9,6 +9,8 @@ const productRoutes = (app: Application)=>{
   app.post("/api/top-wishlist-products", controllers.productController.topWishlistProducts)
   app.post("/api/add-product", admin, controllers.productController.addProduct)
   
+  app.post("/api/v2/filter-products", controllers.productController.filterProducts)
+  
   // router.HandleFunc("/api/reviews/{product_id}", controllers.FetchProductCustomerRatings).Methods("GET")
   // router.HandleFunc("/api/specification/{id}", controllers.FetchProductSpecification).Methods("GET")
   // router.HandleFunc("/api/product_questions/{id}", controllers.FetchProductQuestions).Methods("GET")

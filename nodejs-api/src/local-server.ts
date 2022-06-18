@@ -1,9 +1,5 @@
-import express from "express";
-import path from "path";
-
 
 const app = require("../functions/server")
-
 
 // const liveReload = require("livereload");
 // const connectLiveReload = require("connect-livereload");
@@ -26,6 +22,9 @@ const app = require("../functions/server")
 // routes(app)
 
 const PORT = process.env.PORT || 1000
+
+
+
 
 app.listen(PORT, "0.0.0.0", () => console.log("server is running on port 1000"))
 

@@ -80,21 +80,41 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       [key  in ProductAttributesName]: any
     }
   
-    let inV =  {}
     
-    let range = {}
+    type inVType  = {
+      brand_id?: string[],
+      ram?: number[]
+      cores?: number[]
+      display?: string[]
+
+      network_type?: string[]
+      processor_brand?: string[]
+      resolution_type?: string[]
+      screen_size?: number[]
+      os_version?: string[]
+      operating_system?: string[]
+    }
+    
+    let inV: inVType =  {
+      ram: [2, 4]
+    }
+    
+    let range = {
+    
+    }
     
     let selectedAttributeFilterKey: ProductAttributesName
     
     for (selectedAttributeFilterKey in selectedAttributeFilter) {
       let eachSec: any = selectedAttributeFilter[selectedAttributeFilterKey as keyof FilterAttributesType]
+
       eachSec.forEach((item: { value: any; })=>{
         if(selectedAttributeFilterKey === "battery"
           || selectedAttributeFilterKey === "internal_storage"
           || selectedAttributeFilterKey === "primary_camera"
           || selectedAttributeFilterKey === "secondary_camera"
         ){
-        
+
           // filter range value/// [64, 127]
           if (range[selectedAttributeFilterKey]) {
             if (range) {
@@ -103,7 +123,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
           } else {
             range[selectedAttributeFilterKey] = [item.value]
           }
-          
+
         } else {
           if (inV[selectedAttributeFilterKey]) {
             if (inV) {
@@ -120,10 +140,11 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
     const brandIds = []
     if(selectedBrands && selectedBrands.length > 0){
       selectedBrands.forEach(b=>{
-        brandIds.push(b.id)
+        brandIds.push(b._id)
       })
     }
-    inV["brands"] = brandIds
+    inV["brand_id"] = brandIds
+    
     
     this.props.setFilteredProducts({
       ...filteredProducts,
