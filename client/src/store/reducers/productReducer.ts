@@ -140,7 +140,7 @@ let initialProductState: ProductStateType  = {
     currentPage: 1,
     perPageShow: 20,
     
-    orderBy: "created_at",
+    orderBy: "createdAt",
     orderDirection: "desc"
   },
   cacheProducts:[

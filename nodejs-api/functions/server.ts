@@ -70,9 +70,6 @@ if(process.env.NODE_ENV === "development"){
   // router.get("/api/brand2", function (req, res){
   //   res.send(req.url)
   // })
-  
-
-  
 }
 
 

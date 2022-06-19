@@ -86,7 +86,6 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       ram?: number[]
       cores?: number[]
       display?: string[]
-
       network_type?: string[]
       processor_brand?: string[]
       resolution_type?: string[]
@@ -96,7 +95,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
     }
     
     let inV: inVType =  {
-      ram: [2, 4]
+    
     }
     
     let range = {
@@ -127,7 +126,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
         } else {
           if (inV[selectedAttributeFilterKey]) {
             if (inV) {
-              inV[selectedAttributeFilterKey].push(item.value)
+              (inV[selectedAttributeFilterKey] as any).push(item.value)
             }
           } else {
             inV[selectedAttributeFilterKey] = [item.value]
@@ -159,7 +158,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
         // ram: [[2, 4], [6, 8]],
       },
       // search: { title: "S" },
-      search: this.props.productState.search.value ? this.props.productState.search.value : "",
+      search: this.props.productState.search.value ? {title: this.props.productState.search.value} : null,
       pagination: {
         page_size: filteredProducts.perPageShow,
         page_number: filteredProducts.currentPage,
@@ -302,9 +301,9 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
     
     
     const sortOptions = [
-      {label: "Most Popular", val: "total_sales"},
+      {label: "Most Popular", val: "sold"},
       {label: "Title", val: "title"},
-      {label: "Latest", val: "created_at"}
+      {label: "Latest", val: "createdAt"}
     ]
     
     function findSortLabel() {

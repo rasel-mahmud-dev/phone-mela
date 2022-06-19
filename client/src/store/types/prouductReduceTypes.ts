@@ -104,7 +104,7 @@ export type FILTERED_PRODUCTS_TYPE = {
   // brand: number[]
   search: string,
   message: string,
-  orderBy: "created_at"  | "total_sales" | "title"
+  orderBy: "createdAt"  | "sold" | "title"
   orderDirection: "asc" | "desc"
 }
 

@@ -201,9 +201,8 @@ type FilterProductIncomingData = {
     battery: [][]
   }
   search: {
-    field: "title" | "brand",
-    value: string
-  }
+    title: string
+  } | null
 }
 
 export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>, res: ApiResponse)=> {
@@ -304,17 +303,39 @@ export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>,
       andFilter = { $and: [...rangeFilter]}
       console.log(andFilter.$and)
     }
+  
+    let searchFilter;
+    if(search){
+      for (let searchKey in search) {
+        if(searchKey === "title") {
+          searchFilter = {}
+          searchFilter[searchKey] = {
+            $regex: new RegExp(search[searchKey], "i"),
+          }
+        }
+      }
+    }
+
+    let sorting;
+    if(order){
+      sorting = { $sort: {
+          [order.field]: order.by === "asc" ? 1 : -1
+        }
+      }
+    }
     
     
     let data = await Product.aggregate([
-      { $match: {
+      {
+        $match: {
           // brand_id: {$in: [new ObjectId("62a638e8bf617d070dc47301"), new ObjectId("62a638e8bf617d070dc47302")]},
-          // ...includeAttributes,
-    
-          ...andFilter
+          ...includeAttributes,
+          ...andFilter,
           // $and: [ { 'attributes.internal_storage': { '$gt': 10, '$lte': 127 } } ]
-    
-    
+
+          // title: { $regex: /gal/i},
+          ...searchFilter
+          
           // $and: [
             // {"attributes.primary_camera": { $gt: 31, $lte: 64} },
             // {"attributes.secondary_camera": { $gt: 31, $lte: 64} },
@@ -322,15 +343,49 @@ export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>,
         }
       },
       
-      { $lookup: {
+      
+      // { $unwind: {path: "$order", preserveNullAndEmptyArrays: true} },
+      
+      // { $addFields: {
+      //     "totalPrice":  "$order.price"
+      //   }},
+      
+      // { $project: {
+      //     order: 0,
+      //     product: 0
+      //   } },
+  
+      {
+        $lookup: {
+          from: "orders",
+          foreignField: "product_id",
+          localField: "_id",
+          as: "order"
+        }
+      },
+    {
+      $addFields: {
+        sold: {
+          $size: "$order"
+        }
+      }
+    },
+    {
+      $lookup: {
         from: "brands",
           foreignField: "_id",
           localField: "brand_id",
           as: "brand"
-        }},
+      }
+    },
+    { $unwind: {path: "$brand", preserveNullAndEmptyArrays: true} },
+    {...sorting},
+      
+      
     ])
   
-    // console.log(data.map(d=>d.title))
+    // console.log(data.map(d=>d.order))
+    
     
     res.json({products: data})
     
@@ -339,7 +394,5 @@ export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>,
   } catch (ex){
     console.log(ex)
   }
-  
-  
   
 }
