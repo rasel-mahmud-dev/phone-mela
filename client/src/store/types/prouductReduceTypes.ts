@@ -39,6 +39,7 @@ export interface ProductDetailType{
   brand_id: string,
   brand_name: string,
   cover: string,
+  averageRate?: number,
   created_at: string,
   description: string,
   discount: number,

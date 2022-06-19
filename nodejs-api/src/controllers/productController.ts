@@ -3,6 +3,10 @@ import mongoose, {mongo, Schema} from "mongoose";
 import {ApiRequest, ApiResponse} from "../types";
 import {ObjectId} from "bson";
 
+
+const Product = mongoose.model("Product")
+
+
 const mysql = require('mysql2');
 
 export function connect(){
@@ -20,6 +24,56 @@ export function connect(){
 
 export const fetchProducts = async (req: Request, res: ApiResponse)=> {
 
+
+}
+
+
+export const fetchProduct = async (req: ApiRequest, res: ApiResponse)=> {
+  
+  const { id } = req.params
+  
+  try {
+  
+    let data = await Product.aggregate([
+      {
+        $match: {
+          _id: new ObjectId(id as string)
+        }
+      },
+      {
+        $lookup: {
+          from: "reviews",
+          foreignField: "product_id",
+          localField: "_id",
+          as: "ratings"
+        }
+      },
+      {
+        $addFields: {
+          averageRate: {
+            $avg: "$ratings.rate"
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: "brands",
+          foreignField: "_id",
+          localField: "brand_id",
+          as: "brand"
+        }
+      },
+      { $unwind: {path: "$brand", preserveNullAndEmptyArrays: true}},
+  
+    ])
+  
+    if(data[0]){
+      res.status(200).send(data[0])
+    }
+    
+  } catch (ex){
+      res.status(500).send({})
+  }
 
 }
 
@@ -217,7 +271,7 @@ export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>,
   
   try{
     
-    const Product = mongoose.model("Product")
+
     
     let includeAttributes = {
       // "attributes.ram": {$in: [2]},

@@ -12,6 +12,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+
+
 const whitelist = [process.env.FRONTEND]
 const corsOptions = {
   credentials: true,
@@ -28,9 +30,11 @@ const corsOptions = {
     }
   }
 }
+
 app.use(cors(corsOptions))
 
 const router = express.Router();
+
 
 if(process.env.NODE_ENV === "development"){
   const mainApp = require("../src")
@@ -57,12 +61,12 @@ if(process.env.NODE_ENV === "development"){
   mainApp(router)
   
   app.get("/", function (req, res){
-    res.send("with app /")
+    res.send("with app v3")
   })
   
   // /.netlify/functions
   router.get("/", function (req, res){
-    res.send("with router /")
+    res.send("router app v3")
   })
   
   

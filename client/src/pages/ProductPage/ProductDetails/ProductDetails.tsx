@@ -52,7 +52,6 @@ interface State {
   amountOfRate: {
     [key: number]: number
   },
-  totalAverageRate: number,
   allStar: number
   currentPageForReview: number
 }
@@ -99,7 +98,6 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
         4: 0,
         5: 0,
       },
-      totalAverageRate: 0,
       currentPageForReview: 1,
       allStar: 0
     }
@@ -122,6 +120,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
 
     try{
       const response = await api.get(`/api/product/${productId}`)
+      console.log(response)
       if(response.status === 200) {
       if (response.data._id) {
         let { attributes } = response.data
@@ -136,6 +135,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
             productDetail: {
               ...prevState.productDetail,
               _id: response.data._id,
+              averageRate: response.data.averageRate,
               title: response.data.title,
               brand_id: response.data.brand_id,
               brand_name: response.data.brand_name,
@@ -293,7 +293,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
             ...prevState,
           amountOfRate: stars,
           allStar: allStar,
-          totalAverageRate: Number((allStar / totalRate).toFixed(1)),
+          // totalAverageRate: Number((allStar / totalRate).toFixed(1)),
             productDetail: {
               ...prevState.productDetail,
               reviews: response.data
@@ -394,7 +394,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
         <div className="rating_left flex-1">
           <div className="flex items-center justify-center">
             <h1 className="big_rating_num ">
-              {this.state.totalAverageRate}
+              {this.state.productDetail.averageRate}
             </h1>
             <FontAwesomeIcon icon={faStar} className="text-4xl text-dark-800"/>
           </div>
@@ -590,7 +590,7 @@ class ProductDetails extends React.Component<Readonly<Props>, Readonly<State>>{
                   <h1 className="big_title mt-6 sm:mt-0">{productDetail.title}</h1>
                   <div className="flex items-center">
                     <span className="bg-primary-400 px-1.5 py-0.5 text-sm relative text-white rounded-[3px] mr-1.5">
-                      <span>{this.state.totalAverageRate}</span>
+                      <span>{this.state.productDetail.averageRate}</span>
                       <span className="relative -top-[1px] ml-1"><FontAwesomeIcon className="text-xs text-secondary-400" icon={faStar} /></span>
                     </span>
                     <h4>{productDetail.reviews?.length} Ratings & Reviews</h4>

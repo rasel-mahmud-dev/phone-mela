@@ -8,4 +8,5 @@ import "./Product"
 import "./User"
 import "./ShippingAddress"
 import "./Sales"
+import "./Review"
 

@@ -6,5 +6,6 @@
     <mapping directory="$PROJECT_DIR$/client" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/client/dist" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/netlify-api" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/nodejs-api" vcs="Git" />
   </component>
 </project>
