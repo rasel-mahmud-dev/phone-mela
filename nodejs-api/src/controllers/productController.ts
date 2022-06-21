@@ -163,7 +163,31 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
     products = await  Product.find({}).sort({ discount: 'desc'}).limit(10)
     
   } else if(type === "top_rating"){
-    products = await Product.find({}).sort({ discount: 'desc'}).limit(10);
+    
+    products = await Product.aggregate([
+      {
+        $lookup: {
+          from: "reviews",
+          foreignField: "product_id",
+          localField: "_id",
+          as: "ratings"
+        }
+      },
+      {
+        $addFields: {
+          averageRate: {
+            $avg: "$ratings.rate"
+          }
+        }
+      },
+      {
+        $sort: {
+          averageRate: -1
+        }
+      },
+      { $limit: 10 }
+    ])
+    
     
   } else if(type === "top_sales"){
     const Sales = mongoose.model("Sales")

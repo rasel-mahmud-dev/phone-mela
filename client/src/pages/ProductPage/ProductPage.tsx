@@ -52,6 +52,11 @@ interface State {
 let prevPageNumber;
 
 class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<State>>{
+  
+  private selectedFilterItems: any;
+  
+  
+  
   constructor(props) {
     super(props);
     this.state = {
@@ -60,6 +65,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
     }
     this.clickOnOverlay = this.clickOnOverlay.bind(this)
     this.handleToggleSideBar = this.handleToggleSideBar.bind(this)
+    this.returnFilterResultItems = this.returnFilterResultItems.bind(this)
   }
   
   componentDidMount(){
@@ -286,9 +292,14 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       isOpen: true
     })
   }
+  
+  returnFilterResultItems(returnJSX, selected){
+    if(selected) {
+      this.selectedFilterItems = () => returnJSX
+    }
+  }
 
   render(){
-    
     const {
       products,
       filteredProducts,
@@ -324,7 +335,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
           {/*filter_bar h-[100vh] w-[280px] px-0l*/}
           <div className="left_sidebar_content">
             <h2 className="font-medium text-md m-2 ">Filter</h2>
-            <FilterSidebar brands={this.props.productState.brands} />
+            <FilterSidebar returnFilterResultItems={this.returnFilterResultItems} brands={this.props.productState.brands} />
           </div>
         </div>
         
@@ -333,7 +344,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
           {this.props.productState.search.value && <h4 className="m-0 p-0 text-sm font-normal">Search Result for <span className="text-primary-400">{this.props.productState.search.value}</span></h4> }
           
           <div onClick={this.clickOnOverlay} className={[openSideBar.where === "filterPage" && openSideBar.isOpen && "open-sidebar" ? "content-overlay" : ""].join(" ")} />
-          
+
           <div className="">
             <div className="mt-2">
               <h1 className="main_title">Mobiles
@@ -350,6 +361,9 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
                   <span className="text-dark-800 font-normal text-sm mr-2">Filter</span>
                   <FontAwesomeIcon icon={faFilter} />
                 </button>
+         
+                
+                
                 <div className="flex">
                   <li className="list-none"><FontAwesomeIcon icon={faTable}/></li>
                   <li className="list-none ml-4">
@@ -373,7 +387,17 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
               </div>
       
             </div>
-      
+  
+  
+            <div>
+              { this.selectedFilterItems && (
+                <div className="flex items-start">
+                  <h1>Clear all</h1>
+                  {this.selectedFilterItems()}
+                </div>
+              ) }
+            </div>
+            
             {/*<h1>Render at: {Date.now().toString()}</h1>*/}
   
             { (filteredProducts.products === null) && (
@@ -405,6 +429,8 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
             </div>
 
           </div>
+     
+        
         </div>
       </Layout>
       

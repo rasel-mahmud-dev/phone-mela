@@ -26,7 +26,7 @@ export type ProductType = {
   attributes: string
   author_id: string
   seller_id: string
-  rate?: number
+  averageRate?: number
   sold?: number
   brand_id: string
   cover: string
@@ -158,7 +158,7 @@ let initialProductState: ProductStateType  = {
     },
     topFavorites: { label: "TOP 10 BY FANS", products: []},
     topSales: {label: "Top Selling",
-      // fields: ["total_sales"],
+      fields: ["sold"],
       products: [],
       sliderImages: [
         {
@@ -176,7 +176,10 @@ let initialProductState: ProductStateType  = {
         },
       ]
     },
-    topDiscount: {label: "Top Offers",fields: ["discount"],products: [],
+    topDiscount: {
+      label: "Top Offers",
+      // fields: ["discount"],
+      products: [],
       sliderImages: [
         {
           url: "https://res.cloudinary.com/rasel/image/upload/v1650653556/phone_mela/products/c4.jpg",

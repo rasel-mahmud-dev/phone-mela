@@ -56,8 +56,8 @@ const Product:FC<ProductComponentProps> = (props) => {
   
   function renderStar(rate: number){
     return <div className="bg-primary-400 text-white font-normal flex items-center px-2 py-1 my-1 rounded">
-      <FontAwesomeIcon className="text-sm mr-1" icon={faStar} />
-      <span className="text-sm leading-none">{rate}</span>
+      <FontAwesomeIcon className="text-xs mr-1" icon={faStar} />
+      <span className="text-xs leading-none">{rate}</span>
     </div>
   }
   function renderDiscount(field: string | number){
@@ -67,18 +67,25 @@ const Product:FC<ProductComponentProps> = (props) => {
   function renderCreatedTime(createdAt: Date){
     return <h4 className="my-1 text-center mt-2 text-dark-800 text-[13px] font-normal">Added on {new Date(createdAt).toLocaleDateString()}</h4>
   }
+  function renderTotalSold(sold: number){
+    return <h4 className="my-1 text-center mt-2 text-primary-700 text-[13px] font-normal">{sold} items sold</h4>
+  }
   
   function renderProductAttr(attr: string, prod: ProductType) {
     if (attr === "discount") {
       return renderDiscount(prod.discount)
     }
     if (attr === "rate") {
-      if (prod.rate) {
-      return renderStar(prod.rate)
+      if (prod.averageRate) {
+        return renderStar(prod.averageRate)
       }
+      
     }
-    if (attr === "created_at") {
+    if (attr === "createdAt") {
         return renderCreatedTime(prod.createdAt)
+    }
+    if (attr === "sold") {
+        return renderTotalSold(prod.sold)
     }
   }
   
@@ -106,7 +113,8 @@ const Product:FC<ProductComponentProps> = (props) => {
       </h3>
   
       {fields && fields.map((field: string)=>(
-        renderProductAttr(field, prod)
+        <div>
+          {renderProductAttr(field, prod)}</div>
       )) }
       
       {/*<div className="flex items-center">*/}

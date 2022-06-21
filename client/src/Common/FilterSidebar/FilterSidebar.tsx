@@ -13,6 +13,7 @@ import {faAngleUp} from "@fortawesome/pro-solid-svg-icons/faAngleUp";
 
 interface FilterSidebarProps{
   brands: BrandType[]
+  returnFilterResultItems: any
 }
 export const filterAbleList: ProductAttributesType[] = [
   // {
@@ -272,7 +273,7 @@ export const filterAbleList: ProductAttributesType[] = [
 ]
 
 
-const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
+const FilterSidebar:FC<FilterSidebarProps> = ({brands, returnFilterResultItems}) => {
   
   const dispatch = useDispatch()
   const {selectedAttributeFilter, filterGroup} = useSelector((state: RootStateType)=> state.productState)
@@ -510,18 +511,27 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands}) => {
     }
   }
   
-  
-  return (
-    <div>
-      
-      {/* selected filter values... */}
-      <div className="mb-4 mt-1">
+  function renderSelectedFilterItems(){
+    return (
+      <div>
         <div ref={selectedAttributeRef} className="flex flex-wrap px-4">
           {renderSelectedFields(selectedAttributeFilter)}
         </div>
         <div ref={selectedAttributeRef} className="flex flex-wrap px-4">
           {renderSelectedBrands(filterGroup.selectedBrands)}
         </div>
+      </div>
+    )
+  }
+  
+  
+  return (
+    <div>
+      
+      {/* selected filter values... */}
+      <div className="mb-4 mt-1">
+        { renderSelectedFilterItems() }
+        { returnFilterResultItems(renderSelectedFilterItems(), filterGroup.selectedBrands.length > 0) }
       </div>
       
       <div className="filter_sections">

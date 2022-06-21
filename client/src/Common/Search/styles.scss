@@ -14,8 +14,9 @@
   .input{
     border-radius: 4px;
     background: white;
-    box-shadow: 0px 1px 9px -1px #78787896;
-    padding: 6px 10px;
+    border: 1px solid rgba(10, 163, 87, 0.16);
+    //box-shadow: 0px 1px 15px -5px #78787896;
+    padding-left: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,9 +31,15 @@
     button{
       padding-right: 5px;
       color: #838383;
+      //background: var(--primary);
       svg{
         font-size: 15px;
       }
+    }
+    .search_go{
+      padding: 5px 15px;
+      background: #00bf55;
+      color: white;
     }
   }
   .filter_btn{

@@ -49,6 +49,7 @@ const Search = (props) => {
   return (
     <div>
       <div className="mobile_search_box">
+        
         <form onSubmit={handleSearch}>
           <div className="input">
             <input value={search.value} onChange={onChangeSearch} type="text" placeholder="Search products"/>
@@ -56,12 +57,13 @@ const Search = (props) => {
               { search.value && <button type="button" className="search_clear_icon">
 								<FontAwesomeIcon icon={faTimesCircle} onClick={handleSearchClear} />
 							</button>}
-              <button type="submit" className="bg-transparent">
+              <button type="submit" className="search_go">
                 <FontAwesomeIcon icon={faSearch} className="text-sm" />
               </button>
             </div>
           </div>
         </form>
+        
         <button className="filter_btn">
           <Preload to="/q">
             <FontAwesomeIcon icon={faFilter} className="text-sm" />
