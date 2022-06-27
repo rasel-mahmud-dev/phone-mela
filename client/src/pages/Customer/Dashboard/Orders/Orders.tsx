@@ -38,15 +38,20 @@ const Orders = (props) => {
 
   const {loadingStates, cartState, _id} = props
   const [allOrders, setOrders] = React.useState<OrderType[]>([])
-   
-    
+  
+ 
+  
   React.useEffect( ()=>{
+    
     (async function (){
+      
       if(auth.isAuthenticated){
-        let response = await api.post(`/api/orders`, { customer_id: auth._id })
-        if(response.status === 200) {
-          setOrders(response.data)
-        }
+        
+        api.get("/api/orders").then(response=>{
+          if(response.status === 200){
+            setOrders(response.data)
+          }
+        })
       }
     }())
     

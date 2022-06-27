@@ -1,10 +1,6 @@
 import React from 'react';
 import SideBar from "pages/Customer/Dashboard/SideBar";
-import CartPage from "pages/CartPages/CartPage";
-
 import {Outlet, Route, Routes} from "react-router-dom"
-import Wishlist from 'pages/CartPages/wishlist/Wishlist';
-import AddressBook from "pages/Customer/Dashboard/AddressBook/AddressBook";
 import Layout from "../../../Common/Layout/Layout";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "store/index";

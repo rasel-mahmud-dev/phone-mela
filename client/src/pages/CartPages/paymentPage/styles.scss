@@ -9,3 +9,15 @@
   background: rgba(84, 84, 84, 0.69);
   z-index: 234;
 }
+
+.pay{
+  &:nth-child(2){
+    color: #252525;
+    cursor: pointer !important;
+    font-weight: 500;
+    pointer-events: auto;
+  }
+  color: #a1a1a1;
+  pointer-events: none;
+  font-size: 14px;
+}

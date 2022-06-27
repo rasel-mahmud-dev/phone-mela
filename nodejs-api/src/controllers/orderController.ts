@@ -19,10 +19,10 @@ interface OrderResponseType {
 }
 
 export const fetchOrders = async (req: RequestWithSession, res: ApiResponse<OrderResponseType | string>)=> {
-
   
   try{
     const o: any = await Order.find({customer_id:  req.user.userId})
+      .populate("product_id", "title cover")
     res.send(o)
   } catch (ex){
     res.status(500).send("internal error")
@@ -79,17 +79,23 @@ export const createOrder = async (req: ApiRequest<CreateBody>, res: ApiResponse<
     res.status(201).send("order created successful")
     
   } catch (ex){
-    console.log(ex)
     res.status(500).send("order created fail")
   }
-  
 }
-export const fetchOrder = async (req: Request, res: ApiResponse)=> {
 
+export const fetchOrder = async (req: ApiRequest, res: ApiResponse)=> {
+
+  const {orderId} = req.params
+  
   try{
-  
-  } catch (ex){
-  
-  }
+
+      // @ts-ignore
+      const o: any = await Order.findOne({_id: orderId, customer_id: req.user.userId})
+        .populate("product_id", "title cover")
+        .populate("shipping_id")
+      res.send(o)
+    } catch (ex){
+      res.status(500).send(ex.message)
+    }
   
 }

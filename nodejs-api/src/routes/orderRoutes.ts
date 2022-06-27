@@ -1,12 +1,13 @@
 import {Application} from "express";
 
 import controllers from "../controllers"
+import {auth} from "../middleware";
 
 const orderRoutes = (app: Application)=>{
   
-  app.post("/api/order", controllers.orderController.createOrder)
-  app.post("/api/orders", controllers.orderController.fetchOrders)
-  app.get("/api/order/:orderId", controllers.orderController.fetchOrder)
+  app.post("/api/order", auth, controllers.orderController.createOrder)
+  app.get("/api/orders", auth, controllers.orderController.fetchOrders)
+  app.get("/api/order/:orderId", auth, controllers.orderController.fetchOrder)
   
   
   // router.HandleFunc("/api/reviews/{product_id}", controllers.FetchProductCustomerRatings).Methods("GET")

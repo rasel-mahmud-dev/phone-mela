@@ -34,7 +34,7 @@ const schemaObject: ObjectFlags<OrderType> = {
   product_id: {type: mongoose.Schema.Types.ObjectId, ref: "Product"},
   customer_id: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
   shipper_id: {type: mongoose.Schema.Types.ObjectId, ref: "Shipper"},
-  shipping_id: {type: mongoose.Schema.Types.ObjectId, ref: "shipping_address"},
+  shipping_id: {type: mongoose.Schema.Types.ObjectId, ref: "ShippingAddress"},
   order_status: {
     type: String,
     enum: ['pending', 'delivered'],

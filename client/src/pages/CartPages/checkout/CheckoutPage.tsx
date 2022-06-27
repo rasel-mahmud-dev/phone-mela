@@ -92,6 +92,9 @@ const CheckoutPage: FC<CheckoutPageProps> = (props) => {
         ...shippingAddress,
         customer_id: auth._id
       })
+      if(response.status === 201){
+        setShowAddShippingForm(false)
+      }
     }
   }
   

@@ -236,8 +236,8 @@ const PaymentPage = (props: any) => {
     pay = allPay.find((p: any)=>p.value === paymentMethod)
     
     return pay ? pay.render() : ""
-    
   }
+  
   
   return (
        <div className="relative">
@@ -257,11 +257,11 @@ const PaymentPage = (props: any) => {
             
             <div className="flex-1">
               
-              <div>
-                <h4>Choose Payment Method</h4>
+              <div className="all-payment-method">
+                <h4 className="mb-2">Choose Payment Method</h4>
     
                 { allPay.map(pay=>(
-                  <div>
+                  <div className="pay">
                     <input
                       onChange={handleChange}
                       type="radio"

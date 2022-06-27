@@ -19,17 +19,17 @@ import {faAngleLeft} from "@fortawesome/pro-regular-svg-icons";
 interface OrderDetail {
   phone: any;
   cover: string
-  created_at: string
-  customer_id: number
+  createdAt: string
+  customer_id: string
   delivery_date: string
   description: string
-  order_id: number
+  _id: string
   payment_method: string
   price: number
-  product_id: number
+  product_id: any
   quantity: number
   shipper_id: number
-  shipping_id: number
+  shipping_id: any
   title: string,
   address: string
   post_code: string
@@ -48,8 +48,8 @@ const OrderDetails = (props) => {
   
   const [order, setOrder] = React.useState<OrderDetail>({
     address: "", city: "", country: "", phone: undefined, post_code: "", state: "",
-    created_at: "",
-    customer_id: 0,
+    createdAt: null,
+    customer_id: "",
     delivery_date: "",
     description: "",
     payment_method: "",
@@ -59,17 +59,17 @@ const OrderDetails = (props) => {
     cover: "",
     price: 0,
     quantity: 0,
-    order_id: 0,
+    _id: "",
     title: "",
     order_status_type: ""
   })
   
-  
+
   React.useEffect(()=>{
     (async function (){
        if(params.orderId){
          try {
-           let response = await api.get(`/api/order/${Number(params.orderId)}`)
+           let response = await api.get(`/api/order/${params.orderId}`)
            setOrder(response.data)
          } catch (ex){
          
@@ -139,6 +139,7 @@ const OrderDetails = (props) => {
       <span className="ml-1"> {recentShipAddr.address} {recentShipAddr.post_code} {recentShipAddr.city} {recentShipAddr.state} {recentShipAddr.country}</span>
     </h4>
   }
+  
 
   return (
       <div className=" bg-white sm:mx-3 mx-0">
@@ -156,7 +157,7 @@ const OrderDetails = (props) => {
           <div className="order relative  px-3 py-4">
       
             <div className="flex justify-between sm:flex-row flex-col">
-              <h2  className="text-xl font-medium">Order ID #{order.order_id}24323432 </h2>
+              <h2  className="text-xl font-medium">Order ID #{order._id}24323432 </h2>
               
               <div className="flex py-2 mb-4 sm:py-0 sm:mb-0">
                 <button className="mr-4 hover:bg-primary-400   hover:text-white bg-white-400 flex items-center border border-primary-400/40 px-2 py-0.5 text-white rounded">
@@ -175,7 +176,7 @@ const OrderDetails = (props) => {
               </div>
             </div>
             
-            <h4 className="text-[14px] font-normal text-dark-300 mt-1">Order date {new Date(order.created_at).toDateString()}</h4>
+            <h4 className="text-[14px] font-normal text-dark-300 mt-1">Order date {new Date(order.createdAt).toDateString()}</h4>
       
             <h4 className="text-[15px] text-dark-300 mt-1">{order.title}</h4>
       
@@ -195,9 +196,9 @@ const OrderDetails = (props) => {
   
                 <div className="flex items-start">
                   <div className="w-[50px]">
-                    <Preload to={`/product/${order.title}/${order.product_id}`}><img src={fullLink(order.cover)} alt=""/></Preload>
+                    <Preload to={`/product/${order.product_id.title}/${order.product_id._id}}`}><img src={fullLink(order.product_id.cover)} alt=""/></Preload>
                   </div>
-                  <Preload to={`/product/${order.title}/${order.product_id}`}><h2 className="hover:text-primary-400 font-normal text-sm ml-1">NOKIA 4.5 3/64GB</h2></Preload>
+                  <Preload to={`/product/${order.product_id.title}/${order.product_id._id}`}><h2 className="hover:text-primary-400 font-normal text-sm ml-1">NOKIA 4.5 3/64GB</h2></Preload>
                 </div>
   
                 <div className="flex items-start">
@@ -207,10 +208,7 @@ const OrderDetails = (props) => {
                   </div>
                 </div>
                 
-                
               </div>
-              
-              
               
             </div>
             
@@ -221,19 +219,19 @@ const OrderDetails = (props) => {
   
              <div className="min-w-[150px]">
                <h1 className="text-xl font-medium mt-4">Payment</h1>
-               <div>
+               <div className="mt-2">
                  <h2 className="font-normal text-dark-300 text-sm">{order.payment_method}</h2>
                </div>
              </div>
   
              <div>
     
-               <h1 className="text-xl font-medium mt-4">Delivery</h1>
-               <div className="mt-1">
-                 <h2 className="font-normal text-dark-600 text-[15px]">Address</h2>
+               <h1 className="text-xl font-medium mt-4">Delivery Address</h1>
+               <div className="mt-2">
+                 <h2 className="font-normal text-dark-600 text-[15px]"></h2>
                  <div className="font-normal text-dark-300 text-sm mt-2">
-                   <p>{renderAddress(order)}</p>
-                   <h4 className="mt-1">Phone: {order.phone}</h4>
+                   <p>{order.shipping_id && renderAddress(order.shipping_id)}</p>
+                   <h4 className="mt-1">Phone: {order.shipping_id.phone}</h4>
                  </div>
                </div>
   

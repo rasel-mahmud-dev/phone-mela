@@ -11,7 +11,7 @@ export const getShippingAddress = async (req: Request, res: Response)=> {
     let docs = await ShippingAddress.find({customer_id: req.user.userId})
     res.status(200).send(docs)
   } catch (ex){
-  
+    res.status(500).send([])
   }
 
 }
@@ -51,10 +51,10 @@ export const addShippingAddress  = async (req: Request, res: Response)=> {
     
     let newAddress = new ShippingAddress(o)
     let doc = await newAddress.save()
-    res.send(doc)
+    res.status(201).send(doc)
     
   } catch (ex){
-  
+    res.status(500).send(ex.message)
   }
 
 }
