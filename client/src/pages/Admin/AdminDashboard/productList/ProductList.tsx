@@ -73,14 +73,14 @@ const ProductList = () => {
     {
       title: "Created At",
       key: "3",
-      dataIndex: "created_at",
+      dataIndex: "createdAt",
       width: 150,
       render: (text: string) => new Date(text).toDateString(),
       sorter: {
         compare: (a: any, b: any)=> {
-          if(a.created_at > b.created_at){
+          if(a.createdAt > b.createdAt){
             return 1
-          } else if(a.created_at < b.created_at){
+          } else if(a.createdAt < b.createdAt){
             return -1
           } else {
             return 0

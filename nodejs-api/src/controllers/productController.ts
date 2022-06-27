@@ -23,7 +23,15 @@ export function connect(){
 
 
 export const fetchProducts = async (req: Request, res: ApiResponse)=> {
-
+  
+  try {
+    
+    let data = await Product.find()
+    res.send(data)
+    
+  } catch (ex){
+    res.status(500).send([])
+  }
 
 }
 
@@ -80,6 +88,42 @@ export const fetchProduct = async (req: ApiRequest, res: ApiResponse)=> {
 
 export const addProduct = async (req: Request, res: ApiResponse)=> {
 
+
+}
+
+export const updateProduct = async (req: ApiRequest, res: ApiResponse)=> {
+
+  const {productId} = req.params
+
+  try{
+  
+    const { attributes, brand_id, cover, description, discount, price, stock, tags, title, _id, } = req.body
+    let updateProduct: any = {}
+    if(attributes) updateProduct.attributes = attributes
+    if(brand_id) updateProduct.brand_id = brand_id
+    if(cover) updateProduct.cover = cover
+    if(discount) updateProduct.discount = discount
+    if(price) updateProduct.price = price
+    if(stock) updateProduct.stock = stock
+    if(tags) updateProduct.tags = tags
+    if(title) updateProduct.title = title
+    if(description) updateProduct.description = description
+  
+    let doc = await Product.findByIdAndUpdate(productId, {
+      $set: updateProduct
+    })
+   
+    if(doc){
+      res.status(201).json({message: "updated"})
+    } else {
+      res.status(500).json({message: "no updated"})
+    }
+    
+  
+  } catch (ex){
+    res.status(500).json({message: ex.message})
+  }
+  
 
 }
 
@@ -318,9 +362,11 @@ export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>,
         include[includeKey] && include[includeKey].length > 0 && include[includeKey].map(id=>{
           objectIds.push(new ObjectId(id))
         })
-        // now send match filter like { $match: { brand_id: {$in: [ObjectIds] }}}
+      
+        
         if(objectIds.length > 0) {
-          includeAttributes[includeKey] = objectIds
+          // brand_id: { '$in': [ 1, 2, 3 ] },
+          includeAttributes[includeKey] = {$in: objectIds}
         }
         
       } else {
@@ -401,7 +447,8 @@ export const filterProducts = async (req: ApiRequest<FilterProductIncomingData>,
         }
       }
     }
-    
+  
+    // console.log(includeAttributes)
     
     let data = await Product.aggregate([
       {

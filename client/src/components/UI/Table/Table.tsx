@@ -90,13 +90,13 @@ class Table extends React.Component<TableBasePropsType, TableStateType>{
 
       
       let h =  this.tableRef.current?.parentElement
-      console.log(h?.offsetWidth)
+      // console.log(h?.offsetWidth)
       
       // let w = h?.offsetWidth
       // console.log(w)
       if(this.tableScrollRef){
         let w = (this.tableScrollRef.current as HTMLDivElement).offsetWidth
-        console.log(w)
+        // console.log(w)
         // f.style.maxWidth = w +"px"
         // f.style.overflowX = "auto"
       }

@@ -18,6 +18,9 @@ import "./styles.scss"
 import {filterAbleList} from "src/Common/FilterSidebar/FilterSidebar"
 import {RootStateType} from "store/index";
 import withParams from "../../../utils/withParams";
+import MultiInput from "UI/Form/multiInput/MultiInput";
+import withLocation from "../../../utils/withLocation";
+import withNavigate from "../../../utils/withNavigate";
 
 type UpdateProductType = {
   id: number
@@ -46,6 +49,7 @@ interface Props{
   params: { productId: string }
   history: { push: (args: string) => void }
   location: { search: string }
+  navigate: (to: string) => void
 }
 
 type UserDataType = {
@@ -110,7 +114,7 @@ interface State{
   newBrandAdd: boolean,
   isShowStaticPhotos: boolean,
   staticPhotos: string[],
-  updatedProductId: number
+  updatedProductId: string
 }
 
 class AddProduct extends React.Component<Readonly<Props>, State> {
@@ -169,7 +173,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
       newBrandAdd: false,
       isShowStaticPhotos: false,
       staticPhotos: [],
-      updatedProductId: 0
+      updatedProductId: ""
     }
   }
   
@@ -197,19 +201,14 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
 
     
     const { productId } = this.props.params
+   
     if (productId) {
-  
+      
       
       const response = await api.get(`/api/product/${productId}`)
       if(response.status === 200) {
-        const { id, title, brand_id, description, price, discount, stock, cover, tags, attributes } = response.data
-        let attr: any = {}
-        try {
-          attr = JSON.parse(attributes)
-        } catch (ex){
+        const { _id, title, brand_id, description, price, discount, stock, cover, tags, attributes={} } = response.data
         
-        }
-  
        
         this.setState((prevState: Readonly<State>): State =>{
           
@@ -221,10 +220,10 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
           let updatedFilterAttributes: FilterAttributesType = {...prevState.filterAttributes}
           let key:keyof FilterAttributesType
           for (key in updatedFilterAttributes) {
-            if(attr[key]){
+            if(attributes[key]){
               updatedFilterAttributes[key] = {
                 ...updatedFilterAttributes[key],
-                value: attr[key]
+                value: attributes[key]
               }
             }
           }
@@ -252,11 +251,11 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
                 stock: {value: stock, errorMessage: "", touched: true},
                 price: {value: price, errorMessage: "", touched: true},
                 cover: {value: cover, errorMessage: "", touched: true},
-                tags: [JSON.parse(tags)],
+                tags: tags ? tags : [],
                 brand_id: { value: {_id: brand_id ? brand_id : 0, name: ""}, touched: true }
               },
               filterAttributes: updatedFilterAttributes,
-              updatedProductId: Number(id)
+              updatedProductId: _id
           }
         })
       }
@@ -315,7 +314,7 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
         this.setState((prevState: Readonly<State>): State =>{
         return {
           ...prevState,
-          updatedProductId: isNaN(Number(productId)) ? 0 : Number(productId)
+          updatedProductId: productId ? productId : ""
         }
       })
     }
@@ -327,32 +326,40 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
     const target = e.target as typeof e.target & {
       name: string;
       value: string | number;
+      values?: string[];
     };
     
-    const { name, value} = target
+    const { name, value, values} = target
+    
+    let updatedState = {...this.state}
     
     const {userData, brands} = this.state
     
     if(name === "brand_id"){
       let brand = brands.find(b=>b._id == value)
-        this.setState((prevState: Readonly<State>): State =>{
-          return {
-            ...prevState,
-            userData: {
-              ...userData,
-              [name]: {
-                ...userData[name as keyof UserDataType],
-                value: {
-                  name: brand && brand.name,
-                  id: Number(value)
-                }
+  
+      updatedState = {
+        ...updatedState,
+          userData: {
+            ...userData,
+            [name]: {
+              ...userData[name as keyof UserDataType],
+              value: {
+                name: brand && brand.name,
+                _id: value
               }
             }
           }
-        })
+      }
+      
+    } else if(name === "tags"){
+      
+      updatedState.userData[name] = values
+      
     } else{
     
-      this.setState({
+      updatedState = {
+        ...updatedState,
         userData: {
           ...userData,
           [name]: {
@@ -360,8 +367,12 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
             value: value
           }
         }
-      })
+      }
+      
     }
+  
+    this.setState(updatedState)
+
   }
   
   handleSave = (e: any) => {
@@ -450,15 +461,15 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
       })
       
       let reqPayload: any = {
-        id: updatedProductId,
+        _id: updatedProductId,
         title: userData.title.value,
-        brand_id: Number(userData.brand_id.value._id),
+        brand_id: userData.brand_id.value._id,
         description: userData.description.value,
         price:  Number(userData.price.value),
         discount: Number(userData.discount.value),
         stock: Number(userData.stock.value),
         cover: userData.cover.value,
-        tags: JSON.stringify(["Redmi Note 11","Redmi Note 11s","Redmi Note 11 pro"]),
+        tags: userData.tags,
       }
   
       let attributes: any = {}
@@ -472,24 +483,25 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
           attributes[filterAttributesKey] = num
         }
       }
-      reqPayload.attributes = JSON.stringify(attributes)
+      reqPayload.attributes = attributes
       
       if (updatedProductId){
         // update a existing  product
         api.put(`/api/products/update/${updatedProductId}`, reqPayload).then(response=>{
           if(response.status === 201){
             let q: any = queryString.parse(this.props.location.search)
-            this.props.history.push(q.callback)
+            this.props.navigate(q.callback)
           }
           
         }).catch(ex=>{
-          alert("update fail.")
+          console.log(ex)
+          alert("update fail. ")
         })
         
       } else {
         // adding a new product
         
-        reqPayload.author_id = Number(auth._id)
+        reqPayload.author_id = auth._id
         reqPayload.seller_id = 1
         
         api.post(`/api/products/add`, reqPayload).then(response=>{
@@ -604,6 +616,10 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
     )
   }
   
+  handleTagChange(e){
+  
+  }
+  
   render() {
     const {
       userData,
@@ -626,19 +642,13 @@ class AddProduct extends React.Component<Readonly<Props>, State> {
                 { this.inputGroup("Price", "price", userData.price.value, "number", this.handleChange, errorsData.price)}
                 { this.inputGroup("Discount", "discount", userData.discount.value, "number", this.handleChange, errorsData.discount)}
                 { this.inputGroup("Stock", "stock", userData.stock.value, "number", this.handleChange, errorsData.stock)}
-                
-                <div>
-                  <label htmlFor="">Tags: </label>
-                  {userData.tags && userData.tags.map(tag=>(
-                    <li className="text-sm mx-2">{tag}</li>
-                  ))}
-                </div>
   
-                {/*{ this.selectGroup("Brand", "brand_id", userData.brand_id.value._id, "number",*/}
-                {/*  brands as any, */}
-                {/*  (e)=> this.handleChange({target: {name: e.target.name, brandName: e.target.value, brandId: e.target.dataset._id}}),*/}
-                {/*  errorsData.brand_id)}*/}
-         
+                <div className="form-group mt-4">
+                  <label className="block no-wrap text-sm dark_subtitle" htmlFor="">Tags</label>
+                  <MultiInput placeholder="Enter tag between space" name="tags" onChange={this.handleChange} defaultValues={userData.tags} />
+                </div>
+                
+             
                 <div className="select_group mt-4 mx-2">
                   <label className="block" htmlFor="">Brand</label>
                   { errorsData.brand_id && <div className="text-xs text-secondary-400 mt-1">
@@ -717,5 +727,7 @@ function mapStateToProps(state: RootStateType) {
   return { auth: state.auth, productState: state.productState}
 }
 
-export default connect(mapStateToProps, { fetchProduct,  addNewBrand})(withParams(AddProduct))
+export default connect(mapStateToProps, { fetchProduct,  addNewBrand})(
+  withNavigate(withLocation(withParams(AddProduct)))
+)
 

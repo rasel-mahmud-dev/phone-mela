@@ -149,6 +149,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       })
     }
     inV["brand_id"] = brandIds
+    // inV["brand_id"] = ["62a638e8bf617d070dc47309"]
     
     
     this.props.setFilteredProducts({
@@ -296,6 +297,8 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
   returnFilterResultItems(returnJSX, selected){
     if(selected) {
       this.selectedFilterItems = () => returnJSX
+    } else  {
+      return null
     }
   }
 
@@ -391,8 +394,8 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
   
             <div>
               { this.selectedFilterItems && (
-                <div className="flex items-start">
-                  <h1>Clear all</h1>
+                <div className="flex items-start mt-2">
+                  <h1 className="text-sm font-medium cursor-pointer">Clear all</h1>
                   {this.selectedFilterItems()}
                 </div>
               ) }

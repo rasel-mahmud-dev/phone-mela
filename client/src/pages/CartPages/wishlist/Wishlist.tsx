@@ -187,7 +187,7 @@ const Wishlist = () => {
             
             <div className="flex justify-between mt-4 px-2">
               <button onClick={handlePushBack} className="link_btn font-normal">Back to Shop</button>
-              <Link to="/shopping/cart/checkout">
+              <Link to="/order/checkout">
                 <button className="link_btn font-normal" >Go to Checkout</button>
               </Link>
             </div>

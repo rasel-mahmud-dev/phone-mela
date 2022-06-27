@@ -126,6 +126,7 @@ const Navigation  = (props)=>{
     )
   }
   function loadErrorAvatar(e){
+    
     const div = document.createElement("h1")
     div.classList.add("!m-0")
     div.innerHTML = `
@@ -288,7 +289,8 @@ const Navigation  = (props)=>{
               </span>
             </div>
           </div>
-  
+          
+          
           <div className="main_nav !mb-0 sm:!mb-[10px]">
     
             <div className="left_nav " >
@@ -378,7 +380,7 @@ const Navigation  = (props)=>{
                 <span className="hidden text-sm font-normal  sm:inline-block">My Account</span>
                 <div className="avatar w-9">
                   <div className="mx-2">
-                    { auth.avatar
+                    { auth && auth.avatar
                       ? <img
                         onError={loadErrorAvatar}
                         className="w-full rounded-full flex"

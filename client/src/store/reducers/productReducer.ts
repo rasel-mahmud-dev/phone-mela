@@ -402,18 +402,19 @@ const productsReducer=(state = initialProductState, action: any): ProductStateTy
       updatedState.cartProducts = action.payload
       return updatedState
 
-    // case ActionTypes.INCREASE_CART_ITEM:
-    //   index = updatedState.cartProducts.findIndex(cp=>cp.id === action.payload)
-    //   updatedState.cartProducts[index].quantity++
-    //   return updatedState
-    //
-    // case ActionTypes.DECREASE_CART_ITEM:
-    //   index = updatedState.cartProducts.findIndex(cp=>cp.id === action.payload)
-    //   if(updatedState.cartProducts[index].quantity > 1){
-    //     updatedState.cartProducts[index].quantity--
-    //   }
-    //   return updatedState
-    //
+    case ActionTypes.INCREASE_CART_ITEM:
+      index = updatedState.cartProducts.findIndex(cp=>cp._id === action.payload)
+      updatedState.cartProducts[index].quantity++
+      return updatedState
+
+    case ActionTypes.DECREASE_CART_ITEM:
+      index = updatedState.cartProducts.findIndex(cp=>cp._id === action.payload)
+      if(updatedState.cartProducts[index].quantity > 1){
+        updatedState.cartProducts[index].quantity--
+      }
+      return updatedState
+
+    
     // case ActionTypes.CHANGE_PAGE:
     //   return {...state, currentPage: action.payload }
     //

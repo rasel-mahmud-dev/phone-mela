@@ -17,6 +17,7 @@ export interface ProductType{
   tags: string[]
   attributes: object
   details_id: string
+  description: string
   createdAt?: Date
   updatedAt?: Date
 }
@@ -29,6 +30,7 @@ const schemaObject: ObjectFlags<ProductType> = {
     index: true
   },
   cover: String,
+  description: String,
   brand_id: {
     index: true,
     type: mongoose.Schema.Types.ObjectId,

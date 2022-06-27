@@ -359,6 +359,7 @@ const FilterSidebar:FC<FilterSidebarProps> = ({brands, returnFilterResultItems})
     
     
     dispatch(setSelectedAttributeFilter(updatedSelectedFilter))
+    { returnFilterResultItems(renderSelectedFilterItems(), filterGroup.selectedBrands.length > 0) }
     
     // let data = {}
     //

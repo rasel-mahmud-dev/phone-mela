@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useState} from 'react'
-import {connect, useDispatch, useSelector} from "react-redux";
+import React, {ChangeEvent} from 'react'
+import {useDispatch, useSelector} from "react-redux";
 import Input2 from "UI/Form/Input/Input2";
 import {RootStateType} from "store/index";
-import {useParams, Link, useNavigate} from "react-router-dom"
+import { useNavigate} from "react-router-dom"
 import api from "apis/api";
 import {Helmet} from "react-helmet";
 import OrderContext from "pages/CartPages/orderContext";
@@ -16,8 +16,6 @@ import {CartProductType} from "reducers/productReducer";
 const PaymentPage = (props: any) => {
   
   const orderContext  = React.useContext(OrderContext)
-  console.log(orderContext)
-  
 
   const navigator = useNavigate()
   const dispatch = useDispatch()
@@ -155,10 +153,7 @@ const PaymentPage = (props: any) => {
         console.log(ex)
       })
   }
-  
-  const handleSubmit = async () => {
-  
-  };
+
   
   function handleCreateOrder(data: any){
     
@@ -167,12 +162,11 @@ const PaymentPage = (props: any) => {
     const { shippingAddress, cartProducts} = orderContext.state
   
     let day = (((1000*60) * 60) * 24)
+    
     let payload = {
-      
       product_id: 0,
       price: 0,
       quantity: 0,
-      
       
       customer_id: auth._id,
       shipping_id: shippingAddress._id,
@@ -226,11 +220,12 @@ const PaymentPage = (props: any) => {
         quantity:  cart.quantity,
         product_id: cart.product_id,
       }).then(res=>{
-        console.log(res)
+        if(res.status === 201){
+          alert("Order Created")
+          navigator("/")
+        }
       })
     })
-    
-    
   }
   
   function renderPaymentMedium() {
@@ -261,6 +256,7 @@ const PaymentPage = (props: any) => {
           <div className="flex justify-between flex-col sm:flex-row ">
             
             <div className="flex-1">
+              
               <div>
                 <h4>Choose Payment Method</h4>
     
@@ -277,10 +273,8 @@ const PaymentPage = (props: any) => {
                   </div>
                 )) }
               </div>
-              <div className="mb-8 mt-4">
-                { renderPaymentMedium() }
-                
-              </div>
+              <div className="mb-8 mt-4">{renderPaymentMedium()}</div>
+              
             </div>
             
             <div className="flex-4 ml-4">

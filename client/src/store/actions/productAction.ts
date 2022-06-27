@@ -1,5 +1,5 @@
 import {ActionTypes, SET_ACTION_TYPE} from "./actionTypes"
-import api from "../../apis/api"
+import api, {getApi} from "../../apis/api"
 import {BrandType, CartProductType, HomePageSectionProductsType, ProductType, WishList} from "reducers/productReducer";
 import {togglePopup} from "actions/toolsAction";
 import {RootStateType} from "store/index";
@@ -34,7 +34,7 @@ export const setHomePageSectionProducts = (payload: HomePageSectionProductsType)
 export const fetchProduct = (id: number)=>async(dispatch: (args: { type: ActionTypes.FETCH_PRODUCT, payload: any } | any)=>void, api: AxiosInstance)=>{
   try{
     dispatch(loading(true))
-    const response = await api.get(`/api/product/${id}`)
+    const response = await getApi().get(`/api/product/${id}`)
     if(response.status === 200) {
       if (response.data._id) {
         dispatch(loading(false))
@@ -155,7 +155,7 @@ export function toggleHandleCart(product: AddCartPayload, isShowPopup: boolean =
           }
 
           try{
-            const r = await api.post("api/add-cart", {
+            const r = await getApi().post("api/add-cart", {
               product_id: product.product_id,
               quantity: 1
             })
@@ -189,7 +189,7 @@ export function toggleHandleCart(product: AddCartPayload, isShowPopup: boolean =
         let cart: CartProductType = updatedCartProducts[index]
         if(cart) {
           try {
-            const r = await api.post("api/remove-cart", {
+            const r = await getApi().post("api/remove-cart", {
               cart_id: cart._id,
               customer_id: auth._id
             })
@@ -307,7 +307,7 @@ export function toggleHandleWishlist(product: AddWishlistPayload, isShowPopup: b
         let wishItem = updatedWishlist[index]
         if(!wishItem) return null
         
-        const r =  await api.post("api/remove-wishlist", {wishlist_id: wishItem._id, customer_id: auth._id})
+        const r =  await getApi().post("api/remove-wishlist", {wishlist_id: wishItem._id, customer_id: auth._id})
         if(r.status === 201){
           updatedWishlist.splice(index, 1)
           dispatch({
@@ -357,7 +357,7 @@ export function toggleHandleWishlist(product: AddWishlistPayload, isShowPopup: b
 export function fetchCart(customer_id: string){
   return function (dispatch: any){
     if(customer_id) {
-      api.post("/api/cart-products", {customer_id: customer_id}).then(res => {
+      getApi().post("/api/cart-products", {customer_id: customer_id}).then(res => {
         if(res.data) {
           dispatch({
             type: ActionTypes.FETCH_CART,
@@ -382,7 +382,7 @@ export function fetchCart(customer_id: string){
 export function fetchWishlist(customer_id: number){
   return function (dispatch: any){
     if(customer_id) {
-      api.post("/api/wishlist-products", {customer_id: customer_id}).then(res => {
+      getApi().post("/api/wishlist-products", {customer_id: customer_id}).then(res => {
         dispatch({
           type: FETCH_WISHLIST,
           payload: res.data

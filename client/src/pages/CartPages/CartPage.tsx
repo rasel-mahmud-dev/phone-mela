@@ -179,15 +179,12 @@ const CartPage = () => {
           return (
             <div>
               <div className="flex items-center justify-center select-none min-w-[150px]">
-                <button
-                  onClick={()=>dispatch({type: ActionTypes.DECREASE_CART_ITEM, payload: product._id})}
-                >
-                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.REMOVE_CART_ITEM, payload: product._id})} icon={faMinus} />
+                <button>
+                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.DECREASE_CART_ITEM, payload: product._id})} icon={faMinus} />
                 </button>
                 <span className="bg-primary-400 rounded-full text-sm leading-[25px]  font-normal h-6 w-10 text-white mx-4  px-4">{product.quantity}</span>
-                <button
-                  onClick={()=>dispatch({type: ActionTypes.INCREASE_CART_ITEM, payload: product._id})}>
-                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.REMOVE_CART_ITEM, payload: product._id})} icon={faPlus} />
+                <button>
+                  <FontAwesomeIcon onClick={()=>dispatch({type: ActionTypes.INCREASE_CART_ITEM, payload: product._id})} icon={faPlus} />
                 </button>
               </div>
             </div>
