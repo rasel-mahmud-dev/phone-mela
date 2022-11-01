@@ -85,7 +85,6 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
     type T = {
       [key  in ProductAttributesName]: any
     }
-  
     
     type inVType  = {
       brand_id?: string[],

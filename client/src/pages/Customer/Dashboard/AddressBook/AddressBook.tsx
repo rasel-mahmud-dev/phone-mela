@@ -7,7 +7,7 @@ import {connect, useDispatch, useSelector} from "react-redux"
 
 
 import "./AddressBook.scss"
-import api from "src/apis/api";
+import api, {getApi} from "src/apis/api";
 import Input from "UI/Form/Input/Input2";
 import Button from 'components/UI/Button/Button';
 import Divider from "UI/Divider/Divider";
@@ -35,10 +35,10 @@ const AddressBook = (props) => {
 
 
   const [shippingAddress, setShippingAddress] = React.useState<any>({
-    first_name: "rasel",
-    last_name: "mahmud",
-    phone: 1785513535,
-    post_code: 5826,
+    first_name: "",
+    last_name: "",
+    phone: 0,
+    post_code: 0,
     state: "Bogra",
     city: "sonatola",
     address: "harikhali",
@@ -50,7 +50,7 @@ const AddressBook = (props) => {
   React.useEffect( ()=>{
     (async function () {
       if(auth._id) {
-        let response = await api.get(`/api/shipping-addresses/${auth._id}`)
+        let response = await getApi().get(`/api/shipping-addresses/${auth._id}`)
         setRecentShippingAddress(response.data)
       }
     }())

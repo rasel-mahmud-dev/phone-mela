@@ -47,7 +47,7 @@ if(process.env.NODE_ENV === "development"){
   /**
     When out app are build
   */
-  const mainApp = require("../dist")
+  // const mainApp = require("../dist")
   
   
   /*? fixed later */
@@ -58,10 +58,12 @@ if(process.env.NODE_ENV === "development"){
   router.use("/avatar/", express.static(path.resolve("dist/static/avatar/")))
 
 
-  mainApp(router)
+  // mainApp(router)
   
   app.get("/", function (req, res){
-    res.send("with app v3")
+    res.send(`<?php
+
+    echo 'Hello, World!';`)
   })
   
   // /.netlify/functions
@@ -87,6 +89,14 @@ if(process.env.NODE_ENV === "development"){
 //     res.send("ap")
 // })
 
+app.get("/", function (req, res){
+  
+  res.write(`<?php
+
+    echo 'Hello, World!';`)
+  
+  res.end()
+})
 
 
 app.use(bodyParser.json());

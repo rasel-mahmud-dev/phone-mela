@@ -29,3 +29,5 @@ nodejs-api/.env
 nodejs-api/.idea
 nodejs-api/netlify.toml
 nodejs-api/.gitignore
+# Local Netlify folder
+.netlify

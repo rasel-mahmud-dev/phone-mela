@@ -9,7 +9,7 @@ import Input2 from "UI/Form/Input/Input2";
 import Checkbox from "UI/Form/Checkbox/Checkbox";
 import OrderSummary from "pages/CartPages/orderSummary/OrderSummary";
 import {ShippingAddress} from "reducers/userReducer";
-import api from "src/apis/api";
+import api, {getApi} from "src/apis/api";
 import OrderContext, {OrderContextType} from "pages/CartPages/orderContext";
 
 
@@ -18,10 +18,10 @@ type CheckoutPageProps = {
 
 }
 
+
 const CheckoutPage: FC<CheckoutPageProps> = (props) => {
 
-    let navigator = useNavigate()
-
+  let navigator = useNavigate()
   
   const { productState, auth } = useSelector((state: RootStateType)=>state)
   
@@ -88,7 +88,7 @@ const CheckoutPage: FC<CheckoutPageProps> = (props) => {
       // history.push("/auth/login/?redirect=/shopping/cart/shipping")
       
     } else{
-      let response = await api.post("/api/shipping-address", {
+      let response = await getApi().post("/api/shipping-address", {
         ...shippingAddress,
         customer_id: auth._id
       })

@@ -117,7 +117,7 @@ const DashboardHome = (props) => {
         
         <div className="border border-primary-400 rounded flex-1 py-6 sm:ml-10 ml-0 mt-4 sm:mt-0">
           <h1 className="text-primary-400 text-xl text-center font-medium">TOTAL COST</h1>
-          <h4 className="text-sm text-center font-medium mt-2">TK. {calculateCosts(orders)}</h4>
+          <h4 className="text-sm text-center font-medium mt-2">TK. {calculateCosts(orders)}`</h4>
         </div>
         
       </div>
