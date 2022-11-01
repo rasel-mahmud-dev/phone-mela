@@ -1,24 +1,7 @@
-import {ProductType} from "../models/Product";
-import mongoose, {mongo, Schema} from "mongoose";
 import {ApiRequest, ApiResponse} from "../types";
 import {ObjectId} from "bson";
-
-
-const Product = mongoose.model("Product")
-
-
-const mysql = require('mysql2');
-
-export function connect(){
-// create the connection to database
-  const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    database: 'app3_database',
-    password: "12345"
-  })
-  return connection
-}
+import Sales from "../models/Sales";
+import Product from "../models/Product";
 
 
 
@@ -118,22 +101,15 @@ export const updateProduct = async (req: ApiRequest, res: ApiResponse)=> {
     } else {
       res.status(500).json({message: "no updated"})
     }
-    
-  
   } catch (ex){
     res.status(500).json({message: ex.message})
   }
-  
-
 }
-
 
 
 interface BodyMy{
   type: "latest" |  "top_discount" | "top_rating" | "top_sales"
 }
-
-
 
 interface HomePageProductResponse{
   _id: string
@@ -151,52 +127,8 @@ interface HomePageProductResponse{
   updatedAt: Date,
   createdAt: Date,
 }
+
 export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: BodyMy }, res: ApiResponse<HomePageProductResponse[]>)=> {
-  const Product = mongoose.model("Product")
-  
-  // const connection = connect()
-  // connection.execute("SELECT * from products", function(err, rows, fields) {
-  //   rows.forEach(item=>{
-  //     const {
-  //       title,
-  //       created_at,
-  //       updated_at,
-  //       description,
-  //       price,
-  //       author_id,
-  //       brand_id,
-  //       cover,
-  //       tags,
-  //       attributes,
-  //       seller_id,
-  //       discount,
-  //       stock,
-  //       sold,
-  //       views,
-  //       specification_id,
-  //     } = item
-  //     let p: ProductType = {
-  //       title: title,
-  //       attributes: attributes,
-  //       author_id: "62a61e994fcef281a80766c7",
-  //       brand_id: "62a638e8bf617d070dc47301",
-  //       cover: cover,
-  //       details_id: "000000000000000000000000",
-  //       discount: discount,
-  //       price: price,
-  //       seller_id: "62a61e994fcef281a80766c7",
-  //       sold: sold,
-  //       stock: stock,
-  //       tags: tags,
-  //       views: views,
-  //       createdAt: created_at,
-  //       updatedAt: updated_at,
-  //     }
-      // Product.insertMany(p)
-      // let product = new Product(p)
-      // console.log(product)
-  //   })
-  // })
   
   let products = []
   const {type} = req.body
@@ -232,9 +164,8 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
       { $limit: 10 }
     ])
     
-    
   } else if(type === "top_sales"){
-    const Sales = mongoose.model("Sales")
+
     products = await Sales.aggregate([
       {$group: {
         "_id": {
@@ -281,19 +212,13 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
       { $limit: 20 }
     ])
   }
-  
   res.send(products)
-  
 }
 
 
 export const topWishlistProducts = async (req: Request, res: ApiResponse)=> {
 
-
 }
-
-
-
 
 
 

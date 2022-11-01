@@ -6,14 +6,9 @@ import axios, {Axios, AxiosInstance, AxiosRequestHeaders} from 'axios'
 // export const baseUri = 'http://192.168.43.170:5000';
 
 
-export let baseUri = 'https://phone-mela-api-server.netlify.app/.netlify/functions/server'
-
-
-if(import.meta.env.MODE === "development") {
-  baseUri = 'http://localhost:1000'
-  // baseUri = 'https://phone-mela-api-server.netlify.app/.netlify/functions/server'
-  // baseUri = 'http://localhost:8888/.netlify/functions/server'
-}
+export let baseUri =  import.meta.env.DEV
+    ? 'http://192.168.91.224:1000'
+    : 'https://phone-mela-api-server.netlify.app/.netlify/functions/server'
 
 interface MyHeaders  extends  AxiosRequestHeaders {
   token: string

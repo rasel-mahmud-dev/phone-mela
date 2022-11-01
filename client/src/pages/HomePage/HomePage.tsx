@@ -1,12 +1,12 @@
-import React, {FC, useRef} from 'react'
-import api from "../apis/api";
+import React, {FC, useEffect, useRef} from 'react'
+import api from "apis/api";
 import "./homePage.scss"
-import fullLink from "../utils/fullLink";
+import fullLink from "../../utils/fullLink";
 
 import  {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faArrowRight} from "@fortawesome/pro-regular-svg-icons"
 import { fetchBrands, setHomePageSectionProducts, toggleHandleCart, toggleHandleWishlist,
-} from "src/store/actions/productAction";
+} from "actions/productAction";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,15 +14,16 @@ import {
 } from "reducers/productReducer";
 import { toggleSideBar} from "actions/toolsAction";
 import {RootStateType} from "store/index";
-import Product from "../Common/Product/Product";
-import slugify from "../utils/slugify";
-import fetchHomePageSectionProducts from "../Common/funtions";
+import Product from "../../Common/Product/Product";
+import slugify from "../../utils/slugify";
+import fetchHomePageSectionProducts from "../../Common/funtions";
 import Helmet from "react-helmet";
 import Preload from "UI/Preload/Preload";
-import Layout from "../Common/Layout/Layout";
-import Carousel from 'components/UI/Carousel/Carousel';
+import Layout from "../../Common/Layout/Layout";
+import Carousel from 'UI/Carousel/Carousel';
 import {ActionTypes} from "actions/actionTypes";
 import {useNavigate} from "react-router-dom";
+import Banner from "pages/HomePage/components/Banner";
 
 
 interface HomePageProps{}
@@ -59,8 +60,7 @@ const HomePage:FC<HomePageProps> = (props)=> {
     // {url: "/api/homepage-products", type: "latest", payload: "topDiscount"},
   ]
 
-  React.useEffect(()=>{
-    
+  useEffect(()=>{
     (async function (){
       sections.map(sec=>{
         (async function (){
@@ -163,14 +163,7 @@ const HomePage:FC<HomePageProps> = (props)=> {
       <Helmet>
         <link rel="canonical" href={`https://phone-mela.vercel.app`} />
         <title>Home Page of phone-mela.vercel.app</title>
-        {/*<meta*/}
-        {/*  name="description"*/}
-        {/*  content="Get stats about every music from every movie"*/}
-        {/*/>*/}
-        {/*<meta*/}
-        {/*  name="keywords"*/}
-        {/*  content="Music, Audio, Lyrics"*/}
-        {/*/>*/}
+        
       </Helmet>
       
       <Layout openSidebar={openSideBar.where === "homePage" && openSideBar.isOpen} className="container-1400 page_wrapper">
@@ -229,51 +222,19 @@ const HomePage:FC<HomePageProps> = (props)=> {
           </div>
         </div>
         
-        <div className="content my-3" ref={contentRef}>
+        <div className="content" ref={contentRef}>
           
-          <div className="mt-2" />
           
           <div onClick={clickOnOverlay} className={[openSideBar.where === "homePage" && openSideBar.isOpen && "open-sidebar" ? "content-overlay" : ""].join(" ")} />
             
             <div className="">
   
+              <Banner />
               
-              <div className="banner">
-                {/*{bannerCarousel()}*/}
-                
-  
-                <Carousel >
-                  <div>
-                    <img className="swiper-lazy" src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653556/phone_mela/products/c4.jpg")} alt=""/>
-                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white">
-                      <img className="" src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653556/phone_mela/products/c4_low.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div>
-                    <img className="swiper-lazy" data-src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653555/phone_mela/products/c3.jpg")} alt=""/>
-                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white">
-                      <img className="" src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653556/phone_mela/products/c3_low.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div>
-                    <img className="swiper-lazy" data-src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653667/phone_mela/products/c7.jpg")} alt=""/>
-                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white">
-                      <img className="" src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653556/phone_mela/products/c7_low.jpg")} alt=""/>
-                    </div>
-                  </div>
-                  <div>
-                    <img className="swiper-lazy" data-src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653643/phone_mela/products/c6.jpg")} alt=""/>
-                    <div className="swiper-lazy-preloader swiper-lazy-preloader-white">
-                      <img className="" src={fullLink("https://res.cloudinary.com/rasel/image/upload/v1650653556/phone_mela/products/c6_low.jpg")} alt=""/>
-                    </div>
-                  </div>
-                </Carousel>
-                
-              </div>
       
               <div className={["page_wrapper", openSideBar.where === "homePage" && openSideBar.isOpen ? "open-sidebar" : "close-sidebar"].join(" ")}>
 
-                <div className="w-full" >
+                <div className="w-full px-3" >
           
                   {/*<FontAwesomeIcon icon={faBars} />*/}
           
@@ -308,8 +269,8 @@ const HomePage:FC<HomePageProps> = (props)=> {
                           </div>
                         </div>
                       </div>
-                      <div className="home_products_list__container">
-                        <div className="home_products_list single_products_list">
+                      <div className="">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 md:gap-x-4">
                           {homePageSectionProducts[section as keyof HomePageSectionProductsType] && homePageSectionProducts[section].products.map((prod: ProductType, i: number)=>(
                             <div className="home_product_item__wrapper">
                             <Product

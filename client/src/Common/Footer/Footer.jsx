@@ -50,7 +50,7 @@ const Footer = (props) => {
   
   
   return (
-    <div className='footer'>
+    <div className='footer bg-primary-400'>
       <div className="container-1200 px-4">
         <div className="py-1 flex flex-row">
           { short.map((section, index)=>(

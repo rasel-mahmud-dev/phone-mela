@@ -16,4 +16,4 @@ const schemaObject: ObjectFlags<SalesType> = {
   order_id: {type: mongoose.Schema.Types.ObjectId, ref: "Order"},
 }
 
-mongoose.model('Sales', new mongoose.Schema(schemaObject, {timestamps: true}));
+export default  mongoose.model('Sales', new mongoose.Schema(schemaObject, {timestamps: true}));

@@ -411,7 +411,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
               </div>
             ) }
             
-            <div className="single_products_list filter_page">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 md:gap-x-4">
               { this.renderProductList() }
             </div>
   

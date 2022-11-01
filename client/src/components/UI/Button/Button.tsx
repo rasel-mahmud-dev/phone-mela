@@ -1,13 +1,7 @@
-import React from "react";
-import {Link} from "react-router-dom"
+import React, {FC, HTMLAttributes} from "react";
 
-import "./Button.scss"
 
-type ButtonTypes ='default' | 'primary' | 'ghost' | 'dashed' | 'link' | 'text'
-interface BaseButtonProps {
-  type?: ButtonTypes;
-  icon?: React.ReactNode;
-  size?: string;
+interface BaseButtonProps extends HTMLAttributes<HTMLButtonElement>{
   loading?: boolean | { delay?: number };
   prefixCls?: string;
   className?: string;
@@ -18,74 +12,19 @@ interface BaseButtonProps {
 }
 
 
-const Button = (props)=>{
+const Button:FC<BaseButtonProps> = (props)=>{
   const {
-    htmlType="button", childEvent=false, type="default", icon, ghost,
-    href, to, loading, theme, className,
-    size, block, radius, color, border, ...attributes
-  } = props
-  
-  let classes = ["btn", ghost?"bg-transparent":"", className]
-  if(!theme){
-    if(type === "text"){
-      classes.push(`btn-text`)
-    } else {
-      classes.push(`btn-default`)
-    }
-  }
-  classes.push(block ? "btn-block" : "")
-  classes.push(size === "large" ? "btn-large" : "")
-  classes.push(icon || loading ? "btn-icon" : "")
-  classes.push(loading ? "btn-disable" : "")
-  classes.push(theme ? `btn-${theme}` : "")
-  
-  function renderLinkBtn(){
-    if(to){
-      return <Link
-        to={to}
-        {...attributes}
-        className={classes.join(" ")}>
-        
-        {!loading && icon && <i
-          className={['btn-icon-i', icon].join(' ')} />
-        }
-        { loading && <LoadingIcon /> }
-        { props.children && <span className={[(icon || loading) ? 'ml-2' : ''].join(' ')}>{props.children}</span>}
-      </Link>
-      
-    } else {
-      return <a
-        href={href}
-        {...attributes}
-        className={classes.join(" ")}>
-        {!loading && icon && <i
-          className={['btn-icon-i', icon].join(' ')} />
-        }
-        { loading && <LoadingIcon /> }
-        { props.children && <span className={[(icon || loading) ? 'ml-2' : ''].join(' ')}>{props.children}</span>}
-      </a>
-    }
-  }
-  
-  if(type === "link"){
-    return renderLinkBtn()
-  } else {
-    if(to || href){
-      return renderLinkBtn()
-    } else {
+   loading,className,
+        ...attributes} = props
+    
       return (
         <button
-          type={htmlType}
-          className={classes.join(" ")}
+          className={`px-4 py-2 font-semibold rounded-md ${className}`}
           {...attributes}>
-          {!loading && icon && <i
-            className={[!childEvent ? 'event-none' : '', 'btn-icon-i', icon].join(' ')} />}
           { loading && <LoadingIcon /> }
-          { props.children && <span className={[(icon || loading) ? 'ml-2' : ''].join(' ')}>{props.children}</span>}
+          { props.children && <span className={[(loading) ? 'ml-2' : ''].join(' ')}>{props.children}</span>}
         </button>
       )
-    }
-  }
 }
 
 

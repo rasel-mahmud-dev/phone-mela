@@ -31,7 +31,7 @@ const Layout = (props) => {
     let el = React.cloneElement(content)
     return  (
       <div {...el.props}>
-        {(location.pathname.indexOf("/q") !== -1) ? <Search/> : ("/" === location.pathname) ? <Search /> : "" }
+        {/*{(location.pathname.indexOf("/q") !== -1) ? <Search/> : ("/" === location.pathname) ? <Search /> : "" }*/}
         {el.props.children}
       </div>
     )

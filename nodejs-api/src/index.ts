@@ -19,10 +19,9 @@ const App = function (app){
   mongoose.connect(uri).then(r=>{
     console.log("database connected.")
   }).catch(ex=>{
+    console.log(ex)
     console.log("database not connect")
   })
-
-
 }
 export default  App
 module.exports = App

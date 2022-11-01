@@ -20,7 +20,7 @@ const ReactLazyPreload  = (importStatement: any)=>{
 }
 
 
-const HomePage = ReactLazyPreload( ()=>import("./pages/HomePage") )
+const HomePage = ReactLazyPreload( ()=>import("pages/HomePage/HomePage") )
 const ProductPage = ReactLazyPreload( ()=>import("./pages/ProductPage/ProductPage") )
 const ProductDetails = ReactLazyPreload( ()=>import("./pages/ProductPage/ProductDetails/ProductDetails") )
 

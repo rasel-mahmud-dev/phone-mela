@@ -5,8 +5,11 @@
   // text-align: center;
 }
 
+
+
+
 body{
-  background: #f3f5f6;
+  background: rgba(67, 76, 185, 0.09);
 }
 
 h1,h2,h3,h4,h5,p,ul,li{margin: 0;
@@ -99,7 +102,7 @@ $color: rgb(247, 56, 18);
   margin-right: auto;
 }
 #appContent{
-  background: white;
+  //background: white;
 }
 
 .link_btn{
@@ -208,7 +211,7 @@ $color: rgb(247, 56, 18);
   display: flex;
   flex-direction: column;
   padding: 30px 15px 20px 15px;
-  background: white;
+  //background: rgba(248, 248, 248, 0.82);
   border-radius: 20px;
   position: relative;
   &:hover {
@@ -513,7 +516,7 @@ $color: rgb(247, 56, 18);
     width: 350px;
     
     height:  100%;
-    background: #17bb6a0a;
+    background: rgba(255, 255, 255, 0.04);
     z-index: 206;
     li, ul{
       list-style: none;
@@ -538,10 +541,10 @@ $color: rgb(247, 56, 18);
       padding: 5px 15px;
       overflow-y: auto;
       height: calc(100vh - 108px);
-      @include custom_scrollbar(rgba(4, 173, 65, 0.3));
+      @include custom_scrollbar(rgba(164, 164, 164, 0.17));
       @include get_down(1024px){
         padding: 20px 10px;
-        @include custom_scrollbar(rgba(4, 173, 65, 0.3));
+        @include custom_scrollbar(rgba(164, 164, 164, 0.17));
       }
     }
     
@@ -556,10 +559,6 @@ $color: rgb(247, 56, 18);
   }
   .content{
     width: 100%;
-    @include get_down(1024px) {
-      padding-left: 8px;
-      padding-right: 8px;
-    }
   }
   
   &.close-sidebar{

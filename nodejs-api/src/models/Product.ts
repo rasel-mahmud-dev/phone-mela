@@ -51,4 +51,4 @@ const schemaObject: ObjectFlags<ProductType> = {
   views: Number
 }
 
-mongoose.model('Product', new mongoose.Schema(schemaObject, {timestamps: true}));
+export default mongoose.model('Product', new mongoose.Schema(schemaObject, {timestamps: true}));

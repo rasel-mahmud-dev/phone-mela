@@ -65,7 +65,7 @@ const Input2 = (props) => {
 
 
   return (
-    <div className={["ooooo", className, label ? "with-label": ""].join(" ")}>
+    <div className={["ooooo ", className, label ? "with-label": ""].join(" ")}>
       <div className="input_wrapper">
 
       <label htmlFor={name}

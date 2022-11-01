@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from "react";
 import classnames from "classnames";
-import "./Input.scss";
 import File from './File'
 
 const Input = (props) => {

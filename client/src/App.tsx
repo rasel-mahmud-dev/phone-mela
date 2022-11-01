@@ -42,13 +42,13 @@ const App:FC<AppProps> = (props) => {
   
   React.useEffect(()=>{
     // load Cart products
-    if(auth.isAuthenticated) {
+    if(auth) {
       props.fetchCart(auth._id)
       props.fetchWishlist(auth._id)
     } else {
       props.fetchCart()
     }
-  }, [auth.isAuthenticated])
+  }, [auth])
   
   function clickOnBackdrop(){
     props.togglePopup()

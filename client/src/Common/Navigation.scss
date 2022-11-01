@@ -23,7 +23,6 @@
   position: fixed;
   z-index: 1000;
   top: 0;
-  background: white;
   width: 100%;
   padding: 0 20px;
   //@apply bg-primary-400;
@@ -89,10 +88,6 @@
           font-size: 14px;
           font-weight: 500;
         }
-      }
-      .auth_avatar_icon{
-        width: 20px;
-        height: 20px;
       }
     }
     .left_nav{

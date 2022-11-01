@@ -119,8 +119,8 @@ const MoreProducts: FC<MoreProductsProps> = (props) => {
         </div>
         
         
-        <div className="home_products_list__container px-3">
-          <div className="home_products_list single_products_list">
+        <div className="">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 md:gap-x-4">
           { a  && a.products && a.products.map((prod, i)=>(
             <Product
               key={i}
