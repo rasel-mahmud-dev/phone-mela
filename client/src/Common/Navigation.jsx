@@ -19,8 +19,11 @@ import { onFilterSearchChange, onSearchChange } from "actions/productAction";
 import Preload from "UI/Preload/Preload";
 import { faGlobe } from "@fortawesome/pro-light-svg-icons/faGlobe";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
-import Avatar from "src/Common/Avatar/Avatar";
+import Avatar from "src/components/Avatar/Avatar";
 import useWindowResize from "src/hooks/useWindowResize";
+import {BiShoppingBag, BiUser} from "react-icons/bi";
+import {HiOutlineShoppingBag} from "react-icons/hi";
+import {FaAngleDown} from "react-icons/all";
 
 const offerText =
     "ফোন মেলা এর যেকোনো আউটলেট অথবা অনলাইন শপ\n" +
@@ -272,21 +275,20 @@ const Navigation = (props) => {
         }
     }
 
-    function handleToggleSidebar() {
-        let where = "homePage";
-        if (location.pathname.indexOf("/q") !== -1) {
-            where = "filterPage";
-        } else if (location.pathname === "/auth/customer") {
-            where = "admin_dashboard";
-        } else if (location.pathname.indexOf("/auth/customer") !== -1) {
-            where = "admin_dashboard";
-        } else if (location.pathname === "/admin/dashboard") {
-            where = "admin_dashboard";
-        }
+    function handleToggleSideBar() {
+        // let where = "homePage";
+        // if (location.pathname.indexOf("/q") !== -1) {
+        //     where = "filterPage";
+        // } else if (location.pathname === "/auth/customer") {
+        //     where = "admin_dashboard";
+        // } else if (location.pathname.indexOf("/auth/customer") !== -1) {
+        //     where = "admin_dashboard";
+        // } else if (location.pathname === "/admin/dashboard") {
+        //     where = "admin_dashboard";
+        // }
         dispatch(
             toggleSideBar({
-                where: where,
-                isOpen: null,
+                isOpen: true,
             })
         );
     }
@@ -347,7 +349,7 @@ const Navigation = (props) => {
 
                             <Preload to="/" className="flex items-center text-decoration-none text-initial">
                                 <div className="w-36 md:w-40">
-                                    <img className="w-full" src="/Group2.svg" alt="" />
+                                    <img className="w-full" src="/Group3.png" alt="" />
                                 </div>
                             </Preload>
                         </div>
@@ -378,6 +380,7 @@ const Navigation = (props) => {
                         <div className="right_nav justify-content-end">
                             {((search && showSearchBar) || showSearchBar) && (
                                 <div className="w-full">
+	                                <div className="w-full floating_search_backdrop" onClick={()=>setShowSearchBar(false)}></div>
                                     <div className="floating_search">
                                         <div className="input_wrapper">
                                             <form onSubmit={handleSearch} className="w-full">
@@ -389,27 +392,31 @@ const Navigation = (props) => {
                                                     placeholder="Enter Product Name"
                                                 />
                                             </form>
-                                            <FontAwesomeIcon onClick={handleSearch} icon={faSearch} className="w-5" />
+                                            <FontAwesomeIcon onClick={handleSearch} icon={faSearch} className="text-lg" />
                                         </div>
                                     </div>
                                 </div>
                             )}
-
-                            {/*<li onClick={openSearchPanel} className="nav_item">*/}
-                            {/*  <FontAwesomeIcon*/}
-                            {/*    icon={showSearchBar ? faTimes : faSearch}*/}
-                            {/*  />*/}
-                            {/*</li>*/}
+	
+	
+	                        <li onClick={handleToggleSideBar} className="nav_item flex md:hidden w-8 h-8  items-center justify-center bg-white/10 rounded-full">
+                              <FaAngleDown className="text-light-500" />
+                            </li>
+	                        
+	                        <li onClick={openSearchPanel} className="nav_item block md:hidden">
+                             <FontAwesomeIcon onClick={handleSearch} icon={faSearch} className="w-5 !text-light-500" />
+                            </li>
 
                             <li className="nav_item relative ">
-                                <Preload to="/cart" className="flex justify-center items-center">
+                                <Preload to="/cart" className="flex justify-center items-center gap-x-2">
                                     <span className="hidden text-sm font-normal sm:inline-block">My Cart</span>
-                                    <FontAwesomeIcon icon={faShoppingBag} className="!text-light-700 !text-2xl" />
+	                                <HiOutlineShoppingBag className="!text-light-500 text-2xl"  />
+                                    {/*<FontAwesomeIcon icon={faShoppingBag} className="!text-light-700 !text-2xl" />*/}
                                     {totalCartProducts !== 0 && <span className="badge">{totalCartProducts}</span>}
                                 </Preload>
                             </li>
                             <li
-                                className="nav_item relative items-center"
+                                className="nav_item relative items-center gap-x-2"
                                 onMouseLeave={() => handleSetExpandDropdown("")}
                                 onMouseEnter={() => handleSetExpandDropdown("user_menu")}
                                 onClick={openMenuHandler}
@@ -420,10 +427,11 @@ const Navigation = (props) => {
                                     {auth ? (
                                         <Avatar avatar={auth.avatar} username="Rasel Mahmud" className="ml-2" />
                                     ) : (
-                                        <FontAwesomeIcon
-                                            icon={faUserCircle}
-                                            className="flex  !text-2xl  !text-light-700"
-                                        />
+										<BiUser className="text-light-500 text-2xl" />
+                                        // <FontAwesomeIcon
+                                        //     icon={faUserCircle}
+                                        //     className="flex  !text-2xl  !text-light-700"
+                                        // />
                                     )}
                                     {authDropdown(expandDropdown === "user_menu")}
                                 </div>

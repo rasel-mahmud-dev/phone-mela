@@ -135,10 +135,6 @@
           }
         }
       
-        @include down_sm{
-          padding: 14px 0px;
-        }
-      
       }
       .user-avatar{
         display: flex;
@@ -291,14 +287,35 @@
   }
 }
 
+.floating_search_backdrop{
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 110%;
+    left: 0;
+    top: 0;
+    background-color: rgba(80, 80, 80, 0.12);
+}
 .floating_search{
-  box-shadow: 0px 1px 7px -3px #4848487a;
+  //box-shadow: 0px 1px 7px -3px #4848487a;
+    position: fixed;
+    padding: 6px 10px;
+    z-index: 1004;
+    width: 100%;
+    //height: 110%;
+    left: 0;
+    //left: 10px;
+    //right: 10px;
+    top: 0;
+    background-color: rgba(80, 80, 80, 0.12);
+    backdrop-filter: blur(3px);
   .input_wrapper {
     display: flex;
     align-items: center;
     background: #ffffff4d;
-    padding: 6px 2px;
+    padding: 10px 2px;
     border-radius: 4px;
+      backdrop-filter: blur(3px);
     font-size: 14px;
     font-weight: 400;
     input {
@@ -307,6 +324,7 @@
       border: none;
       background: transparent;
       color: white;
+        font-weight: 500;
       padding: 0 10px;
   
     &::placeholder {

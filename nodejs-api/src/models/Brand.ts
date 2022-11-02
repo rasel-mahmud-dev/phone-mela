@@ -16,4 +16,4 @@ const schemaObject: ObjectFlags<BrandType> = {
   }
 }
 
-mongoose.model('Brand', new mongoose.Schema(schemaObject, {timestamps: true}));
+export default mongoose.model('Brand', new mongoose.Schema(schemaObject, {timestamps: true}));

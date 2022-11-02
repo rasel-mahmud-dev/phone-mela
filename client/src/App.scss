@@ -451,88 +451,37 @@ $color: rgb(247, 56, 18);
 .page_wrapper{
   display: flex;
   //position: relative;
-
-  .left_sidebar{
-    position: sticky;
-    //top: 130px;
-    bottom: 0;
-    width: 350px;
-
-    height:  100%;
-    background: rgba(255, 255, 255, 0.04);
-    z-index: 206;
-    li, ul{
-      list-style: none;
-    }
-
-    @include get_down(1024px){
-      background: #ffffff;
-      position: fixed;
-      box-shadow: 11px 0px 20px -3px #34343459;
-      margin: 0!important;
-      display: block;
-      transition: all .4s ease;
-      left: 0;
-      transform: translateX(-250px);
-    }
-    @include get_down(768px){
-      width: 220px;
-      transform: translateX(-230px);
-    }
-
-    &_content {
-      padding: 5px 15px;
-      overflow-y: auto;
-      height: calc(100vh - 108px);
-      @include custom_scrollbar(rgba(164, 164, 164, 0.17));
-      @include get_down(1024px){
-        padding: 20px 10px;
-        @include custom_scrollbar(rgba(164, 164, 164, 0.17));
-      }
-    }
-
-    //@include custom_scrollbar(rgba(4, 173, 65, 0.3));
-    //transition: transform .4s ease-in-out;
-    //width: 280px;
-    //overflow-y: auto;
-    //z-index: 250;
-    //li{
-    //  list-style: none;
-    //}
-  }
-  .content{
-    width: 100%;
-  }
-
-  &.close-sidebar{
-    .left_sidebar{
-      @include get_down(1024px){
-        transform: translateX(-360px);
-      }
-      @include get_down(768px){
-        transform: translateX(-230px);
-      }
-    }
-  }
-  &.open-sidebar{
-      @include get_down(1024px){
-      .left_sidebar{
-        transform: translateX(0px);
-        .left_sidebar_content{
-          padding: 10px 10px;
-        }
-      }
-    }
-  }
-
-  .content-overlay{
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 205;
-    background: rgba(61, 61, 61, 0.55);
-  }
+  //.content-overlay{
+  //  width: 100%;
+  //  height: 100vh;
+  //  position: fixed;
+  //  top: 0;
+  //  left: 0;
+  //  z-index: 205;
+  //  background: rgba(61, 61, 61, 0.55);
+  //}
 }
 
+
+.swiper{
+    .swiper-button-prev, .swiper-button-next {
+        width: 50px;
+        @apply bg-primary-400/30 rounded-md;
+        //background-color: rgba(255, 255, 255, 0.21);
+        position: absolute !important;
+        top: auto;
+        bottom: 20px !important;
+        //left: 100px;
+        &:after{
+            @apply text-primary-400;
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+    }
+    .swiper-button-prev{
+        right: 0!important;
+        left: auto;
+        transform: translateX(-70px);
+    }
+}

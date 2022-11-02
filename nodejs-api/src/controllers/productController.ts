@@ -2,6 +2,7 @@ import {ApiRequest, ApiResponse} from "../types";
 import {ObjectId} from "bson";
 import Sales from "../models/Sales";
 import Product from "../models/Product";
+import Brand from "../models/Brand";
 
 
 
@@ -217,7 +218,7 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
 
 
 export const fetchHomePageProductsV2 = async (
-    req: Omit<Request,'body'> & { body: {data: ["latest" |  "topFavorites" | "topSales" | "topDiscount" | "topRating"]} },
+    req: Omit<Request,'body'> & { body: {data: ["latest" |  "topFavorites" | "topSales" | "topDiscount" | "topRating" | "topBrands"]} },
     res: ApiResponse<HomePageProductResponse[]>
 )=> {
   
@@ -226,6 +227,9 @@ export const fetchHomePageProductsV2 = async (
     let products: any = {}
     
     for(let section of data){
+        if(section === "topBrands"){
+            products[section] = await Brand.find({}).sort({ createdAt: 'desc'}).limit(50)
+        }
         if(section === "latest"){
             products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
         }

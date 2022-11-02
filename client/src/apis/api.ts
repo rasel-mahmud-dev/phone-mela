@@ -7,8 +7,8 @@ import axios, {Axios, AxiosInstance, AxiosRequestHeaders} from 'axios'
 
 
 export let baseUri =  import.meta.env.DEV
-    // ? 'http://192.168.91.224:1000'
-    ? 'http://localhost:1000'
+    ? 'http://192.168.91.224:1000'
+    // ? 'http://localhost:1000'
     : 'https://phone-mela-api-server.netlify.app/.netlify/functions/server'
 
 interface MyHeaders  extends  AxiosRequestHeaders {

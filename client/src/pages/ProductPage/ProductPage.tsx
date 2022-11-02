@@ -28,6 +28,10 @@ import withLocation from "../../utils/withLocation";
 import {OpenSideBarType, ToolsReducerType} from "reducers/toolsReducer";
 import Layout from "../../Common/Layout/Layout";
 import fullLink from "src/utils/fullLink";
+import Sidebar from "components/Sidebar/Sidebar";
+import HomePageSidebar from "pages/HomePage/components/HomePageSidebar";
+import {FaAngleLeft} from "react-icons/all";
+import Preload from "UI/Preload/Preload";
 
 
 interface ProductPageProps{
@@ -63,7 +67,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       httpFetch: false,
       httpMessage: ""
     }
-    this.clickOnOverlay = this.clickOnOverlay.bind(this)
+
     this.handleToggleSideBar = this.handleToggleSideBar.bind(this)
     this.returnFilterResultItems = this.returnFilterResultItems.bind(this)
   }
@@ -278,8 +282,8 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       />
     })
   }
-  
-  clickOnOverlay(){
+    
+    handleCloseSidebar=()=>{
     this.props.toggleSideBar({
       where: "filterPage",
       isOpen: false
@@ -327,19 +331,34 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
         return  "Normal"
       }
     }
+    
+    
     return (
-      
-      
-      <div>
-      <Layout openSidebar={openSideBar.where === "filterPage" && openSideBar.isOpen} className="container-1400 page_wrapper">
-  
-        <div className="left_sidebar">
-          {/*filter_bar h-[100vh] w-[280px] px-0l*/}
-          <div className="left_sidebar_content">
-            <h2 className="font-medium text-md m-2 ">Filter</h2>
+      <div className="container-1400 page_wrapper">
+       
+       <Sidebar isOpenSidebar={openSideBar.isOpen} header={()=>(
+           <div className="sidebar_nav bg-primary-400 flex items-center px-3">
+               <div className="w-8 h-8 flex items-center justify-center bg-white/10 rounded-full mr-2" onClick={this.handleCloseSidebar}>
+                    <FaAngleLeft className="text-light-500" />
+               </div>
+                <Preload to="/" className="flex items-center text-decoration-none text-initial">
+                    <div className="w-36 md:w-40">
+                        <img className="w-full" src="/Group3.png" alt="" />
+                    </div>
+                </Preload>
+           </div>
+       )} onClose={this.handleCloseSidebar}>
+           
+           <h2 className="font-medium text-md m-2 ">Filter</h2>
             <FilterSidebar returnFilterResultItems={this.returnFilterResultItems} brands={this.props.productState.brands} />
-          </div>
-        </div>
+         {/*<FilterSidebar*/}
+         {/*    showBrands={showBrands}*/}
+         {/*    handleClickOnBrand={handleClickOnBrand}*/}
+         {/*    handleShowAllBrands={handleShowAllBrands}*/}
+         {/*    fetchedHomePageSectionProduct={fetchedHomePageSectionProduct}*/}
+         {/*/>*/}
+    </Sidebar>
+        
         
         <div className="content pl-4 w-full px-2 mt-2 " id="content">
   
@@ -434,7 +453,7 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
      
         
         </div>
-      </Layout>
+  
       
     <div className="container-1600">
       
