@@ -31,3 +31,6 @@ nodejs-api/netlify.toml
 nodejs-api/.gitignore
 # Local Netlify folder
 .netlify
+
+
+# deploy on vercel rasel.mahmud.dev

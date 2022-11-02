@@ -216,6 +216,103 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
 }
 
 
+export const fetchHomePageProductsV2 = async (
+    req: Omit<Request,'body'> & { body: {data: ["latest" |  "topFavorites" | "topSales" | "topDiscount" | "topRating"]} },
+    res: ApiResponse<HomePageProductResponse[]>
+)=> {
+  
+    const {data} = req.body
+    
+    let products: any = {}
+    
+    for(let section of data){
+        if(section === "latest"){
+            products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
+        }
+        if(section === "topFavorites"){
+            // products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
+        }
+        if (section === "topDiscount"){
+            products[section] = await  Product.find({}).sort({ discount: 'desc'}).limit(10)
+        }
+        if (section === "topRating"){
+            products[section] = await Product.aggregate([
+                {
+                    $lookup: {
+                        from: "reviews",
+                        foreignField: "product_id",
+                        localField: "_id",
+                        as: "ratings"
+                    }
+                },
+                {
+                    $addFields: {
+                        averageRate: {
+                            $avg: "$ratings.rate"
+                        }
+                    }
+                },
+                {
+                    $sort: {
+                        averageRate: -1
+                    }
+                },
+                { $limit: 10 }
+            ])
+        }
+        if (section === "topSales"){
+            products[section] = await Sales.aggregate([
+                {$group: {
+                        "_id": {
+                            product_id:  "$product_id",
+                            order_id:  "$order_id",
+                        },
+                        sold: { $sum: 1 }
+                    },
+                },
+                { $addFields: {
+                        "product_id":  "$_id.product_id",
+                        "order_id":  "$_id.order_id"
+                    }},
+                { $project: { _id: 0 }},
+                { $lookup: {
+                        from: "products",
+                        localField: "product_id",
+                        foreignField: "_id",
+                        as: "product"
+                    }},
+                { $unwind: {path: "$product", preserveNullAndEmptyArrays: true} },
+                { $addFields: {
+                        "cover":  "$product.cover",
+                        "title":  "$product.title",
+                        "price":  "$product.price",
+                        "discount":  "$product.discount",
+                        "_id":  "$product._id",
+                    }},
+                { $lookup: {
+                        from: "orders",
+                        localField: "order_id",
+                        foreignField: "_id",
+                        as: "order"
+                    }},
+                { $unwind: {path: "$order", preserveNullAndEmptyArrays: true} },
+                { $addFields: {
+                        "totalPrice":  "$order.price"
+                    }},
+                { $project: {
+                        order: 0,
+                        product: 0
+                    } },
+                { $sort: { sold: -1 } },
+                { $limit: 20 }
+            ])
+        }
+    }
+    
+  res.send(products)
+}
+
+
 export const topWishlistProducts = async (req: Request, res: ApiResponse)=> {
 
 }

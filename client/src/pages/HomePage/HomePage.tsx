@@ -31,7 +31,7 @@ interface HomePageProps{}
 const HomePage:FC<HomePageProps> = (props)=> {
   
   const {
-    productState: { cartProducts, homePageSectionProducts, wishlist, brands },
+    productState: { cartProducts, homePageSectionProducts, fetchedHomePageSectionProduct, wishlist, brands },
     auth,
     tools: {openSideBar}
   }  = useSelector((state: RootStateType) => state)
@@ -52,54 +52,74 @@ const HomePage:FC<HomePageProps> = (props)=> {
     brands: [],
   })
   
-  const sections = [
-    {url: "/api/homepage-products", type: "latest", payload: "latest"},
-    {url: "/api/homepage-products", type: "top_discount", payload: "topDiscount"},
-    {url: "/api/homepage-products", type: "top_rating", payload: "topRating"},
-    {url: "/api/homepage-products", type: "top_sales", payload: "topSales"},
-    // {url: "/api/homepage-products", type: "latest", payload: "topDiscount"},
-  ]
-
+  
   useEffect(()=>{
-    (async function (){
-      sections.map(sec=>{
-        (async function (){
-          // caching products
-          if(!(homePageSectionProducts[sec.payload]) || !(homePageSectionProducts[sec.payload].products) ||  homePageSectionProducts[sec.payload].products.length === 0) {
-            let products = await fetchHomePageSectionProducts(sec.url, sec.type)
-            if (products) {
-              dispatch(setHomePageSectionProducts({
-                [sec.payload]: {products: products}
-              }))
-            }
+    
+      let h = {}
+     
+      let data = Object.keys(homePageSectionProducts)
+      api.post(`/api/homepage-products/v2`, {
+          data: data,
+      }).then(({ data, status }) => {
+          if(status === 200) {
+              dispatch({
+                  type: ActionTypes.FETCH_HOMEPAGE_SECTION_PRODUCTS,
+                  payload: data,
+              });
           }
-        }())
+      }).catch(ex=>{
+      
       })
-  
-  
-      if(!(homePageSectionProducts.topFavorites) || !(homePageSectionProducts.topFavorites.products) ||  homePageSectionProducts.topFavorites.products.length === 0) {
-        api.get("/api/top-wishlist-products").then(response => {
-          if (response.status === 200) {
-            dispatch(setHomePageSectionProducts({topFavorites: {products: response.data}}))
-          }
-        }).catch(ex => {
-        })
-      }
-    }())
+
+      // if(response.status === 200) {
+      //     dispatch({
+      //         type: ACTION_TYPES.FETCH_HOMEPAGE_SECTION_PRODUCTS,
+      //         payload: response.data
+      //     })
+      // }
+      //
+      
+      
+    // (async function (){
+    //   sections.map(sec=>{
+    //     (async function (){
+    //       // caching products
+    //       if(!(homePageSectionProducts[sec.payload]) || !(homePageSectionProducts[sec.payload].products) ||  homePageSectionProducts[sec.payload].products.length === 0) {
+    //         let products = await fetchHomePageSectionProducts(sec.url, sec.type)
+    //         if (products) {
+    //           dispatch(setHomePageSectionProducts({
+    //             [sec.payload]: {products: products}
+    //           }))
+    //         }
+    //       }
+    //     }())
+    //   })
+    //
+    //
+    //   if(!(homePageSectionProducts.topFavorites) || !(homePageSectionProducts.topFavorites.products) ||  homePageSectionProducts.topFavorites.products.length === 0) {
+    //     api.get("/api/top-wishlist-products").then(response => {
+    //       if (response.status === 200) {
+    //         dispatch(setHomePageSectionProducts({topFavorites: {products: response.data}}))
+    //       }
+    //     }).catch(ex => {
+    //     })
+    //   }
+    // }())
     
     // api.post("/api/cart-products").then(r=>{}).catch(ex=>{})
 
-    dispatch(fetchBrands( (data): void => {
-      if (data) {
-        setShowBrands({
-          status: "top",
-          brands: data.slice(0, 15)
-        })
-      }
-    }))
+    // dispatch(fetchBrands( (data): void => {
+    //   if (data) {
+    //     setShowBrands({
+    //       status: "top",
+    //       brands: data.slice(0, 15)
+    //     })
+    //   }
+    // }))
     
   }, [])
   
+    
   
   function handleShowAllBrands(status: "top" | "all"){
     if(brands && brands.length > 0){
@@ -163,7 +183,6 @@ const HomePage:FC<HomePageProps> = (props)=> {
       <Helmet>
         <link rel="canonical" href={`https://phone-mela.vercel.app`} />
         <title>Home Page of phone-mela.vercel.app</title>
-        
       </Helmet>
       
       <Layout openSidebar={openSideBar.where === "homePage" && openSideBar.isOpen} className="container-1400 page_wrapper">
@@ -185,7 +204,7 @@ const HomePage:FC<HomePageProps> = (props)=> {
         
             <h2 className="text-[15px] text-gray-800 font-medium mt-4">TOP DISCOUNT</h2>
             <div className="grid grid-cols-2 mt-1">
-              { homePageSectionProducts.topDiscount && homePageSectionProducts.topDiscount.products.map(discountProd=>(
+              { fetchedHomePageSectionProduct["topDiscount"] && fetchedHomePageSectionProduct["topDiscount"]?.map(discountProd=>(
                 <Preload key={discountProd._id} className="small_sidebar__prod" to={`/product/${slugify(discountProd.title)}/${discountProd._id}`}>
                   <div>
                     <div className="mx-auto w-8">
@@ -200,7 +219,7 @@ const HomePage:FC<HomePageProps> = (props)=> {
         
             <h2 className="text-[15px] text-gray-800 font-medium mt-4">TOP SELLING PRODUCTS</h2>
             <div className="grid grid-cols-2 mt-1">
-              { homePageSectionProducts.topSales && homePageSectionProducts.topSales.products.map((discountProd: any, i: number)=> discountProd.sold > 0 && (
+              { fetchedHomePageSectionProduct["topSales"] && fetchedHomePageSectionProduct["topSales"]?.map((discountProd: any, i: number)=> discountProd.sold > 0 && (
                 <Preload key={i} className="small_sidebar__prod" to={`/product/${slugify(discountProd.title)}/${discountProd._id}`}>
                   <div>
                     <div className="mx-auto w-8">
@@ -271,7 +290,7 @@ const HomePage:FC<HomePageProps> = (props)=> {
                       </div>
                       <div className="">
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 md:gap-x-4">
-                          {homePageSectionProducts[section as keyof HomePageSectionProductsType] && homePageSectionProducts[section].products.map((prod: ProductType, i: number)=>(
+                          {fetchedHomePageSectionProduct[section as keyof HomePageSectionProductsType] && fetchedHomePageSectionProduct[section].map((prod: ProductType, i: number)=>(
                             <div className="home_product_item__wrapper">
                             <Product
                               key={i}

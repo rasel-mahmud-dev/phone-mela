@@ -90,6 +90,7 @@ export interface ProductStateType{
     // { pageNo: 4, perPage: 5, products: {} }
   ],
   homePageSectionProducts: HomePageSectionProductsType,
+    fetchedHomePageSectionProduct: {},
   cartProducts: CartProductType[
     // {id: 0, product_id: 0, customer_id: 0,  title: "", price: 0, quantity: 10}
   ],
@@ -150,6 +151,7 @@ let initialProductState: ProductStateType  = {
     // { pageNo: 4, perPage: 5, products: {} }
   ],
   brands: [],
+fetchedHomePageSectionProduct: {},
   homePageSectionProducts: {
     latest: {
       label: "LATEST DEVICES",
@@ -157,7 +159,8 @@ let initialProductState: ProductStateType  = {
       products: []
     },
     topFavorites: { label: "TOP 10 BY FANS", products: []},
-    topSales: {label: "Top Selling",
+    topSales: {
+      label: "Top Selling",
       fields: ["sold"],
       products: [],
       sliderImages: [
@@ -323,22 +326,23 @@ const productsReducer=(state = initialProductState, action: any): ProductStateTy
       return  updatedState
     
       
-    case ActionTypes.FETCH_HOMEPAGE_PRODUCTS:
-      if(action.payload.latest) {
-        updatedState.homePageSectionProducts.latest!.products = action.payload.latest.products
-      }
-      if(action.payload.topFavorites) {
-        updatedState.homePageSectionProducts.topFavorites!.products = action.payload.topFavorites.products
-      }
-      if(action.payload.topDiscount) {
-        updatedState.homePageSectionProducts.topDiscount!.products =  action.payload.topDiscount.products
-      }
-      if(action.payload.topSales) {
-        updatedState.homePageSectionProducts.topSales!.products = action.payload.topSales.products
-      }
-      if(action.payload.topRating) {
-        updatedState.homePageSectionProducts.topRating!.products = action.payload.topRating.products
-      }
+    case ActionTypes.FETCH_HOMEPAGE_SECTION_PRODUCTS:
+        updatedState.fetchedHomePageSectionProduct = action.payload
+      // if(action.payload.latest) {
+      //   updatedState.homePageSectionProducts.latest!.products = action.payload.latest.products
+      // }
+      // if(action.payload.topFavorites) {
+      //   updatedState.homePageSectionProducts.topFavorites!.products = action.payload.topFavorites.products
+      // }
+      // if(action.payload.topDiscount) {
+      //   updatedState.homePageSectionProducts.topDiscount!.products =  action.payload.topDiscount.products
+      // }
+      // if(action.payload.topSales) {
+      //   updatedState.homePageSectionProducts.topSales!.products = action.payload.topSales.products
+      // }
+      // if(action.payload.topRating) {
+      //   updatedState.homePageSectionProducts.topRating!.products = action.payload.topRating.products
+      // }
       return  updatedState
     
       
@@ -438,7 +442,7 @@ const productsReducer=(state = initialProductState, action: any): ProductStateTy
     //
     //  case ActionTypes.CLEAR_PRODUCT_DETAILS:
     //   return {...state, productDetails: {} }
-      
+    
     case ActionTypes.SEARCH_CHANGE:
       updatedState.search.value = action.payload.value
       return  updatedState

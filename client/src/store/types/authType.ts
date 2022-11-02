@@ -2,19 +2,6 @@ import {ActionTypes} from "actions/actionTypes";
 
 
 
-export interface AuthStateType {
-  isAuthenticated: boolean | null
-  firstName?: string,
-  email: string
-  _id: string
-  username: string
-  role?:  "admin" | "customer"
-  avatar?: string
-}
-
-
-
-
 export type LoginActionPayload = {
   isAuthenticated: boolean
   username: string

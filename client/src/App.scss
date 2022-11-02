@@ -5,6 +5,9 @@
   // text-align: center;
 }
 
+:root{
+    --header-height: 87px
+}
 
 
 
@@ -108,7 +111,7 @@ $color: rgb(247, 56, 18);
 .link_btn{
   font-weight: 300;
   @apply text-dark-900;
-  
+
   &:hover{
     @apply text-primary-400
   }
@@ -138,68 +141,8 @@ $color: rgb(247, 56, 18);
     grid-template-columns: repeat(6, 1fr);
     //flex-basis: 200px;
   }
-
-
-
-  @include get_down(1500px){
-    grid-template-columns: repeat(5, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(1290px){
-    grid-template-columns: repeat(4, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(1170px){
-    grid-template-columns: repeat(3, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(970px){
-    grid-template-columns: repeat(3, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(930px){
-    grid-template-columns: repeat(2, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(730px){
-    grid-template-columns: repeat(2, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(576px){
-    grid-template-columns: repeat(1, 1fr);
-    justify-content: space-between;
-    grid-column-gap: 20px;
-    .home_product_item{
-      margin: 10px 0;
-    }
-  }
 }
 
-.filter_page{
-  grid-template-columns: repeat(5, 1fr);
-  @include get_down(1270px){
-    grid-template-columns: repeat(4, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(1170px){
-    grid-template-columns: repeat(3, 1fr);
-    //flex-basis: 200px;
-  }
-  @include get_down(960px){
-    grid-template-columns: repeat(2, 1fr);
-    //flex-basis: 200px;
-  }
-  
-  @include get_down(668px){
-    grid-template-columns: repeat(1, 1fr);
-  }
-  .home_product_item {
-    align-items: center;
-    user-select: none;
-    width: 100%;
-  }
-  
-}
 
 
 .home_product_item {
@@ -219,7 +162,7 @@ $color: rgb(247, 56, 18);
       height: 50%;
     }
   }
-  
+
   @include get_down(576px){
     max-width: 250px;
     margin: auto;
@@ -234,7 +177,7 @@ $color: rgb(247, 56, 18);
       }
     }
   }
-  
+
   .hover_content{
     overflow: hidden;
     height: 0%;
@@ -311,18 +254,18 @@ $color: rgb(247, 56, 18);
       }
     }
   }
-  
+
   //.add_to_cart_btn{
   //  height: 0px;
   //  transition: all .4s ease;
   //  overflow: hidden;
   //  //display: none;
   //}
-  
+
   @include down_sm {
     //min-width: 150px;
   }
-  
+
   .product_badge{
     top: 18px;
     z-index: 1;
@@ -340,11 +283,11 @@ $color: rgb(247, 56, 18);
       font-weight: 400;
     }
   }
-  
+
   .product_cover {
     max-width: 95px;
     margin: 20px auto;
-    
+
     position: relative;
     img {
       max-width: 95px;
@@ -360,11 +303,11 @@ $color: rgb(247, 56, 18);
       width: 100%;
       height: 0px;
     }
-    
-    
+
+
   }
-  
-  
+
+
   .item__title{
     a {
       margin-top: 10px;
@@ -374,9 +317,9 @@ $color: rgb(247, 56, 18);
     }
     @include down_sm {
       font-weight: 500;
-      
+
     }
-    
+
   }
   .product_rating{
     .svg-inline--fa{
@@ -464,7 +407,7 @@ $color: rgb(247, 56, 18);
       //background: #;
       padding: 5px 10px;
     }
-    
+
     tbody {
       tr {
         td {
@@ -476,21 +419,21 @@ $color: rgb(247, 56, 18);
       }
     }
   }
-  
+
   .cart_image_root {
     width: 70px;
     height: 70px;
     display: inline-flex;
     justify-content: center;
-    
+
   }
-  
+
   .cart-image {
     max-width: 70px;
     max-height: 70px;
     display: table-cell;
     object-fit: initial;
-    
+
     img {
       width: 100%;
       height: 100%;
@@ -508,20 +451,20 @@ $color: rgb(247, 56, 18);
 .page_wrapper{
   display: flex;
   //position: relative;
-  
+
   .left_sidebar{
     position: sticky;
     //top: 130px;
     bottom: 0;
     width: 350px;
-    
+
     height:  100%;
     background: rgba(255, 255, 255, 0.04);
     z-index: 206;
     li, ul{
       list-style: none;
     }
-    
+
     @include get_down(1024px){
       background: #ffffff;
       position: fixed;
@@ -536,7 +479,7 @@ $color: rgb(247, 56, 18);
       width: 220px;
       transform: translateX(-230px);
     }
-  
+
     &_content {
       padding: 5px 15px;
       overflow-y: auto;
@@ -547,7 +490,7 @@ $color: rgb(247, 56, 18);
         @include custom_scrollbar(rgba(164, 164, 164, 0.17));
       }
     }
-    
+
     //@include custom_scrollbar(rgba(4, 173, 65, 0.3));
     //transition: transform .4s ease-in-out;
     //width: 280px;
@@ -560,7 +503,7 @@ $color: rgb(247, 56, 18);
   .content{
     width: 100%;
   }
-  
+
   &.close-sidebar{
     .left_sidebar{
       @include get_down(1024px){
@@ -581,7 +524,7 @@ $color: rgb(247, 56, 18);
       }
     }
   }
-  
+
   .content-overlay{
     width: 100%;
     height: 100vh;

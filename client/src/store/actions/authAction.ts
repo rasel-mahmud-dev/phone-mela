@@ -7,14 +7,7 @@ import errorResponse from "../../response/errorResponse";
 
 
 function failLogin(dispatch: any){
-  const payload = {
-    isAuthenticated: false,
-    username: "",
-    _id: "" ,
-    email: "",
-    avatar: "",
-    role: ""
-  }
+  const payload = false
   dispatch({
     type: ActionTypes.LOGIN,
     payload: payload
@@ -46,7 +39,6 @@ export const register = (userData: { username: string, email: string, password: 
 
   push && push("/")
 }
-
 
 
 

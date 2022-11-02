@@ -133,10 +133,10 @@ let id: NodeJS.Timeout;
 export function toggleHandleCart(product: AddCartPayload, isShowPopup: boolean = false, popupTimeout?: number){
   return async function (dispatch: any, getState: any){
     id && clearTimeout(id)
-    const {productState, auth}: RootStateType = getState()
+    const {productState, auth: {auth}}: RootStateType = getState()
     let updatedCartProducts = [...productState.cartProducts]
   
-    if (auth.isAuthenticated) {
+    if (auth) {
       let newCart: CartProductType;
       let index = updatedCartProducts.findIndex(cp => cp.product_id === product.product_id)
       if (index === -1) {

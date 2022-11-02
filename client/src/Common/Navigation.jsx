@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, {useEffect, useRef} from "react";
 import { connect, useDispatch } from "react-redux";
 import { logout } from "src/store/actions/authAction";
 
@@ -20,6 +20,7 @@ import Preload from "UI/Preload/Preload";
 import { faGlobe } from "@fortawesome/pro-light-svg-icons/faGlobe";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
 import Avatar from "src/Common/Avatar/Avatar";
+import useWindowResize from "src/hooks/useWindowResize";
 
 const offerText =
     "ফোন মেলা এর যেকোনো আউটলেট অথবা অনলাইন শপ\n" +
@@ -27,11 +28,14 @@ const offerText =
     "আকর্ষণীয় গিফট! Samsung, Xiaomi, Oppo, Nokia এই ঈদে দিচ্ছে বিশাল ডিসকাউন্ট এবং সাথে থাকছে অনেক গিফট | যোগাযোগ ইমেইল rasel.mahmud.dev@gmail.com, ফোন ০১৭৮৫৫১৩৫৩৫";
 
 const Navigation = (props) => {
-    const { auth, totalCartProducts, search } = props;
-    const navigationRef = useRef();
+    const { auth: { auth }, totalCartProducts, search } = props;
+    const navigationRef = useRef()
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
+	
+	let width = useWindowResize()
+	
 
     const [isShow_authMenuPanelId, set_authMenuPanelId] = React.useState(null);
     const [expandDropdown, setExpandDropdown] = React.useState("");
@@ -64,7 +68,7 @@ const Navigation = (props) => {
             isShow && (
                 <div className="dropdown_nav rounded-md py-4">
                     <ul className="min-w-[200px] bg-white text-sm font-normal">
-                        {auth.isAuthenticated ? (
+                        {auth ? (
                             <>
                                 {auth.role === "admin" && (
                                     <li className="auth-menu__item">
@@ -165,6 +169,7 @@ const Navigation = (props) => {
         const d = document.querySelector(".d");
         const navi = document.querySelector(".navigation");
         const footer = document.querySelector(".footer");
+		
         if (d && navi) {
             d.style.height = navi.offsetHeight + "px";
         }
@@ -178,22 +183,39 @@ const Navigation = (props) => {
             }, 10);
         }
 
+		
         // if(content && navi && footer){
         //   content.style.height = `calc(100vh - ${navi.offsetHeight + footer.offsetHeight}px)`
         // }
         // console.log(content )
     }
+	
 
-    React.useEffect(() => {
-        setShowSearchBar(!!search);
-        calculateSpace();
-        window.addEventListener("resize", function () {
-            calculateSpace();
-        });
-        // const leftSidebar= document.querySelector(".left_sidebar")
-        // console.log(leftSidebar)
-    }, []);
+	useEffect(()=>{
+		setShowSearchBar(!!search);
+		calculateSpace();
+		
+		if(navigationRef.current){
+			document.documentElement.style.setProperty(`--header-height`, navigationRef.current.offsetHeight + "px")
+		}
+		
+	}, [width, navigationRef.current])
+	
+    // useEffect(() => {
+    //     setShowSearchBar(!!search);
+    //     calculateSpace();
+    //     window.addEventListener("resize", function () {
+    //         calculateSpace();
+    //     });
+    //     // const leftSidebar= document.querySelector(".left_sidebar")
+    //     // console.log(leftSidebar)
+    // }, []);
+	
+	
+	
 
+	
+	
     let whiteLists = ["/", "/q", "/auth/customer", "/admin/dashboard", "/auth/customer/account-info"];
 
     React.useEffect(() => {
@@ -417,7 +439,7 @@ const Navigation = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="d" />
+            <div className="header-height" />
         </>
     );
 };

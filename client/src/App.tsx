@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import {connect} from "react-redux"
 import "./App.scss";
 import {fetchCurrentAuth} from "src/store/actions/authAction"
@@ -13,7 +13,7 @@ import {RootStateType} from "store/index";
 import {FILTERED_PRODUCTS_TYPE} from "store/types/prouductReduceTypes";
 import Footer from "./Common/Footer/Footer";
 import MyRoutes from "./MyRoutes";
-import {AuthStateType} from "store/types/authType";
+import {AuthStateType} from "reducers/authReducer";
 
 type AppProps = {
   togglePopup: any,
@@ -28,7 +28,7 @@ type AppProps = {
 
 const App:FC<AppProps> = (props) => {
   
-  const { auth, tools } = props
+  const { auth: { auth }, tools } = props
   const { action } = tools
   
   const normalRoutes = ["/auth/login", "/auth/signup"]
