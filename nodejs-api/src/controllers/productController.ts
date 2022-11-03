@@ -3,6 +3,7 @@ import {ObjectId} from "bson";
 import Sales from "../models/Sales";
 import Product from "../models/Product";
 import Brand from "../models/Brand";
+import redisConnect from "../database/redis";
 
 
 
@@ -216,104 +217,130 @@ export const fetchHomePageProducts = async (req: Omit<Request,'body'> & { body: 
   res.send(products)
 }
 
-
+let cachedData;
 export const fetchHomePageProductsV2 = async (
     req: Omit<Request,'body'> & { body: {data: ["latest" |  "topFavorites" | "topSales" | "topDiscount" | "topRating" | "topBrands"]} },
     res: ApiResponse<HomePageProductResponse[]>
 )=> {
   
-    const {data} = req.body
+    const { data} = req.body
     
     let products: any = {}
     
-    for(let section of data){
-        if(section === "topBrands"){
-            products[section] = await Brand.find({}).sort({ createdAt: 'desc'}).limit(50)
+    let client;
+    try {
+        
+        // first find store memory catch
+        if(cachedData){
+            return res.send(cachedData)
         }
-        if(section === "latest"){
-            products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
-        }
-        if(section === "topFavorites"){
-            // products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
-        }
-        if (section === "topDiscount"){
-            products[section] = await  Product.find({}).sort({ discount: 'desc'}).limit(10)
-        }
-        if (section === "topRating"){
-            products[section] = await Product.aggregate([
-                {
-                    $lookup: {
-                        from: "reviews",
-                        foreignField: "product_id",
-                        localField: "_id",
-                        as: "ratings"
-                    }
-                },
-                {
-                    $addFields: {
-                        averageRate: {
-                            $avg: "$ratings.rate"
-                        }
-                    }
-                },
-                {
-                    $sort: {
-                        averageRate: -1
-                    }
-                },
-                { $limit: 10 }
-            ])
-        }
-        if (section === "topSales"){
-            products[section] = await Sales.aggregate([
-                {$group: {
-                        "_id": {
-                            product_id:  "$product_id",
-                            order_id:  "$order_id",
-                        },
-                        sold: { $sum: 1 }
-                    },
-                },
-                { $addFields: {
-                        "product_id":  "$_id.product_id",
-                        "order_id":  "$_id.order_id"
-                    }},
-                { $project: { _id: 0 }},
-                { $lookup: {
-                        from: "products",
-                        localField: "product_id",
-                        foreignField: "_id",
-                        as: "product"
-                    }},
-                { $unwind: {path: "$product", preserveNullAndEmptyArrays: true} },
-                { $addFields: {
-                        "cover":  "$product.cover",
-                        "title":  "$product.title",
-                        "price":  "$product.price",
-                        "discount":  "$product.discount",
-                        "_id":  "$product._id",
-                    }},
-                { $lookup: {
-                        from: "orders",
-                        localField: "order_id",
-                        foreignField: "_id",
-                        as: "order"
-                    }},
-                { $unwind: {path: "$order", preserveNullAndEmptyArrays: true} },
-                { $addFields: {
-                        "totalPrice":  "$order.price"
-                    }},
-                { $project: {
-                        order: 0,
-                        product: 0
-                    } },
-                { $sort: { sold: -1 } },
-                { $limit: 20 }
-            ])
-        }
-    }
     
-  res.send(products)
+        // if memory cache is undefined then find from redis cache
+        // client = await redisConnect()
+        // let p = await client.get("phone_mela_homepage_data")
+        // cachedData = JSON.parse(p)
+        
+        // if(p){
+        //     return res.send(cachedData)
+        // }
+    
+        // if redis cache also not found then fetch from mongodb
+        for(let section of data){
+            if(section === "topBrands"){
+                products[section] = await Brand.find({}).sort({ createdAt: 'desc'}).limit(50)
+            }
+            if(section === "latest"){
+                products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
+            }
+            if(section === "topFavorites"){
+                // products[section] = await  Product.find({}).sort({ createdAt: 'desc'}).limit(10)
+            }
+            if (section === "topDiscount"){
+                products[section] = await  Product.find({}).sort({ discount: 'desc'}).limit(10)
+            }
+            if (section === "topRating"){
+                products[section] = await Product.aggregate([
+                    {
+                        $lookup: {
+                            from: "reviews",
+                            foreignField: "product_id",
+                            localField: "_id",
+                            as: "ratings"
+                        }
+                    },
+                    {
+                        $addFields: {
+                            averageRate: {
+                                $avg: "$ratings.rate"
+                            }
+                        }
+                    },
+                    {
+                        $sort: {
+                            averageRate: -1
+                        }
+                    },
+                    { $limit: 10 }
+                ])
+            }
+            if (section === "topSales"){
+                products[section] = await Sales.aggregate([
+                    {$group: {
+                            "_id": {
+                                product_id:  "$product_id",
+                                order_id:  "$order_id",
+                            },
+                            sold: { $sum: 1 }
+                        },
+                    },
+                    { $addFields: {
+                            "product_id":  "$_id.product_id",
+                            "order_id":  "$_id.order_id"
+                        }},
+                    { $project: { _id: 0 }},
+                    { $lookup: {
+                            from: "products",
+                            localField: "product_id",
+                            foreignField: "_id",
+                            as: "product"
+                        }},
+                    { $unwind: {path: "$product", preserveNullAndEmptyArrays: true} },
+                    { $addFields: {
+                            "cover":  "$product.cover",
+                            "title":  "$product.title",
+                            "price":  "$product.price",
+                            "discount":  "$product.discount",
+                            "_id":  "$product._id",
+                        }},
+                    { $lookup: {
+                            from: "orders",
+                            localField: "order_id",
+                            foreignField: "_id",
+                            as: "order"
+                        }},
+                    { $unwind: {path: "$order", preserveNullAndEmptyArrays: true} },
+                    { $addFields: {
+                            "totalPrice":  "$order.price"
+                        }},
+                    { $project: {
+                            order: 0,
+                            product: 0
+                        } },
+                    { $sort: { sold: -1 } },
+                    { $limit: 20 }
+                ])
+            }
+        }
+        
+        res.send(products)
+        cachedData = products;
+        // await client.set("phone_mela_homepage_data", JSON.stringify(products))
+        
+    } catch (ex){
+        res.send([])
+    } finally {
+        // await client?.quit()
+    }
 }
 
 

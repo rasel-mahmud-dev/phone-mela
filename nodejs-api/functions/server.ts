@@ -35,6 +35,7 @@ app.use(cors(corsOptions))
 
 const router = express.Router();
 
+console.log(process.env.NODE_ENV)
 
 if(process.env.NODE_ENV === "development"){
   const mainApp = require("../src")
@@ -47,7 +48,7 @@ if(process.env.NODE_ENV === "development"){
   /**
     When out app are build
   */
-  // const mainApp = require("../dist")
+  const mainApp = require("../dist")
   
   
   /*? fixed later */
@@ -58,7 +59,7 @@ if(process.env.NODE_ENV === "development"){
   router.use("/avatar/", express.static(path.resolve("dist/static/avatar/")))
 
 
-  // mainApp(router)
+  mainApp(router)
   
   app.get("/", function (req, res){
     res.send(`<?php
@@ -80,6 +81,7 @@ if(process.env.NODE_ENV === "development"){
 
 
 // access if from  /.netlify/functions/server
+
 //   router.get("/", (r, res)=>{
 //     res.send("hi")
 //   })

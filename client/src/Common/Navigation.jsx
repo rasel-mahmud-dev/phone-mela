@@ -304,9 +304,9 @@ const Navigation = (props) => {
     return (
         <>
             <div ref={navigationRef} className="navigation select-none bg-primary-400 text-light-600" id="navigation">
-                <div className="container-1400 flex-1 px-3">
+                <div className="container-1400 flex-1 px-2">
                     {/* top_navigation hide on mobile view */}
-                    <div className="md:flex justify-between hidden">
+                    <div className="md:flex justify-between hidden pt-3">
                         <div className="flex items-center gap-x-2">
                             <a
                                 target={"_blank"}
@@ -354,19 +354,19 @@ const Navigation = (props) => {
                             </Preload>
                         </div>
 
-                        <div className="center_nav bg-light-900/20 py-2 px-4 rounded-md text-light-900 hidden lg:block ">
+                        <div className="center_nav bg-light-900/10 py-2 px-4 rounded-md text-light-900 hidden lg:block ">
                             <form onSubmit={handleSearch} className="w-full">
-                                <div className="bg- flex items-center">
+                                <div className="nav-search flex items-center">
                                     <input
                                         ref={searchInputRef}
                                         value={search}
-                                        className="bg-transparent outline-none border-none w-full"
+                                        className="bg-transparent outline-none border-none w-full placeholder-dark-50"
                                         onChange={onChangeSearch}
                                         type="text"
-                                        placeholder="search products"
+                                        placeholder="Search products"
                                     />
                                     {search && (
-                                        <button type="button" className="search_clear_icon">
+                                        <button type="button" className="search_clear_icon mr-3">
                                             <FontAwesomeIcon icon={faTimesCircle} onClick={handleSearchClear} />
                                         </button>
                                     )}
@@ -379,7 +379,7 @@ const Navigation = (props) => {
 
                         <div className="right_nav justify-content-end">
                             {((search && showSearchBar) || showSearchBar) && (
-                                <div className="w-full">
+                                <div className="floating_search_wrapper">
 	                                <div className="w-full floating_search_backdrop" onClick={()=>setShowSearchBar(false)}></div>
                                     <div className="floating_search">
                                         <div className="input_wrapper">
@@ -399,11 +399,11 @@ const Navigation = (props) => {
                             )}
 	
 	
-	                        <li onClick={handleToggleSideBar} className="nav_item flex md:hidden w-8 h-8  items-center justify-center bg-white/10 rounded-full">
+	                        <li onClick={handleToggleSideBar} className="nav_item flex md:!hidden w-8 h-8  items-center justify-center bg-white/10 rounded-full">
                               <FaAngleDown className="text-light-500" />
                             </li>
 	                        
-	                        <li onClick={openSearchPanel} className="nav_item block md:hidden">
+	                        <li onClick={openSearchPanel} className="nav_item block md:!hidden">
                              <FontAwesomeIcon onClick={handleSearch} icon={faSearch} className="w-5 !text-light-500" />
                             </li>
 

@@ -8,7 +8,7 @@ import Table from "UI/Table/Table";
 
 const DashboardHome = (props) => {
 
-  const auth = useSelector((state: RootStateType)=>state.auth)
+  const { auth } = useSelector((state: RootStateType) => state.auth);
   
   const [orders, setOrders] = React.useState([])
   

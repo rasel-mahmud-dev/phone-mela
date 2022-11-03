@@ -21,7 +21,7 @@ import fullLink from "../../../utils/fullLink";
 
 const SideBar = () => {
   
-  const { auth } = useSelector((state: RootStateType)=>state)
+  const { auth: {auth} } = useSelector((state: RootStateType)=>state)
   
   const navigator = useNavigate()
   const dispatch = useDispatch()

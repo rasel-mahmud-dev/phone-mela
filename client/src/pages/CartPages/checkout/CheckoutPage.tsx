@@ -23,7 +23,7 @@ const CheckoutPage: FC<CheckoutPageProps> = (props) => {
 
   let navigator = useNavigate()
   
-  const { productState, auth } = useSelector((state: RootStateType)=>state)
+  const { productState, auth:{auth} } = useSelector((state: RootStateType)=>state)
   
   const {cartProducts} = productState
   

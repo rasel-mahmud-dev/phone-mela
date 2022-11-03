@@ -20,7 +20,7 @@ const PaymentPage = (props: any) => {
   const navigator = useNavigate()
   const dispatch = useDispatch()
 
-  const { auth, tools }= useSelector((state: RootStateType)=>state)
+  const { auth: {auth}, tools }= useSelector((state: RootStateType)=>state)
   const [paymentMethod, setPaymentMethod] = React.useState("")
   const [paymentInfoOk, setPaymentInfoOk] = React.useState(false)
   const orderState = React.useContext(OrderContext)

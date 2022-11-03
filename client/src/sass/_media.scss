@@ -83,6 +83,11 @@ $mobile-width : 576px;
     @content;
   }
 }
+@mixin get_up($size){
+  @media (min-width: $size){
+    @content;
+  }
+}
 
 // down_sm means (510 to 0)
 // down_md means (768 to 0)

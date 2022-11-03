@@ -287,6 +287,12 @@
   }
 }
 
+.floating_search_wrapper{
+    @include get_up(768px){
+        display: none;
+    }
+}
+
 .floating_search_backdrop{
     position: fixed;
     z-index: 1000;
@@ -352,4 +358,9 @@
 .header-height{
     height: var(--header-height);
     display: block;
+}
+.nav-search{
+    input{
+        background: transparent;
+    }
 }

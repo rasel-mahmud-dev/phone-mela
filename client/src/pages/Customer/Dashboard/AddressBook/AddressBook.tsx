@@ -25,7 +25,7 @@ const AddressBook = (props) => {
   // let history = useHistory()
   const dispatch = useDispatch()
 
-  const {auth} = useSelector((state: RootStateType)=>state)
+  const {auth: {auth}} = useSelector((state: RootStateType)=>state)
 
 
   const [isShowAddShippingForm, setShowAddShippingForm] = React.useState(false)

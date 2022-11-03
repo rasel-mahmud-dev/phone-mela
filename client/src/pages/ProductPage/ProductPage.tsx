@@ -296,6 +296,10 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
       isOpen: true
     })
   }
+    
+    handleClearSearch =()=>{
+        this.props.onSearchChange("")
+    }
   
   returnFilterResultItems(returnJSX, selected){
     if(selected) {
@@ -351,20 +355,18 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
            
            <h2 className="font-medium text-md m-2 ">Filter</h2>
             <FilterSidebar returnFilterResultItems={this.returnFilterResultItems} brands={this.props.productState.brands} />
-         {/*<FilterSidebar*/}
-         {/*    showBrands={showBrands}*/}
-         {/*    handleClickOnBrand={handleClickOnBrand}*/}
-         {/*    handleShowAllBrands={handleShowAllBrands}*/}
-         {/*    fetchedHomePageSectionProduct={fetchedHomePageSectionProduct}*/}
-         {/*/>*/}
     </Sidebar>
         
         
         <div className="content pl-4 w-full px-2 mt-2 " id="content">
   
-          {this.props.productState.search.value && <h4 className="m-0 p-0 text-sm font-normal">Search Result for <span className="text-primary-400">{this.props.productState.search.value}</span></h4> }
+          {this.props.productState.search.value && (
+              <div className="flex justify-between items-start">
+                  <h4 className="m-0 p-0 text-sm font-normal white-space-wrap">Search Result for <span className="text-primary-400 ">{this.props.productState.search.value}</span></h4>
+                  <span onClick={this.handleClearSearch} className="text-sm bg-primary-400 rounded px-4 py-1 text-white">Clear Search</span>
+              </div>
+          ) }
           
-          <div onClick={this.clickOnOverlay} className={[openSideBar.where === "filterPage" && openSideBar.isOpen && "open-sidebar" ? "content-overlay" : ""].join(" ")} />
 
           <div className="">
             <div className="mt-2">
@@ -378,8 +380,8 @@ class ProductPage extends React.Component<Readonly<ProductPageProps>, Readonly<S
               </h1>
         
               <div className="flex items-center justify-between mt-2">
-                <button className="sidebar_menu_button" onClick={this.handleToggleSideBar}>
-                  <span className="text-dark-800 font-normal text-sm mr-2">Filter</span>
+                <button className="text-sm bg-primary-400 rounded px-4 py-1 text-white" onClick={this.handleToggleSideBar}>
+                  <span className="font-normal text-sm mr-2">Filter</span>
                   <FontAwesomeIcon icon={faFilter} />
                 </button>
          

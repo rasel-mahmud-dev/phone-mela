@@ -33,14 +33,14 @@ const AccountInfo = (props) => {
 //   let [collapseIds, setCollapseIds] = React.useState(["4", "sdf"])
 //   let [ dataUrl, setDataUrl] = React.useState<string>("")
 
-  const {auth} = useSelector((state: RootStateType)=>state)
+  const {auth: {auth}} = useSelector((state: RootStateType)=>state)
   
   let [ customerProfile, setCustomerProfile] = React.useState<CustomerProfileType | null>(null)
 //   let [ users, setUsers] = React.useState([])
 //   let [ isShowSetPassForm, setShowPassForm] = React.useState(false)
 
   React.useEffect(()=>{
-    if(auth.isAuthenticated){
+    if(auth){
       api.get(`/api/auth/customer-profile/${auth._id}`).then(doc=>{
         if(doc.data){
           let u = doc.data

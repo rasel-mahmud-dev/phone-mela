@@ -199,7 +199,7 @@ const HomePage:FC<HomePageProps> = (props)=> {
         <title>Home Page of phone-mela.vercel.app</title>
       </Helmet>
       
-      <div className="container-1400 page_wrapdper">
+      <div className="container-1400 page_wrapper">
    
         <Sidebar isOpenSidebar={openSideBar.isOpen}  header={()=>(
             <div className="sidebar_nav bg-primary-400 flex items-center px-3">

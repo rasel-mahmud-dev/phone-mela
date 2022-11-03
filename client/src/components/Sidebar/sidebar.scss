@@ -43,7 +43,7 @@
         padding: 5px 15px;
         overflow-y: auto;
         height: calc(100vh - var(--header-height));
-        //@include custom_scrollbar(rgba(164, 164, 164, 0.17));
+        @include custom_scrollbar(rgba(164, 164, 164, 0.17));
         @include get_down(1024px) {
             padding: 20px 10px;
             //@include custom_scrollbar(rgba(164, 164, 164, 0.17));

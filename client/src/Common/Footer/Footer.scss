@@ -1,9 +1,19 @@
 
 .footer{
-  position: relative;
-  width: 100%;
-  z-index: 201;
-  .footer_content{
+
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    //min-height: 100;
+    //display: table-row;
+    //height: 0;
+
+  //width: 100%;
+  //z-index: 201;
+  //  //position: absolute;
+  //  //bottom: 0;
+
+    .footer_content{
     height: 80px;
     p{
       color: rgb(233, 233, 233);

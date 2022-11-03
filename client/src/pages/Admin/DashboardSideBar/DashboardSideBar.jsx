@@ -7,7 +7,7 @@ import("./DashboardSideBar.scss")
 
 
 const DashboardSideBar = (props) => {
-  const { auth } = props
+  const { auth: {auth} } = props
   
   const [state, setState] = React.useState( [
     {
@@ -77,9 +77,9 @@ const DashboardSideBar = (props) => {
       <div className="sidebar">
         <div className="sidebar-author">
           <div className="author_avatar mx-auto">
-            <img src={auth.avatar} alt="author-avatar" className="mx-auto"/>
+            <img src={auth?.avatar} alt="author-avatar" className="mx-auto"/>
           </div>
-          <h4 className="author-name">{auth.username}</h4>
+          <h4 className="author-name">{auth?.username}</h4>
           <p className="author-position">GENERAL MANAGER</p>
         </div>
         

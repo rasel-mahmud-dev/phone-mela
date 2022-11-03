@@ -32,7 +32,7 @@ const Orders = (props) => {
   let params = useParams() 
   // let history = useHistory()
   
-  const {auth} = useSelector((state: RootStateType)=> state)
+  const {auth: {auth}} = useSelector((state: RootStateType)=> state)
   
   const dispatch = useDispatch()
 
@@ -45,7 +45,7 @@ const Orders = (props) => {
     
     (async function (){
       
-      if(auth.isAuthenticated){
+      if(auth){
         
         api.get("/api/orders").then(response=>{
           if(response.status === 200){

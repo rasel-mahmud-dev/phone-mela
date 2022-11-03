@@ -256,7 +256,7 @@ export interface AddWishlistPayload{
 export function toggleHandleWishlist(product: AddWishlistPayload, isShowPopup: boolean = false, popupTimeout?: number, cb?: any){
   return async function (dispatch: (args: TOGGLE_WISHLIST_ACTION | SET_ACTION_TYPE)=> TOGGLE_WISHLIST_ACTION, getState: any){
     
-    const { productState, auth }: RootStateType = getState()
+    const { productState, auth: {auth} }: RootStateType = getState()
     let updatedWishlist = [...productState.wishlist]
     
     

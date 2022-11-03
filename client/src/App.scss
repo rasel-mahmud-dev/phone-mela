@@ -1,19 +1,26 @@
 @import "sass/media";
 @import "sass/variable";
 @import "src/sass/mixin";
-.App {
-  // text-align: center;
-}
+
 
 :root{
     --header-height: 87px
 }
 
-
-
 body{
   background: rgba(67, 76, 185, 0.09);
+
 }
+
+.App {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.main{
+    flex-grow: 1;
+}
+
 
 h1,h2,h3,h4,h5,p,ul,li{margin: 0;
 padding: 0}
