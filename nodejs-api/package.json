@@ -23,7 +23,8 @@
     "mongoose": "^6.3.6",
     "mysql2": "^2.3.3",
     "redis": "^4.4.0",
-    "serverless-http": "^3.0.1"
+    "serverless-http": "^3.0.1",
+    "stripe": "^11.1.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.42",

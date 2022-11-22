@@ -15,7 +15,7 @@ const App = function (app){
     routes(app)
   }
   
-  const uri = isDev ? "mongodb://127.0.0.1:27017/phone-mela" : process.env.MONGO_DB_URI
+  const uri = !isDev ? "mongodb://127.0.0.1:27017/phone-mela" : process.env.MONGO_DB_URI
   mongoose.connect(uri).then(r=>{
     console.log("database connected.")
   }).catch(ex=>{
